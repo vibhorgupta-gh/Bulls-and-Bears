@@ -23,6 +23,7 @@ This year's edition is developed using Node.js and React and `yarn` is the packa
 2. Clone it to your local machine, and work on your fork
 3. Resolve an issue/introduce a feature and open a pull request
 4. The PR must be opened to the `develop` branch of this repository. **Do not make direct PRs to the master branch.**
+5. Please handle dependency versions cautiously. Do not install updated versions of dependencies in `package.json` while setting up your project. Try to use the `--exact` flag wherever possible. Read the docs for more info.
 
 ## Maintainers
 
