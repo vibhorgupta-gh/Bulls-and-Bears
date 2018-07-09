@@ -33,7 +33,7 @@ This year's edition is developed using Node.js and React and `yarn` is the packa
 
   When you clone your fork to your machine, it gets manifested as `origin`. So now you can update the changes in your local repo to your fork. But what if someone else in this entire while made a PR to the parent repo (from which you forked your repo) and it was merged? Now the parent repo has some code which you do not have. Here, if you try to make a PR to the parent repo without updating the changes just made by someone else, you will encounter merge conflicts. Here's what you have to do:
 
-  1. `git remote add <name> <url>` where <name> is the name you want to give to the remote. For example, your fork is named 'origin'. The <url> is the url of the parent repository, i.e this repo in your case. The general convention for name is 'upstream'. Now 'upstream' is set as the parent remote.
+  1. `git remote add <name> <url>` where 'name' is the name you want to give to the remote. For example, your fork is named 'origin'. The 'url' is the url of the parent repository, i.e this repo in your case. The general convention for name is 'upstream'. Now 'upstream' is set as the parent remote.
 
   2. Every time you sit down to work, remember to update your fork with potential changes that might have been made in the parent repo by running
 
