@@ -9,7 +9,7 @@ This year's edition is developed using Node.js and React and `yarn` is the packa
 
 ## Instructions to Run
 
-1. `yarn install` to install the dependencies (You need to be in the project root for this)
+1. `yarn install --production=false` to install the dependencies and dev dependencies. You need to be in the project root for this.
 
 2. `yarn run start` to start the development server
 
