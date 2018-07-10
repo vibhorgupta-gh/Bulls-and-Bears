@@ -6,6 +6,6 @@ var express    = require("express");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(process.env.PORT , process.env.IP , function(){
-	console.log("SERVER HAS STARTED");
+app.listen(process.env.PORT || 3000, process.env.IP , function(){
+	console.log("SERVER HAS STARTED AT"+process.env.IP );
 })
