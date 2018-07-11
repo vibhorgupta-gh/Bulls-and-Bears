@@ -9,6 +9,7 @@ const passport = require('passport');
 const config = require('./config.js');
 const route = require('./routes');
 const app = express();
+//const controller =require('./controller');//for routes page
 app.use(session({ secret: 'bnbisgood' }));
  // session secret
 app.use(passport.initialize());
@@ -17,16 +18,18 @@ require('./auth/facebooklogin')(app,passport);
  // pass passport for configuration
 
 app.use(cookieParser());
- // persistent login sessions
+// persistent login sessions
 //middleware for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.use('/api',route);
 //connect to mongoose db
 mongoose.connect(config.SECRETS.database.url);
 //on connected
 mongoose.connection.on('connected',()=>{
-console.log('connected to database :)');
+    console.log('connected to database :)');
 });
 //on error
 mongoose.connection.on('error',(err)=>{
@@ -35,14 +38,11 @@ mongoose.connection.on('error',(err)=>{
         console.log('error is ' + err+config.SECRETS.database.url);
     }
 });
-app.use('/api',route)
 
-app.get('/', (req, res)=> {
-  res.send('We are now live!')
-})
-
-
+//routes
+//controller(app);
+app.use('/',route);
 
 app.listen(port, ip, function(){
 	console.log('Magic happens at ' + config.SERVER_URL + '!');
-})
+});
