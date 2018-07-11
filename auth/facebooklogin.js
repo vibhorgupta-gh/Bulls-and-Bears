@@ -28,7 +28,8 @@ module.exports = function(app,passport) {
         clientID        : config.SECRETS.facebook_auth.client_ID,
         clientSecret    : config.SECRETS.facebook_auth.client_secret,
         callbackURL     : config.SECRETS.facebook_auth.callbackURL,
-        profileFields   : ['id', 'displayName', 'name', 'gender' , 'email', 'photos']
+        profileFields   : ['id', 'displayName', 'name', 'gender' , 'email', 'photos'],
+        enableProof: true
     },
 
     // facebook will send back the token and profile
@@ -36,7 +37,7 @@ module.exports = function(app,passport) {
 
         // asynchronous
         process.nextTick(function() {
-
+            console.log(profile);
             // find the user in the database based on their facebook id
             User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
 
@@ -51,7 +52,7 @@ module.exports = function(app,passport) {
                 } else {
                     // if there is no user found with that facebook id, create them
                     var newUser = new User();
-
+                    
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
@@ -72,7 +73,7 @@ module.exports = function(app,passport) {
         });
 
     }));
-    app.get('/auth/facebook', passport.authenticate('facebook'));
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email', 'public_profile']}));
         
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
