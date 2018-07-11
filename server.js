@@ -17,6 +17,8 @@ app.get('/', (req, res)=> {
   res.send('We are now live!')
 })
 
+
+
 app.listen(port, ip, function(){
 	console.log('Magic happens at ' + config.SERVER_URL + '!');
 })
