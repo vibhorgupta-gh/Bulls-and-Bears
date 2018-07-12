@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const UserSchema = mongoose.Schema({
     facebook: {
         id: String,
@@ -8,9 +7,26 @@ const UserSchema = mongoose.Schema({
         email: String,
         name: String
     }
+    admin : { type : Boolean , default : false} ,
+    accountBalance : Number ,
+    activity : [{
+    	keys-company : [{
+    		type : mongoose.Schema.Types.ObjectId ,
+    		ref : "Company"
+    	}] ,
+    	timeStamp : { type: Date, default: Date.now	} ,
+    	action : String ,
+    	quantity : Number ,
+    	price : Number 
+    }] ,
 
+    loan : [ {
+    	pending : {type : Boolean  , default : false} ,
+    	amount : Number 
+    } ]
 });
 
+params : loan_params() ;
 
-const User = module.exports = mongoose.model('User',UserSchema);
+module.exports = mongoose.model('User',UserSchema);
 
