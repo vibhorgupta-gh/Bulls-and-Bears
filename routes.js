@@ -3,6 +3,7 @@ const router = express.Router();
 var User = require('./model/usermodel');
 
 router.get('/users',(req,res,next)=>{
+    console.log("on users page")
     User.find({},function(err,user){
         res.json(user);
     });
@@ -26,7 +27,18 @@ router.get('/feedback', (req, res) => {
     //feedback form
     res.send(" Woah hold your horses. \n games not live yet");
 });
-
+router.post('/buy',,(req,res)=>{
+    res.send('foodbar buy ');
+});
+router.post('/sell',(req,res)=>{
+    res.send('foodbar sell');
+});
+router.post('/takeloan',(req,res)=>{
+    res.send('foodbar take loan');
+});
+router.post('/repayloan',(req,res)=>{
+    res.send('foodbar repay loan');
+});
 /*router.delete('/users',(req,res,next)=>{
     User.remove({},(err,user)=>{
         res.json(user);
