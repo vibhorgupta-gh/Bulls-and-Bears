@@ -9,7 +9,7 @@ const passport = require('passport');
 const config = require('./config.js');
 const route = require('./routes');
 const app = express();
-app.use(session({ 
+app.use(session({
     secret: 'bnbisgood',
     resave: true,
     saveUninitialized: true }));
@@ -33,12 +33,11 @@ console.log('connected to database :)');
 });
 //on error
 mongoose.connection.on('error',(err)=>{
-    if(err)
-    {
-        console.log('error is ' + err+config.SECRETS.database.url);
+    if (err) {
+      console.log('error is ' + err+config.SECRETS.database.url);
     }
 });
-app.use('/api',route)
+app.use('/',route)
 
 app.get('/', (req, res)=> {
   res.send('We are now live!')

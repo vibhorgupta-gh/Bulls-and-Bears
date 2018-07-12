@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema({
         email: String,
         name: String
     }
-    isAdmin : { type : Boolean , default : false} ,
+    isAdmin : { type : Boolean , default : false } ,
     accountBalance : Number ,
     activity : [{
     	company : [{
@@ -18,15 +18,13 @@ const UserSchema = mongoose.Schema({
     	timeStamp : { type: Date, default: Date.now	} ,
     	action : String ,
     	quantity : Number ,
-    	price : Number 
+    	price : Number
     }] ,
 
     loan : [ {
-    	pending : {type : Boolean  , default : false} ,
-    	amount : Number ,
-    	loanParams : [ parameters ]
+    	isPending : { type : Boolean  , default : false } ,
+    	amount : { type: Number, max: parameters.maxLoan }
     } ]
 });
 
 module.exports = mongoose.model('User',UserSchema);
-

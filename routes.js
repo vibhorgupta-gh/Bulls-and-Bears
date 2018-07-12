@@ -1,16 +1,17 @@
 const express = require('express');// pass passport for configuration
 const router = express.Router();
-var User = require('./model/usermodel');
+const { isLoggedIn, isAdmin } = require('./utils/middleware')
+const user = require('./model/usermodel');
 
 router.get('/users',(req,res,next)=>{
-    User.find({},function(err,user){
+    user.find({},(err,user)=>{
         res.json(user);
     });
   });
 
 router.delete('/users',(req,res,next)=>{
-    User.remove({},(err,user)=>{
+    user.remove({},(err,user)=>{
         res.json(user);
     })
-})  
+})
 module.exports = router;

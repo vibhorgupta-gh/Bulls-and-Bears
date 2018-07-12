@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
-const parameter = {
-	maxShares : //the decided number
-	maxLoan :  // the decided number of loan
+ module.exports = {
+	maxShares : 10000 //subject to change
+	maxLoan :  1000 //subject to change
 }
-
-module.exports = parameter ;
