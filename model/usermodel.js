@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const parameters = require("../utils/parameters.js");
 
 const UserSchema = mongoose.Schema({
     facebook: {
@@ -7,10 +8,10 @@ const UserSchema = mongoose.Schema({
         email: String,
         name: String
     }
-    admin : { type : Boolean , default : false} ,
+    isAdmin : { type : Boolean , default : false} ,
     accountBalance : Number ,
     activity : [{
-    	keys-company : [{
+    	company : [{
     		type : mongoose.Schema.Types.ObjectId ,
     		ref : "Company"
     	}] ,
@@ -22,11 +23,10 @@ const UserSchema = mongoose.Schema({
 
     loan : [ {
     	pending : {type : Boolean  , default : false} ,
-    	amount : Number 
+    	amount : Number ,
+    	loanParams : [ parameters ]
     } ]
 });
-
-params : loan_params() ;
 
 module.exports = mongoose.model('User',UserSchema);
 

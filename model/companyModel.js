@@ -4,6 +4,7 @@ const companySchema = mongoose.Schema({
 	name : String ,
 	symbol : String , 
 	description : String ,
+	availableQuantity : Number ,
 	sharePrice : Number ,
 	totalQuantity : Number ,
 	marketCap : Number ,
