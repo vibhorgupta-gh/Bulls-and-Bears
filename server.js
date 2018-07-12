@@ -9,8 +9,12 @@ const passport = require('passport');
 const config = require('./config.js');
 const route = require('./routes');
 const app = express();
-//const controller =require('./controller');//for routes page
-app.use(session({ secret: 'bnbisgood' }));
+
+app.use(session({ 
+    secret: 'bnbisgood',
+    resave: true,
+    saveUninitialized: true }));
+
  // session secret
 app.use(passport.initialize());
 app.use(passport.session());
@@ -26,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api',route);
 //connect to mongoose db
-mongoose.connect(config.SECRETS.database.url);
+mongoose.connect(config.SECRETS.database.url,{ useNewUrlParser: true });
 //on connected
 mongoose.connection.on('connected',()=>{
     console.log('connected to database :)');
