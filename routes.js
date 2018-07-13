@@ -22,21 +22,21 @@ router.delete('/users',(req,res,next)=>{
         res.send("foobar");
     });
 
-  router.get('/companylist',(req,res)=>{
+  router.get('/company_list',(req,res)=>{
         res.send("foobar");
     });
   
 
-  router.get('/costumerdetail',(req,res)=>{
+  router.get('/customer_detail',(req,res)=>{
         res.send("foobar");
     });
 
 
-  router.get('/companydetail',(req,res)=>{
+  router.get('/company_detail',(req,res)=>{
         res.send("foobar");
   }); 
 
-  router.get('/newslist',(req,res)=>{
+  router.get('/news_list',(req,res)=>{
         res.send("foobar");
   });
 
@@ -60,12 +60,12 @@ router.delete('/users',(req,res,next)=>{
     });
 
 
-  router.post('/takeloan',(req,rest)=>{
+  router.post('/take_loan',(req,rest)=>{
         res.send("foobar");
     });
  
 
-  router.post('/repayloan',(req,res)=>{   
+  router.post('/repay_loan',(req,res)=>{   
         res.send("foobar");
     });
 
