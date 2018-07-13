@@ -18,70 +18,55 @@ router.delete('/users',(req,res,next)=>{
       
  //GET 
 
- router.get('/leaderboard',(req,res,next)=>{
-    user.find({},(err,user)=>{
+ router.get('/leaderboard',(req,res)=>{
         res.send("foobar");
     });
-  });
 
-  router.get('/companylist',(req,res,next)=>{
-    user.find({},(err,company)=>{
+  router.get('/companylist',(req,res)=>{
         res.send("foobar");
     });
-  });
+  
 
-  router.get('/costumerdetail',(req,res,next)=>{
-    user.find({},(err,company)=>{
+  router.get('/costumerdetail',(req,res)=>{
         res.send("foobar");
     });
-  });
 
-  router.get('/companydetail',(req,res,next)=>{
-    user.find({},(err,company)=>{
+
+  router.get('/companydetail',(req,res)=>{
         res.send("foobar");
-    });  
-  });
+  }); 
 
-  router.get('/newslist',(req,res,next)=>{
-    user.find({},(err,news)=>{
+  router.get('/newslist',(req,res)=>{
         res.send("foobar");
-    });
   });
 
-  router.post('/buy',(req,res,next)=>{
-    user.find({},(err,company)=>{
+  router.post('/buy',(req,res)=>{
         res.send("foobar");
     });
-  });
 
-  router.post('/sell',(req,res,next)=>{
-    user.find({},(err,company)=>{
+
+  router.post('/sell',(req,res)=>{
         res.send("foobar");
     });
-  });
 
-  router.post('/short',(req,res,next)=>{
-    user.find({},(err,company)=>{
+
+  router.post('/short',(req,res)=>{
         res.send("foobar");
     });
-  });
+  
 
-  router.post('/cover',(req,res,next)=>{
-    user.find({},(err,company)=>{
+  router.post('/cover',(req,res)=>{
         res.send("foobar");
     });
-  });
 
-  router.post('/takeloan',(req,res,next)=>{
-    user.find({},(err,company)=>{
+
+  router.post('/takeloan',(req,rest)=>{
         res.send("foobar");
     });
-  });
+ 
 
-  router.post('/repayloan',(req,res,next)=>{
-    user.find({},(err,company)=>{
+  router.post('/repayloan',(req,res)=>{   
         res.send("foobar");
     });
-  });
 
   module.exports = router;
