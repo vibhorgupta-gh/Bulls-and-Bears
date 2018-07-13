@@ -14,4 +14,59 @@ router.delete('/users',(req,res,next)=>{
         res.json(user);
     })
 })
-module.exports = router;
+
+      
+ //GET 
+
+ router.get('/leaderboard',(req,res)=>{
+        res.send("foobar");
+    });
+
+  router.get('/company_list',(req,res)=>{
+        res.send("foobar");
+    });
+  
+
+  router.get('/customer_detail',(req,res)=>{
+        res.send("foobar");
+    });
+
+
+  router.get('/company_detail',(req,res)=>{
+        res.send("foobar");
+  }); 
+
+  router.get('/news_list',(req,res)=>{
+        res.send("foobar");
+  });
+
+  router.post('/buy',(req,res)=>{
+        res.send("foobar");
+    });
+
+
+  router.post('/sell',(req,res)=>{
+        res.send("foobar");
+    });
+
+
+  router.post('/short',(req,res)=>{
+        res.send("foobar");
+    });
+  
+
+  router.post('/cover',(req,res)=>{
+        res.send("foobar");
+    });
+
+
+  router.post('/take_loan',(req,rest)=>{
+        res.send("foobar");
+    });
+ 
+
+  router.post('/repay_loan',(req,res)=>{   
+        res.send("foobar");
+    });
+
+  module.exports = router;
