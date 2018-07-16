@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const ip = process.env.IP || '127.0.0.1';
 const passport = require('passport');
 const config = require('./config.js');
-const route = require('./routes');
+const route = require('./routes/routes');
 const app = express();
 app.use(session({
     secret: 'bnbisgood',

@@ -11,20 +11,23 @@ const user = require('./model/usermodel');
 //     })
 // });
 
-router.get("/admin/addCompany" , (req,res) => {
+router.get("admin/companies", (req,res)=> {
+	res.send("foobar");
+});
+
+router.post("/admin/addCompany" , (req,res) => {
+	res.send("foobar");
+});
+
+router.post("/admin/deleteCompany" , (req,res) => {
 	res.send("foobar");
 });
 
 
-router.get("/admin/deleteCompany" , (req,res) => {
+router.post("/admin/editNews" , (req,res) => {
 	res.send("foobar");
 });
 
-
-router.get("/admin/editNews" , (req,res) => {
-	res.send("foobar");
-});
-
-router.get("/admin/editCompany" , (req,res) => {
+router.post("/admin/editCompany" , (req,res) => {
 	res.send("foobar");
 });
