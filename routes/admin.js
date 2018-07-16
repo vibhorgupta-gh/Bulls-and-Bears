@@ -15,19 +15,19 @@ router.get("admin/companies", (req,res)=> {
 	res.send("foobar");
 });
 
-router.post("/admin/addCompany" , (req,res) => {
+router.post("/admin/add_company" , (req,res) => {
 	res.send("foobar");
 });
 
-router.post("/admin/deleteCompany" , (req,res) => {
+router.post("/admin/delete_company" , (req,res) => {
 	res.send("foobar");
 });
 
 
-router.post("/admin/editNews" , (req,res) => {
+router.post("/admin/edit_news" , (req,res) => {
 	res.send("foobar");
 });
 
-router.post("/admin/editCompany" , (req,res) => {
+router.post("/admin/edit_company" , (req,res) => {
 	res.send("foobar");
 });
