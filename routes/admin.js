@@ -1,7 +1,7 @@
 const express = require('express');// pass passport for configuration
 const router = express.Router();
-const { isLoggedIn, isAdmin } = require('./utils/middleware') ;
-const user = require('./model/usermodel');
+const { isLoggedIn, isAdmin } = require('../utils/middleware') ;
+const user = require('../model/user');
 
 
 
