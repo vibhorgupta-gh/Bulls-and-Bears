@@ -10,39 +10,44 @@ const config = require('./config.js');
 const route = require('./routes/routes');
 const app = express();
 app.use(session({
-    secret: 'bnbisgood',
-    resave: true,
-    saveUninitialized: true }));
- // session secret
+  secret: 'bnbisgood',
+  resave: true,
+  saveUninitialized: true
+}));
+// session secret
 app.use(passport.initialize());
 app.use(passport.session());
-require('./auth/facebooklogin')(app,passport);
- // pass passport for configuration
+require('./auth/facebooklogin')(app, passport);
+// pass passport for configuration
 
 app.use(cookieParser());
- // persistent login sessions
+// persistent login sessions
 //middleware for POST data
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 //connect to mongoose db
-mongoose.connect(config.SECRETS.database.url,{ useNewUrlParser: true });
+mongoose.connect(config.SECRETS.database.url, {
+  useNewUrlParser: true
+});
 //on connected
-mongoose.connection.on('connected',()=>{
-console.log('connected to database :)');
+mongoose.connection.on('connected', () => {
+  console.log('connected to database :)');
 });
 //on error
-mongoose.connection.on('error',(err)=>{
-    if (err) {
-      console.log('error is ' + err+config.SECRETS.database.url);
-    }
+mongoose.connection.on('error', (err) => {
+  if (err) {
+    console.log('error is ' + err + config.SECRETS.database.url);
+  }
 });
-app.use('/',route)
+app.use('/', route)
 
-app.get('/', (req, res)=> {
+app.get('/', (req, res) => {
   res.send('We are now live!')
 })
 
-app.listen(port, ip, function(){
-	console.log('Magic happens at ' + config.SERVER_URL + '!');
+app.listen(port, ip, function () {
+  console.log('Magic happens at ' + config.SERVER_URL + '!');
 })
