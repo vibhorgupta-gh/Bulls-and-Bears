@@ -1,4 +1,5 @@
-
+const News = require("../model/news");
+const User = require("../model/user");
 const Company = require("../model/company");
 const parameter = require("../utils/parameters");
 
@@ -53,7 +54,66 @@ module.exports = {
         } else {
             company.save();
             res.json(company);
-        }
+          }
+      });
+    }  ,
+
+    editNews(req,res){
+      Company.findById(req.params.id , function(err , company){
+          if(err){
+            console.log(err);
+          } else {
+            const obj = {
+              newsText: req.body.newstext,
+              publishedOn: req.body.publishedDate,
+              newsImpact: company
+            } ;
+            News.findByIdAndUpdate(req.params.newsId , {$set: obj} ,function(err , news){
+                  if(err){
+                    res.json(err);
+                  } else {
+                    res.json(news);
+                  }
+              });
+          }
       })
+
+    } ,
+
+    deleteNews(req,res){
+        News.findByIdAndRemove(req.params.newsId , function(err){
+          if(err){
+             res.json(err);
+           } else {
+             res.json("News was deleted !");
+           }
+        });
+    },
+
+
+    addNews(req,res){
+      Company.findById(req.params.id , function(err , company){
+            if(err){
+              console.log(err);
+            } else {
+              const obj = {
+                newsText: req.body.newsText,
+                publishedOn: req.body.publishedDate,
+                newsImpact: company
+              } ;
+              News.create(obj , function(err , news){
+                if(err){
+                  res.json(err);
+                } else {
+                    news.save();
+                    res.json(news);
+                  }
+              });
+
+            }
+
+      });
+
     }
-    };
+
+};
