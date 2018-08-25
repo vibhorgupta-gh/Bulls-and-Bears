@@ -7,22 +7,22 @@ module.exports = {
 
   editCompany(req,res){
     const obj = {
-      name : req.body.name ,
-      symbol : req.body.symbol ,
-      description : req.body.description ,
-      availableQuantity : req.body.availableQuantity ,
+      name : req.body.name,
+      symbol : req.body.symbol,
+      description : req.body.description,
+      availableQuantity : req.body.availableQuantity,
       sharePrice : req.body.sharePrice,
       totalQuantity : req.body.totalQuantity,
       marketCap : req.body.marketCap,
       history : req.body.history
     } ;
     Company.findByIdAndUpdate(req.params.id , {$set: obj} ,function(err , company){
-      if(err){
-        res.json(err);
-      } else {
-        res.json(company);
-      }
-    });
+          if(err){
+            res.json(err);
+          } else {
+            res.json(company);
+          }
+      });
   } ,
 
   deleteCompany(req,res){
@@ -38,10 +38,10 @@ module.exports = {
 
     addCompany(req,res){
       const obj = {
-        name : req.body.name ,
-        symbol : req.body.symbol ,
-      	description : req.body.description ,
-      	availableQuantity : req.body.availableQuantity ,
+        name : req.body.name,
+        symbol : req.body.symbol,
+      	description : req.body.description,
+      	availableQuantity : req.body.availableQuantity,
       	sharePrice : req.body.sharePrice,
       	totalQuantity : req.body.totalQuantity,
       	marketCap : req.body.marketCap,
