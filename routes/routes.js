@@ -1,12 +1,12 @@
 const express = require('express'); // pass passport for configuration
 const router = express.Router();
-const UserController = require('./utils/controller');
+const UserController = require('../utils/controller.js');
 const {
   isLoggedIn,
   isAdmin
-} = require('./utils/middleware')
-const user = require('./model/user');
-const company = require('./model/company');
+} = require('../utils/middleware')
+const user = require('../model/user');
+const company = require('../model/company');
 
 
 

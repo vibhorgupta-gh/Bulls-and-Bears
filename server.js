@@ -8,6 +8,7 @@ const ip = process.env.IP || '127.0.0.1';
 const passport = require('passport');
 const config = require('./config.js');
 const route = require('./routes/routes');
+const adminRoute = require('./routes/admin');
 const app = express();
 app.use(session({
   secret: 'bnbisgood',
@@ -43,6 +44,7 @@ mongoose.connection.on('error', (err) => {
   }
 });
 app.use('/', route)
+app.use('/' , adminRoute)
 
 app.get('/', (req, res) => {
   res.send('We are now live!')
