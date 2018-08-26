@@ -15,6 +15,7 @@ const companySchema = mongoose.Schema({
 		},
 		sharePrice: Number,
 		availableQuantity: Number
+
 	}]
 
 });
