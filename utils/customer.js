@@ -2,6 +2,7 @@ const Company = require("../model/company");
 const News = require("../model/news");
 const User = require("../model/user");
 const parameter = require("../utils/parameters");
+
 module.exports = {
     getUsers(req, res) {
         User.find({}, (err, data) => {
@@ -63,7 +64,7 @@ module.exports = {
             }
             if (total + req.body.NoOfShares > parameter.maxShares) {
                 return res.json({
-                    msg: "kitne kareedega?"
+                    msg: "kitne khareedega?"
                 });
             }
         });
@@ -72,12 +73,12 @@ module.exports = {
             if (err) res.json(err);
             if (user.accountBalance < company.sharePrice * req.body.NoOfShares) {
                 return res.json({
-                    msg: "itne paise nhi he"
+                    msg: "itne paise nahi hain"
                 });
             }
             if (company.availableQuantity < req.body.NoOfShares) {
                 return res.json({
-                    msg: "itne stock nhi he"
+                    msg: "itne stock nahi hain"
                 });
             }
             var historytemp = {
@@ -121,12 +122,12 @@ module.exports = {
                 if (err) res.json(err);
                 if (!user.stockHolding.id(company._id)) {
                     return res.json({
-                        msg: "itne stock nhi he"
+                        msg: "itne stock nahi hain"
                     });
                 }
                 if (user.stockHolding.id(company._id).quantity < req.body.NoOfShares) {
                     return res.json({
-                        msg: "itne stock nhi he"
+                        msg: "itne stock nahi hain"
                     });
                 }
 
@@ -174,7 +175,7 @@ module.exports = {
             }
             if (total + req.body.NoOfShares > parameter.maxShares) {
                 return res.json({
-                    msg: "kitne kareedega?"
+                    msg: "kitne khareedega?"
                 });
             }
         });
@@ -226,12 +227,12 @@ module.exports = {
             if (err) res.json(err);
             if (!user.stockShorted.id(company._id)) {
                 return res.json({
-                    msg: "shorted stock nhi he"
+                    msg: "shorted stock nahi hain"
                 });
             }
             if (user.stockShorted.id(company._id).TotalStock < req.body.NoOfShares) {
                 return res.json({
-                    msg: "itne shorted stock nhi he"
+                    msg: "itne shorted stock nahi hain"
                 });
             }
             var historytemp = {
@@ -275,7 +276,7 @@ module.exports = {
             user = data;
             if (user.loan.amount + req.body.loan > parameter.maxLoan) {
                 return res.json({
-                    msg: "aur nhi "
+                    msg: "aur nahi"
                 });
             }
             user.loan.isPending = true;
@@ -294,12 +295,12 @@ module.exports = {
             user = data;
             if (user.loan.amount - req.body.loan < 0) {
                 return res.json({
-                    msg: "zyada paise dene ka shock he "
+                    msg: "zyada paise dene ka shock hai?"
                 });
             }
             if (user.accountBalance < req.body.loan) {
                 return res.json({
-                    msg: "kama toh le  "
+                    msg: "kama toh le"
                 });
             }
             user.loan.amount -= req.body.loan;
