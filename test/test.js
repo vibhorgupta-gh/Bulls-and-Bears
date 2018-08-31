@@ -1,22 +1,22 @@
-var mongoose = require('mongoose');
-var news = require('../model/news.js');
+const mongoose = require('mongoose');
+const news = require('../model/news.js');
 
-var company = require('../model/company.js');
+const company = require('../model/company.js');
 
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var expect = require('chai').expect;
-var should = require('should');
-var server = require('../server.js');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const expect = require('chai').expect;
+const should = require('should');
+const server = require('../server.js');
 
 chai.use(chaiHttp);
 process.env.NODE_ENV = 'test';
 
-describe('test for put requests',()=>{
+describe('Test for PUT requests',()=>{
 
-  it('/admin/company/:id',(done)=>{
+  it('adds company',(done) => {
 
-    var Company = new company({
+    let Company = new company({
       name : 'Nivea',
       symbol : 'XYZ',
       description : 'kuch-bhi',
@@ -24,16 +24,14 @@ describe('test for put requests',()=>{
       availableQuantity : 2000,
       totalQuantity : 10000,
       marketCap : 500
-
     });
 
      Company.save((err,company)=>{
        chai.request(server)
        .put('/admin/company/'+ Company.id)
        .end((err,res)=>{
-         res.should.have.status(200);
-        res.body.should.be.a('object');
-
+         expect(res.statusCode).to.equal(200)
+         expect(res.body).to.be.an('object')
          done();
        });
      });
