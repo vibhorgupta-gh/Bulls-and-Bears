@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "server.js",
   "scripts": {
-    "test": "cd test && mocha --timeout 20000",
+    "test": "cd test && mocha --timeout 50000",
     "start": "cross-env BNB_ENV=localhost node server.js",
     "prod": "cross-env BNB_ENV=production node server.js"
   },
