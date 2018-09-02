@@ -5,6 +5,10 @@ services:
   - mongodb
 before_script:
   - sleep 15  
+install:
+  - yarn install
+script:
+  - yarn test  
 addons:
   apt:
     config:
