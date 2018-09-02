@@ -1,0 +1,13 @@
+language : node_js
+node_js :
+    - "8.11.4"
+services:
+  - mongodb
+before_script:
+  - sleep 15  
+addons:
+  apt:
+    config:
+      retries: true
+    ⋮ # rest (including `packages` and `sources`, if applicable
+   
