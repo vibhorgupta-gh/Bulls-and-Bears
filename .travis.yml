@@ -9,9 +9,5 @@ install:
   - yarn install
 script:
   - yarn test  
-addons:
-  apt:
-    config:
-      retries: true
-    ⋮ # rest (including `packages` and `sources`, if applicable
+
    
