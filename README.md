@@ -52,3 +52,7 @@ This year's edition is developed using Node.js and React and `yarn` is the packa
 
 1. [Vibhor Gupta](https://github.com/VibhorCodecianGupta)
 2. [Gaurav Tiwari](https://github.com/thegauravtiwari)
+
+
+
+[![Build Status](https://travis-ci.com/shivanggarg1998/Bulls-and-Bears.svg?branch=develop)](https://travis-ci.com/shivanggarg1998/Bulls-and-Bears)
