@@ -7,7 +7,7 @@ const parameter = require("../utils/parameters");
 module.exports = {
 
   editCompany(req,res){
-    
+
     const obj = {
       name : req.body.name,
       symbol : req.body.symbol,
@@ -17,7 +17,7 @@ module.exports = {
       totalQuantity : req.body.totalQuantity,
       marketCap : req.body.marketCap,
     };
-    
+
     Company.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, company){
         if(err){
           res.json(err);
@@ -40,7 +40,7 @@ module.exports = {
 
 
   addCompany(req,res){
-    
+
     const obj = {
       name : req.body.name,
       symbol : req.body.symbol,
@@ -50,7 +50,7 @@ module.exports = {
     	totalQuantity : req.body.totalQuantity,
     	marketCap : req.body.marketCap,
     };
-    
+
     Company.create(obj, function(err, company){
       if(err){
         res.json(err);
@@ -62,15 +62,15 @@ module.exports = {
   },
 
 
-  editNews(req,res){  
-      
+  editNews(req,res){
+
     const obj = {
-      newsText: req.body.newstext,
-      publishedOn: req.body.publishedDate,
+      newsText: req.body.newsText,
+      publishedOn: req.body.publishedOn,
       newsImpact: null
     };
-    
-    News.findByIdAndUpdate(req.params.newsId, {$set: obj}, function(err, news){
+
+    News.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, news){
           if(err){
             res.json(err);
           } else {
@@ -80,7 +80,7 @@ module.exports = {
   },
 
   deleteNews(req,res){
-    News.findByIdAndRemove(req.params.newsId , function(err){
+    News.findByIdAndRemove(req.params.id , function(err){
       if(err){
          res.json(err);
        } else {
@@ -91,13 +91,13 @@ module.exports = {
 
 
   addNews(req,res){
-        
+
     const obj = {
       newsText: req.body.newsText,
-      publishedOn: req.body.publishedDate,
-      newsImpact: company
+      publishedOn: req.body.publishedOn,
+      newsImpact: Company
     };
-    
+
     News.create(obj , function(err , news){
       if(err){
         res.json(err);
