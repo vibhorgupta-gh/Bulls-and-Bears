@@ -22,16 +22,29 @@ describe('TEST FOR PUT REQUEST FOR ADMIN',()=>{
         marketCap : 500
         });
 
-    Company.save((err,company)=>{
-        chai.request(server)
-        .put('/admin/company/'+ Company.id)
-        .end((err,res)=>{
-        expect(res.statusCode).to.equal(200)
-        expect(res.body).to.be.an('object')
-        done();
+describe('Test for PUT requests', () => {
+  it('updates company', (done) => {
+    setTimeout(done, 3000);
+    let Company = new company({
+      name: 'Nivea',
+      symbol: 'XYZ',
+      description: 'kuch-bhi',
+      sharePrice: 100,
+      availableQuantity: 2000,
+      totalQuantity: 10000,
+      marketCap: 500
+    });
+
+    Company.save((err, company) => {
+      chai.request(server)
+        .put('/admin/company/' + Company.id)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('object')
+          done();
         });
-      });
-   });
+    });
+  });
 
    it('updates news',(done) => {
 
@@ -63,18 +76,52 @@ describe('TEST FOR POST REQUEST FOR ADMIN',()=>{
       totalQuantity : 10000,
       marketCap : 500
       });
+  it('updates news', (done) => {
+    setTimeout(done, 3000);
+    let News = new news({
+      newsText: 'kejriwal arrested',
+      publishedOn: 20,
+      createdOn: 10,
+      newsImpact: null
+    });
 
-    Company.save((err,company)=>{
-        chai.request(server)
+    News.save((err, news) => {
+      chai.request(server)
+        .put('/admin/news/' + News.id)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('object')
+          res.should.have.property('error', false)
+          done();
+        });
+    });
+  });
+})
+
+describe('TEST FOR POST REQUEST', () => {
+  it('adds company', (done) => {
+    setTimeout(done, 3000);
+    let Company = new company({
+      name: 'Nivea',
+      symbol: 'XYZ',
+      description: 'kuch-bhi',
+      sharePrice: 100,
+      availableQuantity: 2000,
+      totalQuantity: 10000,
+      marketCap: 500
+    });
+
+    Company.save((err, company) => {
+      chai.request(server)
         .post('/admin/company')
         .send(Company)
-        .end((err,res)=>{
-        expect(res.statusCode).to.equal(200)
-        expect(res.body).to.be.an('object')
-        res.should.have.property('error',false)
-        done()
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('object')
+          res.should.have.property('error', false)
+          done()
         });
-     });
+    });
   });
 
   it('adds news',(done) =>{
@@ -85,17 +132,25 @@ describe('TEST FOR POST REQUEST FOR ADMIN',()=>{
         publishedOn: 10,
         newsImpact: null
       });
+  it('adds news', (done) => {
+    setTimeout(done, 3000);
+    let News = new news({
+      newsText: 'kejriwal arrested',
+      publishedOn: 20,
+      createdOn: 10,
+      newsImpact: null
+    });
 
-    News.save((err,company)=>{
-       chai.request(server)
-       .post('/admin/news')
-       .send(News)
-       .end((err,res)=>{
-       expect(res.statusCode).to.equal(200)
-       expect(res.body).to.be.an('object')
-       res.should.have.property('error',false)
-       done()
-       });
+    News.save((err, news) => {
+      chai.request(server)
+        .post('/admin/news')
+        .send(News)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('object')
+          res.should.have.property('error', false)
+          done()
+        });
     });
   });
 })
@@ -103,14 +158,17 @@ describe('TEST FOR POST REQUEST FOR ADMIN',()=>{
 describe('TEST FOR DELETE REQUEST FOR ADMIN',() => {
     it('deletes company',(done) =>{
 
+describe('TEST FOR DELETE REQUEST', () => {
+  it('deletes company', (done) => {
+    setTimeout(done, 3000);
     let Company = new company({
-    name : 'Nivea',
-    symbol : 'XYZ',
-    description : 'kuch-bhi',
-    sharePrice : 100,
-    availableQuantity : 2000,
-    totalQuantity : 10000,
-    marketCap : 500
+      name: 'Nivea',
+      symbol: 'XYZ',
+      description: 'kuch-bhi',
+      sharePrice: 100,
+      availableQuantity: 2000,
+      totalQuantity: 10000,
+      marketCap: 500
     });
 
     Company.save((err,company)=>{
@@ -121,17 +179,32 @@ describe('TEST FOR DELETE REQUEST FOR ADMIN',() => {
        expect(res.body).to.be.an('String')
        done()
        });
+    Company.save((err, company) => {
+      chai.request(server)
+        .delete('/admin/company/' + Company.id)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('string')
+          res.should.have.property('error', false)
+          done()
+        });
     });
-});
+  });
 
     it('deletes news',(done) =>{
 
       let News = new news({
       newsText : 'kejriwal arrested',
+  it('deletes news', (done) => {
+    setTimeout(done, 3000);
+    let News = new news({
+      newsText: 'kejriwal arrested',
+      Published: true,
+      publishedOn: 10,
       newsImpact: null
     });
 
-  News.save((err,company)=>{
+    News.save((err, company) => {
       chai.request(server)
       .delete('/admin/news/'+News.id)
       .end((err,res)=>{
@@ -415,4 +488,14 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
          done()
        })
   })
+})
+        .delete('/admin/news/' + News.id)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('string')
+          res.should.have.property('error', false)
+          done()
+        });
+    });
+  });
 })
