@@ -6,6 +6,7 @@ const parameter = require("../utils/parameters");
 
 module.exports = {
 
+  editCompany(req,res){
   editCompany(req, res) {
 
     const obj = {
@@ -18,6 +19,12 @@ module.exports = {
       marketCap: req.body.marketCap,
     };
 
+    Company.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, company){
+        if(err){
+          res.json(err);
+        } else {
+          res.json(company);
+        }
     Company.findByIdAndUpdate(req.params.id, {
       $set: obj
     }, function (err, company) {
@@ -41,6 +48,7 @@ module.exports = {
   },
 
 
+  addCompany(req,res){
   addCompany(req, res) {
 
     const obj = {
@@ -53,6 +61,8 @@ module.exports = {
       marketCap: req.body.marketCap,
     };
 
+    Company.create(obj, function(err, company){
+      if(err){
     Company.create(obj, function (err, company) {
       if (err) {
         res.json(err);
@@ -64,6 +74,30 @@ module.exports = {
   },
 
 
+  editNews(req,res){
+
+    const obj = {
+      newsText: req.body.newsText,
+      publishedOn: req.body.publishedOn,
+      newsImpact: null
+    };
+
+    News.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, news){
+          if(err){
+            res.json(err);
+          } else {
+            res.json(news);
+          }
+      });
+  },
+
+  deleteNews(req,res){
+    News.findByIdAndRemove(req.params.id , function(err){
+      if(err){
+         res.json(err);
+       } else {
+         res.json("News was deleted!");
+       }
   editNews(req, res) {
 
     console.log(req.body);
@@ -96,11 +130,17 @@ module.exports = {
   },
 
 
+  addNews(req,res){
   addNews(req, res) {
 
     const obj = {
       newsText: req.body.newsText,
       publishedOn: req.body.publishedOn,
+      newsImpact: Company
+    };
+
+    News.create(obj , function(err , news){
+      if(err){
       createdOn: req.body.createdOn,
       newsImpact: null
     };
