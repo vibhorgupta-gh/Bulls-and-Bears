@@ -10,6 +10,57 @@ const server = require('../server.js');
 chai.use(chaiHttp);
 process.env.NODE_ENV = 'test';
 //test for admin.js
+
+describe('Test for POST request for admin',()=>{
+    it('adds company',(done) =>{
+      
+      let Company = new company({
+      name : 'Nivea',
+      symbol : 'XYZ',
+      description : 'kuch-bhi',
+      sharePrice : 100,
+      availableQuantity : 2000,
+      totalQuantity : 10000,
+      marketCap : 500
+      });
+  
+      Company.save((err, company) => {
+        chai.request(server)
+          .post('/admin/company')
+          .send(Company)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200)
+            expect(res.body).to.be.an('object')
+            res.should.have.property('error', false)
+            done()
+          });
+      });
+  });
+
+  it('adds news',(done) =>{
+
+        let News = new news({
+        newsText : 'kejriwal arrested',
+        Published : true,
+        publishedOn: 10,
+        newsImpact: null
+      });
+
+    News.save((err, news) => {
+      chai.request(server)
+        .post('/admin/news')
+        .send(News)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.be.an('object')
+          res.should.have.property('error', false)
+          done()
+        });
+    });
+  });
+})
+
+
 describe('TEST FOR PUT REQUEST FOR ADMIN',()=>{
     it('updates company',(done) => {
         let Company = new company({
@@ -21,19 +72,6 @@ describe('TEST FOR PUT REQUEST FOR ADMIN',()=>{
         totalQuantity : 10000,
         marketCap : 500
         });
-
-describe('Test for PUT requests', () => {
-  it('updates company', (done) => {
-    setTimeout(done, 3000);
-    let Company = new company({
-      name: 'Nivea',
-      symbol: 'XYZ',
-      description: 'kuch-bhi',
-      sharePrice: 100,
-      availableQuantity: 2000,
-      totalQuantity: 10000,
-      marketCap: 500
-    });
 
     Company.save((err, company) => {
       chai.request(server)
@@ -65,102 +103,9 @@ describe('Test for PUT requests', () => {
    });
 })
 
-describe('TEST FOR POST REQUEST FOR ADMIN',()=>{
-      it('adds company',(done) =>{
-      let Company = new company({
-      name : 'Nivea',
-      symbol : 'XYZ',
-      description : 'kuch-bhi',
-      sharePrice : 100,
-      availableQuantity : 2000,
-      totalQuantity : 10000,
-      marketCap : 500
-      });
-  it('updates news', (done) => {
-    setTimeout(done, 3000);
-    let News = new news({
-      newsText: 'kejriwal arrested',
-      publishedOn: 20,
-      createdOn: 10,
-      newsImpact: null
-    });
-
-    News.save((err, news) => {
-      chai.request(server)
-        .put('/admin/news/' + News.id)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200)
-          expect(res.body).to.be.an('object')
-          res.should.have.property('error', false)
-          done();
-        });
-    });
-  });
-})
-
-describe('TEST FOR POST REQUEST', () => {
-  it('adds company', (done) => {
-    setTimeout(done, 3000);
-    let Company = new company({
-      name: 'Nivea',
-      symbol: 'XYZ',
-      description: 'kuch-bhi',
-      sharePrice: 100,
-      availableQuantity: 2000,
-      totalQuantity: 10000,
-      marketCap: 500
-    });
-
-    Company.save((err, company) => {
-      chai.request(server)
-        .post('/admin/company')
-        .send(Company)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200)
-          expect(res.body).to.be.an('object')
-          res.should.have.property('error', false)
-          done()
-        });
-    });
-  });
-
-  it('adds news',(done) =>{
-
-        let News = new news({
-        newsText : 'kejriwal arrested',
-        Published : true,
-        publishedOn: 10,
-        newsImpact: null
-      });
-  it('adds news', (done) => {
-    setTimeout(done, 3000);
-    let News = new news({
-      newsText: 'kejriwal arrested',
-      publishedOn: 20,
-      createdOn: 10,
-      newsImpact: null
-    });
-
-    News.save((err, news) => {
-      chai.request(server)
-        .post('/admin/news')
-        .send(News)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200)
-          expect(res.body).to.be.an('object')
-          res.should.have.property('error', false)
-          done()
-        });
-    });
-  });
-})
-
-describe('TEST FOR DELETE REQUEST FOR ADMIN',() => {
-    it('deletes company',(done) =>{
 
 describe('TEST FOR DELETE REQUEST', () => {
   it('deletes company', (done) => {
-    setTimeout(done, 3000);
     let Company = new company({
       name: 'Nivea',
       symbol: 'XYZ',
@@ -171,14 +116,6 @@ describe('TEST FOR DELETE REQUEST', () => {
       marketCap: 500
     });
 
-    Company.save((err,company)=>{
-       chai.request(server)
-       .delete('/admin/company/'+Company.id)
-       .end((err,res)=>{
-       expect(res.statusCode).to.equal(200)
-       expect(res.body).to.be.an('String')
-       done()
-       });
     Company.save((err, company) => {
       chai.request(server)
         .delete('/admin/company/' + Company.id)
@@ -191,12 +128,8 @@ describe('TEST FOR DELETE REQUEST', () => {
     });
   });
 
-    it('deletes news',(done) =>{
-
-      let News = new news({
-      newsText : 'kejriwal arrested',
+    
   it('deletes news', (done) => {
-    setTimeout(done, 3000);
     let News = new news({
       newsText: 'kejriwal arrested',
       Published: true,
@@ -215,6 +148,8 @@ describe('TEST FOR DELETE REQUEST', () => {
     });
   });
 })
+
+
 //test for company.js
 describe('TEST FOR GET REQUEST FOR COMPANY',()=>{
 
@@ -234,7 +169,7 @@ describe('TEST FOR GET REQUEST FOR COMPANY',()=>{
        chai.request(server)
        .get('/company_list')
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('Array')
          res.should.have.property('error',false)
          done()
@@ -280,13 +215,14 @@ describe('TEST FOR GET REQUEST FOR COMPANY',()=>{
        chai.request(server)
        .get('/company_detail/' + Company.id)
        .end((err,res)=>{
-           expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
        })
      })
   })
+  
   it('gets customer-details',(done)=>{
 
     let Company = new company({
@@ -303,13 +239,14 @@ describe('TEST FOR GET REQUEST FOR COMPANY',()=>{
        chai.request(server)
        .get('/customer_detail/' + Company.id)
        .end((err,res)=>{
-           expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
        })
      })
   })
+  
   it('gets news-details',(done)=>{
 
     var News = new news({
@@ -321,7 +258,7 @@ describe('TEST FOR GET REQUEST FOR COMPANY',()=>{
        chai.request(server)
        .get('/newsDetail/' + News.id)
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
@@ -343,9 +280,9 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
     marketCap : 500
     });
 
-     var buy = {
-       id:'5b7d863dc1a1b37b5c266f56',
-       NoOfShares:4
+     const buy = {
+       id: '5b7d863dc1a1b37b5c266f56',
+       NoOfShares: 4
      }
 
      Company.save((err,company)=>{
@@ -353,7 +290,7 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
        .post('/buy/' + Company.id)
        .send(buy)
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
@@ -374,8 +311,8 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
     });
 
      var sell = {
-       id:'5b7d863dc1a1b37b5c266f56',
-       NoOfShares:4
+       id: '5b7d863dc1a1b37b5c266f56',
+       NoOfShares: 4
      }
 
      Company.save((err,company)=>{
@@ -383,7 +320,7 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
        .post('/sell/' + Company.id)
        .send(sell)
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
@@ -404,8 +341,8 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
     });
 
      var short = {
-       id:'5b7d863dc1a1b37b5c266f56',
-       NoOfShares:4
+       id: '5b7d863dc1a1b37b5c266f56',
+       NoOfShares: 4
      }
 
      Company.save((err,company)=>{
@@ -413,7 +350,7 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
        .post('/short/' + Company.id)
        .send(short)
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
@@ -434,8 +371,8 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
     });
 
      var cover = {
-       id:'5b7d863dc1a1b37b5c266f56',
-       NoOfShares:4
+       id: '5b7d863dc1a1b37b5c266f56',
+       NoOfShares: 4
      }
 
      Company.save((err,company)=>{
@@ -443,7 +380,7 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
        .post('/cover/' + Company.id)
        .send(cover)
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
@@ -454,16 +391,16 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
   it('take_loan',(done)=>{
 
      var Loan = {
-       id:'5b7d863dc1a1b37b5c266f56',
-       NoOfShares:4,
-       loan:1000
+       id: '5b7d863dc1a1b37b5c266f56',
+       //NoOfShares: 4,
+       loan: 1000
      }
 
        chai.request(server)
        .post('/take_loan')
        .send(Loan)
        .end((err,res)=>{
-           expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
@@ -473,29 +410,19 @@ describe('TEST FOR POST REQUEST FOR COMPANY',()=>{
   it('repay_loan',(done)=>{
 
      var Loan = {
-       id:'5b7d863dc1a1b37b5c266f56',
-       NoOfShares:4,
-       Loan:1000
+       id: '5b7d863dc1a1b37b5c266f56',
+       //NoOfShares:4,
+       Loan: 1000
      }
 
        chai.request(server)
        .post('/repay_loan')
        .send(Loan)
        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
+         expect(res.statusCode).to.equal(200)
          expect(res.body).to.be.an('object')
          res.should.have.property('error',false)
          done()
        })
   })
-})
-        .delete('/admin/news/' + News.id)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200)
-          expect(res.body).to.be.an('string')
-          res.should.have.property('error', false)
-          done()
-        });
-    });
-  });
 })
