@@ -7,8 +7,6 @@ const parameter = require("../utils/parameters");
 module.exports = {
 
 
-  //editCompany(req,res){
-
   editCompany(req, res) {
 
 
@@ -35,6 +33,19 @@ module.exports = {
 },
 
 
+  //   Company.findByIdAndUpdate(req.params.id, {
+  //     $set: obj
+  //   }, function (err, company) {
+  //     if (err) {
+  //       res.json(err);
+  //     } else {
+  //       res.json(company);
+  //     }
+  //   });
+  // },
+
+
+
   deleteCompany(req, res) {
     Company.findByIdAndRemove(req.params.id, function (err) {
       if (err) {
@@ -47,9 +58,7 @@ module.exports = {
 
 
 
-//  addCompany(req,res){
-
-  addCompany(req, res) {
+  addCompany (req, res) {
 
 
     const obj = {
@@ -63,8 +72,7 @@ module.exports = {
     };
 
 
-  //  Company.create(obj, function(err, company){
-    //  if(err){
+
 
     Company.create(obj, function (err, company) {
       if (err) {
@@ -76,6 +84,7 @@ module.exports = {
       }
     });
   },
+
 
 
 
@@ -105,9 +114,9 @@ module.exports = {
        }
 });
 },
+
   editNews(req, res) {
 
-    console.log(req.body);
     const obj = {
       newsText: req.body.newsText,
       publishedOn: req.body.publishedOn,
@@ -139,8 +148,6 @@ module.exports = {
 
 
 
-//  addNews(req,res){
-
   addNews(req, res) {
 
 
@@ -150,7 +157,7 @@ module.exports = {
       newsImpact: Company
     };
 
-  
+
 
     News.create(obj, function (err, news) {
       if (err) {

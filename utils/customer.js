@@ -51,26 +51,27 @@ module.exports = {
     },
 
     buyShares(req, res) {
-        let user;
-        User.findById(req.body.id, (err, data) => {
-            if (err) throw err;
-            user = data;
-            let total = 0;
-            for (var i in user.stockHolding) {
-                total += i.quantity;
-            }
-            for (var i in user.stockShorted) {
-                total += i.quantity;
-            }
-            if (total + req.body.NoOfShares > parameter.maxShares) {
-                return res.json({
-                    msg: "kitne khareedega?"
-                });
-            }
-        });
 
-        Company.findById(req.params.id, (err, company) => {
+        Company.findById(req.params.id, async (err, company) => {
             if (err) res.json(err);
+
+            const user = await User.findById(req.body.id)
+                if (err) throw err;
+
+                let total = 0;
+                for (var i in user.stockHolding) {
+                    total += i.quantity;
+                }
+                for (var i in user.stockShorted) {
+                    total += i.quantity;
+                }
+                if (total + req.body.NoOfShares > parameter.maxShares) {
+                    return res.json({
+                        msg: "kitne khareedega?"
+                    });
+                }
+                console.log(user.id);
+
             if (user.accountBalance < company.sharePrice * req.body.NoOfShares) {
                 return res.json({
                     msg: "itne paise nahi hain"
@@ -113,6 +114,7 @@ module.exports = {
             });
         });
     },
+
     sellShares(req, res) {
         let user;
         User.findById(req.body.id, (err, data) => {
@@ -143,10 +145,10 @@ module.exports = {
                 };
                 company.history.push(historytemp);
                 user.accountBalance += company.sharePrice * req.body.NoOfShares;
-                company.availableQuantity += req.body.NoOfShares;
+                company.availableQuantity = (+company.availableQuantity) + (+req.body.NoOfShares);
                 user.activity.push(activitytemp);
                 if (user.stockHolding.id(company._id)) {
-                    user.stockHolding.id(company._id).quantity -= req.body.NoOfShares;
+                    user.stockHolding.id(company._id).quantity -= (+req.body.NoOfShares);
                 }
 
                 company.save();
@@ -161,30 +163,47 @@ module.exports = {
 
 
     },
+
     shortShares(req, res) {
-        let user;
-        User.findById(req.body.id, (err, data) => {
-            if (err) throw err;
-            user = data;
-            let total = 0;
-            for (var i in user.stockHolding) {
-                total += i.quantity;
-            }
-            for (var i in user.stockShorted) {
-                total += i.quantity;
-            }
-            if (total + req.body.NoOfShares > parameter.maxShares) {
-                return res.json({
-                    msg: "kitne khareedega?"
-                });
-            }
-        });
-        Company.findById(req.params.id, (err, company) => {
+        // let user;
+        // User.findById(req.body.id, (err, data) => {
+        //     if (err) throw err;
+        //     user = data;
+        //     let total = 0;
+        //     for (var i in user.stockHolding) {
+        //         total += i.quantity;
+        //     }
+        //     for (var i in user.stockShorted) {
+        //         total += i.quantity;
+        //     }
+        //     if (total + req.body.NoOfShares > parameter.maxShares) {
+        //         return res.json({
+        //             msg: "kitne khareedega?"
+        //         });
+        //     }
+        // });
+        Company.findById(req.params.id, async (err, company) => {
             if (err) res.json(err);
+
+            const user = await User.findById(req.body.id)
+                if (err) throw err;
+
+                let total = 0;
+                for (var i in user.stockHolding) {
+                    total += i.quantity;
+                }
+                for (var i in user.stockShorted) {
+                    total += i.quantity;
+                }
+                if (total + req.body.NoOfShares > parameter.maxShares) {
+                    return res.json({
+                        msg: "kitne khareedega?"
+                    });
+                }
 
             var historytemp = {
                 sharePrice: company.sharePrice,
-                availableQuantity: company.availableQuantity + req.body.NoOfShares
+                availableQuantity: (+company.availableQuantity) + (+req.body.NoOfShares)
             };
             var activitytemp = {
                 company: company._id,
@@ -193,12 +212,12 @@ module.exports = {
                 price: company.sharePrice
             };
             company.history.push(historytemp);
-            company.availableQuantity += req.body.NoOfShares;
+            company.availableQuantity = (+company.availableQuantity) + (+req.body.NoOfShares);
             user.activity.push(activitytemp);
             if (user.stockShorted.id(company._id)) {
                 user.stockShorted.id(company._id).TotalPrice +=
                     req.body.NoOfShares * company.sharePrice;
-                user.stockShorted.id(company._id).TotalStock += req.body.NoOfShares;
+                user.stockShorted.id(company._id).TotalStock += (+req.body.NoOfShares);
             } else {
                 user.stockShorted.push({
                     _id: company._id,
@@ -216,12 +235,13 @@ module.exports = {
             });
         });
     },
+
     coverShares(req, res) {
         let user;
         User.findById(req.body.id, (err, data) => {
             if (err) throw err;
             user = data;
-        });
+
 
         Company.findById(req.params.id, (err, company) => {
             if (err) res.json(err);
@@ -268,6 +288,7 @@ module.exports = {
                 Customer: user
             });
         });
+      });
     },
     takeloan(req, res) {
         let user;
