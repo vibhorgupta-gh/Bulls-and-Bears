@@ -7,7 +7,7 @@ switch (config.DEPLOY) {
   case 'localhost':
   default:
     config.SERVER_URL = 'http://localhost:3000',
-      config.SECRETS = require('./secrets.json')
+      config.SECRETS = require('./secrets-sample.json')
     break
 }
 

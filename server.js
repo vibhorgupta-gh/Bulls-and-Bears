@@ -53,3 +53,5 @@ app.get('/', (req, res) => {
 app.listen(port, ip, function () {
   console.log('Magic happens at ' + config.SERVER_URL + '!');
 })
+
+module.exports = app;

@@ -1,11 +1,13 @@
-# Bulls-and-Bears
+[![Build Status](https://travis-ci.com/VibhorCodecianGupta/Bulls-and-Bears.svg?branch=develop)](https://travis-ci.com/VibhorCodecianGupta/Bulls-and-Bears)
+
+# Bulls and Bears
 
 Your favourite virtual share market simulation is back. Trade away!
 
 This year's edition is developed using Node.js and React and `yarn` is the package manager used. You need to have these on your local machine as prerequisites to start development. Follow the links below to install the requirements and read the documentation.
 
-[Yarn](https://yarnpkg.com/lang/en/)
-[Node](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/lang/en/)
+- [Node](https://nodejs.org/en/)
 
 ## Instructions to Run
 
@@ -52,3 +54,6 @@ This year's edition is developed using Node.js and React and `yarn` is the packa
 
 1. [Vibhor Gupta](https://github.com/VibhorCodecianGupta)
 2. [Gaurav Tiwari](https://github.com/thegauravtiwari)
+
+
+
