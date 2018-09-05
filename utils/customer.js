@@ -70,7 +70,7 @@ module.exports = {
                         msg: "kitne khareedega?"
                     });
                 }
-                console.log(user.id);
+                
 
             if (user.accountBalance < company.sharePrice * req.body.NoOfShares) {
                 return res.json({
