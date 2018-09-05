@@ -6,17 +6,22 @@ const parameter = require("../utils/parameters");
 
 module.exports = {
 
-  editCompany(req,res){
+
+  //editCompany(req,res){
+
+  editCompany(req, res) {
+
 
     const obj = {
-      name : req.body.name,
-      symbol : req.body.symbol,
-      description : req.body.description,
-      availableQuantity : req.body.availableQuantity,
-      sharePrice : req.body.sharePrice,
-      totalQuantity : req.body.totalQuantity,
-      marketCap : req.body.marketCap,
+      name: req.body.name,
+      symbol: req.body.symbol,
+      description: req.body.description,
+      availableQuantity: req.body.availableQuantity,
+      sharePrice: req.body.sharePrice,
+      totalQuantity: req.body.totalQuantity,
+      marketCap: req.body.marketCap,
     };
+
 
     Company.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, company){
         if(err){
@@ -24,42 +29,54 @@ module.exports = {
         } else {
           res.json(company);
         }
-    });
-  },
 
 
-  deleteCompany(req,res){
-    Company.findByIdAndRemove(req.params.id, function(err){
-      if(err){
-         res.json(err);
-       } else {
-         res.json("Company was deleted!");
-       }
-    });
-  },
+  })
+},
 
 
-  addCompany(req,res){
-
-    const obj = {
-      name : req.body.name,
-      symbol : req.body.symbol,
-    	description : req.body.description,
-    	availableQuantity : req.body.availableQuantity,
-    	sharePrice : req.body.sharePrice,
-    	totalQuantity : req.body.totalQuantity,
-    	marketCap : req.body.marketCap,
-    };
-
-    Company.create(obj, function(err, company){
-      if(err){
+  deleteCompany(req, res) {
+    Company.findByIdAndRemove(req.params.id, function (err) {
+      if (err) {
         res.json(err);
       } else {
-          company.save();
-          res.json(company);
-        }
+        res.json("Company was deleted!");
+      }
     });
   },
+
+
+
+//  addCompany(req,res){
+
+  addCompany(req, res) {
+
+
+    const obj = {
+      name: req.body.name,
+      symbol: req.body.symbol,
+      description: req.body.description,
+      availableQuantity: req.body.availableQuantity,
+      sharePrice: req.body.sharePrice,
+      totalQuantity: req.body.totalQuantity,
+      marketCap: req.body.marketCap,
+    };
+
+
+  //  Company.create(obj, function(err, company){
+    //  if(err){
+
+    Company.create(obj, function (err, company) {
+      if (err) {
+
+        res.json(err);
+      } else {
+        company.save();
+        res.json(company);
+      }
+    });
+  },
+
 
 
   editNews(req,res){
@@ -86,11 +103,46 @@ module.exports = {
        } else {
          res.json("News was deleted!");
        }
+});
+},
+  editNews(req, res) {
+
+    console.log(req.body);
+    const obj = {
+      newsText: req.body.newsText,
+      publishedOn: req.body.publishedOn,
+      createdOn: req.body.createdOn,
+      newsImpact: null
+    };
+
+    News.findByIdAndUpdate(req.params.id, {
+      $set: obj
+    }, function (err, news) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(news);
+      }
+    });
+  },
+
+  deleteNews(req, res) {
+    News.findByIdAndRemove(req.params.id, function (err) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json("News was deleted!");
+      }
+
     });
   },
 
 
-  addNews(req,res){
+
+//  addNews(req,res){
+
+  addNews(req, res) {
+
 
     const obj = {
       newsText: req.body.newsText,
@@ -98,13 +150,16 @@ module.exports = {
       newsImpact: Company
     };
 
-    News.create(obj , function(err , news){
-      if(err){
+  
+
+    News.create(obj, function (err, news) {
+      if (err) {
+
         res.json(err);
       } else {
-          news.save();
-          res.json(news);
-        }
+        news.save();
+        res.json(news);
+      }
     });
   }
 
