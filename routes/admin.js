@@ -13,6 +13,9 @@ const {
 const company = require('../model/company');
 
 // ----- Company related routes handled by admin ------
+//1. put of /admin/company/id is working
+//1. delete of /admin/company/id is working
+//1. post of /admin/company/id is working
 router.route('/admin/company/:id')
 	.put(editCompany)
 	.delete(deleteCompany)
