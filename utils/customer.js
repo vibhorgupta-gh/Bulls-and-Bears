@@ -71,7 +71,7 @@ module.exports = {
                     });
                 }
                 console.log(user.id);
-            
+
             if (user.accountBalance < company.sharePrice * req.body.NoOfShares) {
                 return res.json({
                     msg: "itne paise nahi hain"
@@ -114,7 +114,7 @@ module.exports = {
             });
         });
     },
-    
+
     sellShares(req, res) {
         let user;
         User.findById(req.body.id, (err, data) => {
@@ -163,7 +163,7 @@ module.exports = {
 
 
     },
-    
+
     shortShares(req, res) {
         // let user;
         // User.findById(req.body.id, (err, data) => {
@@ -184,10 +184,10 @@ module.exports = {
         // });
         Company.findById(req.params.id, async (err, company) => {
             if (err) res.json(err);
-            
+
             const user = await User.findById(req.body.id)
                 if (err) throw err;
-            
+
                 let total = 0;
                 for (var i in user.stockHolding) {
                     total += i.quantity;
@@ -200,7 +200,7 @@ module.exports = {
                         msg: "kitne khareedega?"
                     });
                 }
-                
+
             var historytemp = {
                 sharePrice: company.sharePrice,
                 availableQuantity: (+company.availableQuantity) + (+req.body.NoOfShares)
@@ -235,13 +235,13 @@ module.exports = {
             });
         });
     },
-    
+
     coverShares(req, res) {
         let user;
         User.findById(req.body.id, (err, data) => {
             if (err) throw err;
             user = data;
-        });
+
 
         Company.findById(req.params.id, (err, company) => {
             if (err) res.json(err);
@@ -288,6 +288,7 @@ module.exports = {
                 Customer: user
             });
         });
+      });
     },
     takeloan(req, res) {
         let user;

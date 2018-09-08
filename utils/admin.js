@@ -6,7 +6,9 @@ const parameter = require("../utils/parameters");
 
 module.exports = {
 
+
   editCompany(req, res) {
+
 
     const obj = {
       name: req.body.name,
@@ -18,17 +20,30 @@ module.exports = {
       marketCap: req.body.marketCap,
     };
 
-    
-    Company.findByIdAndUpdate(req.params.id, {
-      $set: obj
-    }, function (err, company) {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(company);
-      }
-    });
-  },
+
+    Company.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, company){
+        if(err){
+          res.json(err);
+        } else {
+          res.json(company);
+        }
+
+
+  })
+},
+
+
+  //   Company.findByIdAndUpdate(req.params.id, {
+  //     $set: obj
+  //   }, function (err, company) {
+  //     if (err) {
+  //       res.json(err);
+  //     } else {
+  //       res.json(company);
+  //     }
+  //   });
+  // },
+
 
 
   deleteCompany(req, res) {
@@ -42,7 +57,9 @@ module.exports = {
   },
 
 
+
   addCompany (req, res) {
+
 
     const obj = {
       name: req.body.name,
@@ -54,8 +71,12 @@ module.exports = {
       marketCap: req.body.marketCap,
     };
 
+
+
+
     Company.create(obj, function (err, company) {
       if (err) {
+
         res.json(err);
       } else {
         company.save();
@@ -64,6 +85,35 @@ module.exports = {
     });
   },
 
+
+
+
+  editNews(req,res){
+
+    const obj = {
+      newsText: req.body.newsText,
+      publishedOn: req.body.publishedOn,
+      newsImpact: null
+    };
+
+    News.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, news){
+          if(err){
+            res.json(err);
+          } else {
+            res.json(news);
+          }
+      });
+  },
+
+  deleteNews(req,res){
+    News.findByIdAndRemove(req.params.id , function(err){
+      if(err){
+         res.json(err);
+       } else {
+         res.json("News was deleted!");
+       }
+});
+},
 
   editNews(req, res) {
 
@@ -92,11 +142,14 @@ module.exports = {
       } else {
         res.json("News was deleted!");
       }
+
     });
   },
 
 
+
   addNews(req, res) {
+
 
     const obj = {
       newsText: req.body.newsText,
@@ -104,8 +157,11 @@ module.exports = {
       newsImpact: Company
     };
 
+
+
     News.create(obj, function (err, news) {
       if (err) {
+
         res.json(err);
       } else {
         news.save();
