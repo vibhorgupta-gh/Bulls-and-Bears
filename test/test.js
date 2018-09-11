@@ -472,7 +472,7 @@ describe('Test for POST request for company',()=>{
           expect(res.statusCode).to.equal(200)
           expect(res.body).to.be.an('object')
           res.should.have.property('error',false)
-          done()
+          done();
         });
     });
 })
