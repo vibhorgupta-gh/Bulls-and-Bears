@@ -18,8 +18,10 @@ app.use(session({
 // session secret
 app.use(passport.initialize());
 app.use(passport.session());
+require('./auth/googlelogin')(app, passport);
+// pass passport for configuration for google login
 require('./auth/facebooklogin')(app, passport);
-// pass passport for configuration
+// pass passport for configuration for facebook login
 
 app.use(cookieParser());
 // persistent login sessions
