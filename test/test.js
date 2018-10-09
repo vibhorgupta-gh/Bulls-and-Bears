@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const news = require('../model/news.js');
 const company = require('../model/company.js');
+const User = require('../model/user.js');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = require('chai').expect;
@@ -107,57 +108,8 @@ describe('Test for PUT request for admin',()=>{
 })
 
 
-describe('Test for POST request for admin',()=>{
-    it('adds company',(done) =>{
 
-      let Company = new company({
-      name : 'Nivea',
-      symbol : 'XYZ',
-      description : 'kuch-bhi',
-      sharePrice : 100,
-      availableQuantity : 2000,
-      totalQuantity : 10000,
-      marketCap : 500
-      });
-
-      Company.save((err,company)=>{
-        chai.request(server)
-          .post('/admin/company')
-          .send(Company)
-          .end((err,res)=>{
-            expect(res.statusCode).to.equal(200)
-            expect(res.body).to.be.an('object')
-            res.should.have.property('error',false)
-            done()
-          });
-      });
-    });
-
-    it('adds news',(done) =>{
-
-      let News = new news({
-      newsText : 'kejriwal arrested',
-      Published : true,
-      publishedOn: 10,
-      newsImpact: null
-      });
-
-      News.save((err,company)=>{
-        chai.request(server)
-        .post('/admin/news')
-        .send(News)
-        .end((err,res)=>{
-          expect(res.statusCode).to.equal(200)
-          expect(res.body).to.be.an('object')
-          res.should.have.property('error',false)
-          done()
-        });
-      });
-    });
-})
-
-
-describe('Test for DELETE request for company', () => {
+describe('Test for DELETE request for admin', () => {
     it('deletes company', (done) => {
 
       let Company = new company({
@@ -276,19 +228,29 @@ describe('Test for GET request for company',()=>{
 
     it('gets customer-details',(done)=>{
 
-      let Company = new company({
-      name : 'Nivea',
-      symbol : 'XYZ',
-      description : 'kuch-bhi',
-      sharePrice : 100,
-      availableQuantity : 2000,
-      totalQuantity : 10000,
-      marketCap : 500
+      let user = new User({
+      facebook:{
+        id:'1234',
+        token:'234',
+        email:'34',
+        name:'4'
+      },
+      google:{
+        id:'1234',
+        token:'234',
+        email:'34',
+        name:'4'
+      },
+      isAdmin:false,
+      accountBalance:200,
+      stockShorted:{
+        TotalPrice:100,
+        TotalPrice:200
+      }
       });
-
-      Company.save((err,company)=>{
+      user.save((err,company)=>{
         chai.request(server)
-        .get('/customer_detail/' + Company.id)
+        .get('/customer_detail/' + user.id)
         .end((err,res)=>{
           expect(res.statusCode).to.equal(200)
           expect(res.body).to.be.an('object')
