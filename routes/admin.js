@@ -10,9 +10,11 @@ const {
 	editNews,
 	deleteNews
 } = require('../utils/admin.js')
+
 const company = require('../model/company');
 
 // ----- Company related routes handled by admin ------
+
 router.route('/admin/company/:id')
 	.put(editCompany)
 	.delete(deleteCompany)

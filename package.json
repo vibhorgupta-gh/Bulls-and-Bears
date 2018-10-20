@@ -7,9 +7,9 @@
   "license": "MIT",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env BNB_ENV=localhost node server.js",
-    "prod": "cross-env BNB_ENV=production node server.js"
+    "test": "cd test && mocha --timeout 25000 --exit ",
+    "start": "cross-env BNB_ENV=localhost nodemon server.js",
+    "start:prod": "cross-env BNB_ENV=production node server.js"
   },
   "private": false,
   "dependencies": {
@@ -21,6 +21,7 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-facebook-token": "^3.3.0",
+    "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
@@ -29,6 +30,7 @@
     "cross-env": "^5.2.0",
     "expect": "^23.3.0",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.4",
     "should": "^13.2.1"
   }
 }
