@@ -1,12 +1,12 @@
-var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 
 // load up the user model
-var User = require('../model/user');
+const User = require('../model/user');
 
 // load the auth variables
-var config = require('../config');
+const config = require('../config');
 
 module.exports = function (app, passport) {
 // used to serialize the user for the session
@@ -61,7 +61,7 @@ module.exports = function (app, passport) {
                         done(null, user); // user found, return that user
                     } else {
                         // if there is no user found with that facebook id, create them
-                        var newUser = new User();
+                        let newUser = new User();
 
                         // set all of the facebook information in our user model
                         newUser.facebook.id = profile.id; // set the users facebook id
@@ -77,20 +77,19 @@ module.exports = function (app, passport) {
                             done(null, newUser);
                         });
                     }
-
                 });
             });
-
         }));
 
     // =========================================================================
     // GOOGLE ==================================================================
     // =========================================================================
+
     passport.use(new GoogleStrategy({
 
-            clientID        : config.SECRETS.googleAuth.clientID,
-            clientSecret    : config.SECRETS.googleAuth.clientSecret,
-            callbackURL     : config.SECRETS.googleAuth.callbackURL,
+            clientID : config.SECRETS.google_auth.client_ID,
+            clientSecret : config.SECRETS.google_auth.client_secret,
+            callbackURL : config.SECRETS.google_auth.callbackURL,
             passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
         },
@@ -111,7 +110,7 @@ module.exports = function (app, passport) {
                             // if there is a user id already but no token (user was linked at one point and then removed)
                             if (!user.google.token) {
                                 user.google.token = token;
-                                user.google.name  = profile.displayName;
+                                user.google.name = profile.displayName;
                                 console.log(user.google.name);
                                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
@@ -125,17 +124,16 @@ module.exports = function (app, passport) {
 
                             return done(null, user);
                         } else {
-                            var newUser          = new User();
 
-                            newUser.google.id    = profile.id;
+                            let newUser = new User();
+                            newUser.google.id = profile.id;
                             newUser.google.token = token;
-                            newUser.google.name  = profile.displayName;
+                            newUser.google.name = profile.displayName;
                             console.log(newUser.google.id);
                             newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
                             newUser.save(function(err) {
-                                if (err)
-                                    return done(err);
+                                if (err) return done(err);
 
                                 return done(null, newUser);
                             });
@@ -144,26 +142,21 @@ module.exports = function (app, passport) {
 
                 } else {
                     // user already exists and is logged in, we have to link accounts
-                    var user               = req.user; // pull the user out of the session
-
-                    user.google.id    = profile.id;
-
+                    let user = req.user; // pull the user out of the session
+                    user.google.id = profile.id;
                     user.google.token = token;
-                    user.google.name  = profile.displayName;
+                    user.google.name = profile.displayName;
                     console.log(user.google.name);
                     user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
 
                     user.save(function(err) {
-                        if (err)
-                            return done(err);
+                        if (err) return done(err);
 
                         return done(null, user);
                     });
-
                 }
             });
-
         }));
     //=======================================================================================================
     //routes for both sign in
@@ -192,7 +185,7 @@ module.exports = function (app, passport) {
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect : '/lolsuccess',
+            successRedirect : '/dashboard',
             failureRedirect : '/'
         }));
     // route for logging out
@@ -200,10 +193,6 @@ module.exports = function (app, passport) {
         req.logout();
         res.redirect('/');
     });
-    app.get('/lolsuccess',function (req,res) {
-        res.send("login successful");
-    });
-    console.log(config.SECRETS.googleAuth.clientID+" poo ");
+
     return passport;
 };
-

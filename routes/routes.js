@@ -14,11 +14,10 @@ const {
   takeloan,
   repayloan
 } = require('../utils/customer.js');
+
 const { isLoggedIn, isAdmin } = require('../utils/middleware')
 const user = require('../model/user');
 const company = require('../model/company');
-
-
 
 router.get('/leaderboard', getUsers);
 router.get('/company_list', getCompanies);

@@ -32,20 +32,6 @@ module.exports = {
   })
 },
 
-
-  //   Company.findByIdAndUpdate(req.params.id, {
-  //     $set: obj
-  //   }, function (err, company) {
-  //     if (err) {
-  //       res.json(err);
-  //     } else {
-  //       res.json(company);
-  //     }
-  //   });
-  // },
-
-
-
   deleteCompany(req, res) {
     Company.findByIdAndRemove(req.params.id, function (err) {
       if (err) {
