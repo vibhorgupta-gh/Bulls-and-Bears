@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session')
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 3000;
@@ -18,8 +18,11 @@ app.use(session({
 // session secret
 app.use(passport.initialize());
 app.use(passport.session());
-require('./auth/facebooklogin')(app, passport);
-// pass passport for configuration
+require('./auth/logins')(app, passport);
+//require('./auth/googlelogin')(app, passport);
+// pass passport for configuration for google login
+//require('./auth/facebooklogin')(app, passport);
+// pass passport for configuration for facebook login
 
 app.use(cookieParser());
 // persistent login sessions
@@ -53,5 +56,6 @@ app.get('/', (req, res) => {
 app.listen(port, ip, function () {
   console.log('Magic happens at ' + config.SERVER_URL + '!');
 })
+
 
 module.exports = app;
