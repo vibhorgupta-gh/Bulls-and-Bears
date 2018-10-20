@@ -6,9 +6,7 @@ const parameter = require("../utils/parameters");
 module.exports = {
     getUsers(req, res) {
         User.find({}, (err, data) => {
-            return res.json({
-                Customers: data
-            });
+            res.json({ Customers: data });
         });
     },
 
@@ -22,9 +20,7 @@ module.exports = {
     getCompany(req, res) {
         Company.findById(req.params.id, (err, data) => {
             if (err) res.json(err);
-            res.json({
-                compDetails: data
-            });
+            res.json({ compDetails: data });
         });
     },
 
@@ -44,14 +40,11 @@ module.exports = {
 
     getCustomerDetail(req, res) {
         User.findById(req.params.id, (err, data) => {
-            res.json({
-                Customer: data
-            });
+            res.json({ Customer: data });
         });
     },
 
     buyShares(req, res) {
-
           Company.findById(req.params.id, async (err, company) => {
               if (err) res.json(err);
 
@@ -59,34 +52,27 @@ module.exports = {
                   if (err) throw err;
 
                   let total = 0;
-                  for (var i in user.stockHolding) {
+                  for (let i in user.stockHolding) {
                       total += i.quantity;
                   }
-                  for (var i in user.stockShorted) {
+                  for (let i in user.stockShorted) {
                       total += i.quantity;
                   }
                   if (total + req.body.NoOfShares > parameter.maxShares) {
-                      return res.json({
-                          msg: "kitne khareedega?"
-                      });
+                      return res.json({ msg: "kitne khareedega?" });
                   }
 
-
               if (user.accountBalance < company.sharePrice * req.body.NoOfShares) {
-                  return res.json({
-                      msg: "itne paise nahi hain"
-                  });
+                  return res.json({ msg: "itne paise nahi hain" });
               }
               if (company.availableQuantity < req.body.NoOfShares) {
-                  return res.json({
-                      msg: "itne stock nahi hain"
-                  });
+                  return res.json({ msg: "itne stock nahi hain" });
               }
-              var historytemp = {
+              let historytemp = {
                   sharePrice: company.sharePrice,
                   availableQuantity: company.availableQuantity - req.body.NoOfShares
               };
-              var activitytemp = {
+              let activitytemp = {
                   company: company._id,
                   action: "bought",
                   quantity: req.body.NoOfShares,
@@ -96,6 +82,7 @@ module.exports = {
               user.accountBalance -= company.sharePrice * req.body.NoOfShares;
               company.availableQuantity -= req.body.NoOfShares;
               user.activity.push(activitytemp);
+
               if (user.stockHolding.id(company._id)) {
                   user.stockHolding.id(company._id).quantity += req.body.NoOfShares;
               } else {
@@ -115,28 +102,24 @@ module.exports = {
           });
       },
 
-sellShares(req, res) {
-Company.findById(req.params.id, async (err, company) => {
-        if (err) res.json(err);
+      sellShares(req, res) {
+          Company.findById(req.params.id, async (err, company) => {
+              if (err) res.json(err);
+              const user = await User.findById(req.body.id)
 
-        const user = await User.findById(req.body.id)
-            if (err) throw err;
-if (!user.stockHolding.id(company._id)) {
-                return res.json({
-                    msg: "itne stock nahi hain"
-                });
+              if (err) throw err;
+              if (!user.stockHolding.id(company._id)) {
+                return res.json({ msg: "itne stock nahi hain" });
             }
             if (user.stockHolding.id(company._id).quantity < req.body.NoOfShares) {
-                return res.json({
-                    msg: "itne stock nahi hain"
-                });
+                return res.json({ msg: "itne stock nahi hain" });
             }
 
-            var historytemp = {
+            let historytemp = {
                 sharePrice: company.sharePrice,
                 availableQuantity: company.availableQuantity + req.body.NoOfShares
             };
-            var activitytemp = {
+            let activitytemp = {
                 company: company._id,
                 action: "sold",
                 quantity: req.body.NoOfShares,
@@ -158,10 +141,10 @@ if (!user.stockHolding.id(company._id)) {
                 Customer: user
             });
 
-});
-},
-    shortShares(req, res) {
+        });
+    },
 
+    shortShares(req, res) {
         Company.findById(req.params.id, async (err, company) => {
             if (err) res.json(err);
 
@@ -169,23 +152,21 @@ if (!user.stockHolding.id(company._id)) {
                 if (err) throw err;
 
                 let total = 0;
-                for (var i in user.stockHolding) {
+                for (let i in user.stockHolding) {
                     total += i.quantity;
                 }
-                for (var i in user.stockShorted) {
+                for (let i in user.stockShorted) {
                     total += i.quantity;
                 }
                 if (total + req.body.NoOfShares > parameter.maxShares) {
-                    return res.json({
-                        msg: "kitne khareedega?"
-                    });
+                    return res.json({ msg: "kitne khareedega?" });
                 }
 
-            var historytemp = {
+            let historytemp = {
                 sharePrice: company.sharePrice,
                 availableQuantity: (+company.availableQuantity) + (+req.body.NoOfShares)
             };
-            var activitytemp = {
+            let activitytemp = {
                 company: company._id,
                 action: "shorted",
                 quantity: req.body.NoOfShares,
@@ -217,26 +198,22 @@ if (!user.stockHolding.id(company._id)) {
     },
 
     coverShares(req, res) {
-  Company.findById(req.params.id, async (err, company) => {
+        Company.findById(req.params.id, async (err, company) => {
              if (err) res.json(err);
-
              const user = await User.findById(req.body.id)
+
                  if (err) throw err;
-  if (!user.stockShorted.id(company._id)) {
-                 return res.json({
-                     msg: "shorted stock nahi hain"
-                 });
+                 if (!user.stockShorted.id(company._id)) {
+                 return res.json({ msg: "shorted stock nahi hain" });
              }
              if (user.stockShorted.id(company._id).TotalStock < req.body.NoOfShares) {
-                 return res.json({
-                     msg: "itne shorted stock nahi hain"
-                 });
+                 return res.json({ msg: "itne shorted stock nahi hain" });
              }
-             var historytemp = {
+             let historytemp = {
                  sharePrice: company.sharePrice,
                  availableQuantity: company.availableQuantity - req.body.NoOfShares
              };
-             var activitytemp = {
+             let activitytemp = {
                  company: company._id,
                  action: "covered",
                  quantity: req.body.NoOfShares,
@@ -264,18 +241,15 @@ if (!user.stockHolding.id(company._id)) {
                  Company: company,
                  Customer: user
              });
- });
-},
+         });
+     },
 
-takeloan(req, res) {
-
+     takeloan(req, res) {
          User.findById(req.body.id,(err, data) => {
             if (err) throw err;
-        let user=data;
+            let user = data;
             if (user.loan.amount + req.body.loan > parameter.maxLoan) {
-                return res.json({
-                    msg: "aur nahi"
-                });
+                return res.json({ msg: "aur nahi" });
             }
             user.loan.isPending = true;
             user.loan.amount += req.body.loan;
@@ -286,20 +260,16 @@ takeloan(req, res) {
             });
         });
     },
-    repayloan(req, res) {
 
+    repayloan(req, res) {
         User.findById(req.body.id, (err, data) => {
             if (err) throw err;
-        let user = data;
+            let user = data;
             if (user.loan.amount - req.body.loan < 0) {
-                return res.json({
-                    msg: "zyada paise dene ka shock hai?"
-                });
+                return res.json({ msg: "zyada paise dene ka shock hai?" });
             }
             if (user.accountBalance < req.body.loan) {
-                return res.json({
-                    msg: "kama toh le"
-                });
+                return res.json({ msg: "kama toh le" });
             }
             user.loan.amount -= req.body.loan;
             user.accountBalance -= req.body.loan;
@@ -312,5 +282,4 @@ takeloan(req, res) {
             });
         });
     }
-
 };
