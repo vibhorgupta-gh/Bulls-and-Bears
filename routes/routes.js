@@ -14,6 +14,7 @@ const {
   takeloan,
   repayloan
 } = require('../utils/customer.js');
+
 const { isLoggedIn, isAdmin } = require('../utils/middleware')
 const user = require('../model/user');
 const company = require('../model/company');

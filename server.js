@@ -1,25 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session')
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 3000;
-const ip = process.env.IP || '127.0.0.1';
 const passport = require('passport');
 const config = require('./config.js');
 const route = require('./routes/routes');
-const adminRoute = require('./routes/admin');
+const admin = require('./routes/admin');
 const app = express();
+
 app.use(session({
-  secret: 'bnbisgood',
+  secret: 'bnbisgoodbnbisgood',
   resave: true,
   saveUninitialized: true
 }));
 // session secret
 app.use(passport.initialize());
 app.use(passport.session());
-require('./auth/facebooklogin')(app, passport);
-// pass passport for configuration
+require('./auth/social')(app, passport);
 
 app.use(cookieParser());
 // persistent login sessions
@@ -44,14 +43,15 @@ mongoose.connection.on('error', (err) => {
   }
 });
 app.use('/', route)
-app.use('/' , adminRoute)
+app.use('/' , admin)
 
 app.get('/', (req, res) => {
   res.send('We are now live!')
 })
 
-app.listen(port, ip, function () {
-  console.log('Magic happens at ' + config.SERVER_URL + '!');
+app.listen(port, function () {
+  console.log('Magic happens at port ' + port + '!');
 })
+
 
 module.exports = app;
