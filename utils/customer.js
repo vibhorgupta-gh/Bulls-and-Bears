@@ -24,7 +24,7 @@ exports.getCompanies = function(req, res){
   })
 }
 
-exports.getCustomerDetail = function(req, res) {    //yet to be tested
+exports.getCustomerDetail = function(req, res) {
   User.findById(req.params.id).then(customerDetails=>{
     res.json(customerDetails)
   })
@@ -34,7 +34,7 @@ exports.getCustomerDetail = function(req, res) {    //yet to be tested
   })
 }
 
-exports.getCompany = function(req, res) {    //yet to be tested
+exports.getCompany = function(req, res) {   
   Company.findById(req.params.id).then(companyDetails=>{
     res.json(companyDetails)
   })
