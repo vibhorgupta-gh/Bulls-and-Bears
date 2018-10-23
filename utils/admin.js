@@ -3,135 +3,91 @@ const User = require("../model/user");
 const Company = require("../model/company");
 const parameter = require("../utils/parameters");
 
+
 module.exports = {
 
-    editCompany(req, res) {
-        const obj = {
-          name: req.body.name,
-          symbol: req.body.symbol,
-          description: req.body.description,
-          availableQuantity: req.body.availableQuantity,
-          sharePrice: req.body.sharePrice,
-          totalQuantity: req.body.totalQuantity,
-          marketCap: req.body.marketCap,
-        };
+editCompany(req, res) {
+  const obj = {
+    name: req.body.name,
+    symbol: req.body.symbol,
+    description: req.body.description,
+    availableQuantity: req.body.availableQuantity,
+    sharePrice: req.body.sharePrice,
+    totalQuantity: req.body.totalQuantity,
+    marketCap: req.body.marketCap,
+  };
+  Company.findByIdAndUpdate(req.params.id).then(company =>{
+    res.json(company);
+  })
+  .catch(err =>{
+    res.json(err);
+  })
+},
 
-        Company.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, company){
-            if(err){
-              res.json(err);
-            } else {
-              res.json(company);
-            }
-        })
-    },
+deleteCompany(req, res) {
+  Company.findByIdAndRemove(req.params.id).then(company =>{
+    res.json("Company was deleted!");
+  })
+  .catch(err =>{
+    res.json(err);
+  });
+},
 
+addCompany (req, res) {
+  const obj = {
+    name: req.body.name,
+    symbol: req.body.symbol,
+    description: req.body.description,
+    availableQuantity: req.body.availableQuantity,
+    sharePrice: req.body.sharePrice,
+    totalQuantity: req.body.totalQuantity,
+    marketCap: req.body.marketCap,
+  };
+  Company.create(obj).then(company =>{
+    company.save();
+    res.json(company);
+  })
+  .catch(err =>{
+    res.json(err);
+  });
+},
 
-    deleteCompany(req, res) {
-        Company.findByIdAndRemove(req.params.id, function (err) {
-          if (err) {
-            res.json(err);
-          } else {
-            res.json("Company was deleted!");
-          }
-        });
-     },
+editNews(req,res){
+  const obj = {
+    newsText: req.body.newsText,
+    publishedOn: req.body.publishedOn,
+    newsImpact: null
+  };
+  News.findByIdAndUpdate(req.params.id).then(news =>{
+    res.json(news);
+  })
+  .catch(err =>{
+    res.json(err);
+  });
+},
 
+deleteNews(req,res){
+  News.findByIdAndRemove(req.params.id).then(news =>{
+    res.json("News was deleted!");
+  })
+  .catch(err =>{
+    res.json(err);
+  });
+},
 
-    addCompany (req, res) {
-        const obj = {
-          name: req.body.name,
-          symbol: req.body.symbol,
-          description: req.body.description,
-          availableQuantity: req.body.availableQuantity,
-          sharePrice: req.body.sharePrice,
-          totalQuantity: req.body.totalQuantity,
-          marketCap: req.body.marketCap,
-        };
+addNews(req, res) {
+  const obj = {
+    newsText: req.body.newsText,
+    publishedOn: req.body.publishedOn,
+    newsImpact: Company
+  };
+  News.create(obj).then(news =>{
+    news.save();
+    res.json(news);
+  })
+  .catch(err =>{
+    res.json(err);
+  });
+}
 
-        Company.create(obj, function (err, company) {
-          if (err) {
-            res.json(err);
-          } else {
-            company.save();
-            res.json(company);
-          }
-        });
-    },
-
-
-    editNews(req,res){
-        const obj = {
-          newsText: req.body.newsText,
-          publishedOn: req.body.publishedOn,
-          newsImpact: null
-        };
-
-        News.findByIdAndUpdate(req.params.id, {$set: obj}, function(err, news){
-          if(err){
-            res.json(err);
-          } else {
-            res.json(news);
-          }
-        });
-    },
-
-
-    deleteNews(req,res){
-        News.findByIdAndRemove(req.params.id , function(err){
-          if(err){
-            res.json(err);
-          } else {
-            res.json("News was deleted!");
-          }
-       });
-    },
-
-
-    editNews(req, res) {
-        const obj = {
-          newsText: req.body.newsText,
-          publishedOn: req.body.publishedOn,
-          createdOn: req.body.createdOn,
-          newsImpact: null
-        };
-
-        News.findByIdAndUpdate(req.params.id, {
-          $set: obj
-        }, function (err, news) {
-          if (err) {
-            res.json(err);
-          } else {
-            res.json(news);
-          }
-        });
-     },
-
-
-    deleteNews(req, res) {
-        News.findByIdAndRemove(req.params.id, function (err) {
-          if (err) {
-            res.json(err);
-          } else {
-            res.json("News was deleted!");
-          }
-        });
-    },
-
-
-    addNews(req, res) {
-        const obj = {
-          newsText: req.body.newsText,
-          publishedOn: req.body.publishedOn,
-          newsImpact: Company
-        };
-
-        News.create(obj, function (err, news) {
-          if (err) {
-            res.json(err);
-          } else {
-            news.save();
-            res.json(news);
-          }
-        });
-     }
 };

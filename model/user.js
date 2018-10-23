@@ -10,11 +10,11 @@ const UserSchema = mongoose.Schema({
         email: String,
         name: String
     },
-    google           : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+    google: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
     },
     isAdmin: {
         type: Boolean,
