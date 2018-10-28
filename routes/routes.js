@@ -1,35 +1,33 @@
-const express = require('express'); // pass passport for configuration
-const router = express.Router();
-const {
-  getUsers,
-  getCompanies,
-  getCustomerDetail,
-  getCompany,
-  getNewsDetail,
-  getNews,
-  buyShares,
-  sellShares,
-  shortShares,
-  coverShares,
-  takeloan,
-  repayloan
-} = require('../utils/customer.js');
+module.exports = function(app, passport){
+  const {
+    getUsers,
+    getCompanies,
+    getCustomerDetail,
+    getCompany,
+    getNewsDetail,
+    getNews,
+    buyShares,
+    sellShares,
+    shortShares,
+    coverShares,
+    takeloan,
+    repayloan
+  } = require('../utils/customer.js');
 
-const { isLoggedIn, isAdmin } = require('../utils/middleware')
-const user = require('../model/user');
-const company = require('../model/company');
+  const { isLoggedIn, isAdmin } = require('../utils/middleware')
+  const user = require('../model/user');
+  const company = require('../model/company');
 
-router.get('/leaderboard', getUsers);
-router.get('/company_list', getCompanies);
-router.get('/customer_detail/:id', getCustomerDetail);
-router.get('/company_detail/:id', getCompany);
-router.get('/newsDetail/:id', getNewsDetail);
-router.get('/news_list', getNews);
-router.post('/buy/:id', buyShares);
-router.post('/sell/:id', sellShares);
-router.post('/short/:id', shortShares);
-router.post('/cover/:id', coverShares);
-router.post('/take_loan', takeloan);
-router.post('/repay_loan', repayloan);
-
-module.exports = router;
+  app.get('/leaderboard', passport.authenticate(['facebook','google']), getUsers);
+  app.get('/company_list', passport.authenticate(['facebook','google']), getCompanies);
+  app.get('/customer_detail/:id', passport.authenticate(['facebook','google']), getCustomerDetail);
+  app.get('/company_detail/:id', passport.authenticate(['facebook','google']), getCompany);
+  app.get('/newsDetail/:id', passport.authenticate(['facebook','google']), getNewsDetail);
+  app.get('/news_list', passport.authenticate(['facebook','google']), getNews);
+  app.post('/buy/:id', passport.authenticate(['facebook','google']), buyShares);
+  app.post('/sell/:id', passport.authenticate(['facebook','google']), sellShares);
+  app.post('/short/:id', passport.authenticate(['facebook','google']), shortShares);
+  app.post('/cover/:id', passport.authenticate(['facebook','google']), coverShares);
+  app.post('/take_loan', passport.authenticate(['facebook','google']), takeloan);
+  app.post('/repay_loan', passport.authenticate(['facebook','google']), repayloan);
+}

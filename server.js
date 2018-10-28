@@ -6,8 +6,6 @@ const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 3000;
 const passport = require('passport');
 const config = require('./config.js');
-const route = require('./routes/routes');
-const admin = require('./routes/admin');
 const app = express();
 
 app.use(session({
@@ -42,11 +40,16 @@ mongoose.connection.on('error', (err) => {
     console.log('error is ' + err + config.SECRETS.database.url);
   }
 });
-app.use('/', route)
-app.use('/' , admin)
+
+require('./routes/routes')(app, passport)
+require('./routes/admin')(app, passport)
 
 app.get('/', (req, res) => {
   res.send('We are now live!')
+})
+
+app.get('*', (req, res) => {
+  res.send('Out of Bounds!')
 })
 
 app.listen(port, function () {
