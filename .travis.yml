@@ -6,7 +6,9 @@ services:
 before_script:
   - sleep 15
 install:
-  - cd server && yarn install
+  - cd server
+  - yarn install
 script:
-  - cd server && yarn test
+  - cd server
+  - yarn test
 
