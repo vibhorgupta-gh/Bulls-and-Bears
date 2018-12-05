@@ -4,10 +4,11 @@ node_js :
 services:
   - mongodb
 before_script:
-  - sleep 15  
+  - sleep 15
 install:
+  - cd server
   - yarn install
 script:
-  - yarn test  
+  - cd server
+  - yarn test
 
-   
