@@ -15,7 +15,7 @@ exports.getUsers = function(req, res){
 }
 
 exports.getCompanies = function(req, res){
-  Company.find({}).then(companies=>{
+  Company.find({}).then((err,companies)=>{
     res.json(companies)
   })
   .catch(err=>{
