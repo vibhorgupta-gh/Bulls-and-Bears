@@ -22,7 +22,9 @@ app.use(cookieParser());
 // persistent login sessions
 //middleware for POST data
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 //connect to mongoose db
 mongoose.connect(config.SECRETS.database.url, {

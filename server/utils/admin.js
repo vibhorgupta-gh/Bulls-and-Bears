@@ -16,7 +16,7 @@ editCompany(req, res) {
     totalQuantity: req.body.totalQuantity,
     marketCap: req.body.marketCap,
   };
-  Company.findByIdAndUpdate(req.params.id).then(company =>{
+  Company.findByIdAndUpdate(req.params.id,obj,{new:true}).then(company =>{
     res.json(company);
   })
   .catch(err =>{
@@ -25,7 +25,7 @@ editCompany(req, res) {
 },
 
 deleteCompany(req, res) {
-  Company.findByIdAndRemove(req.params.id).then(company =>{
+  Company.findByIdAndRemove(req.params.id).then(() =>{
     res.json("Company was deleted!");
   })
   .catch(err =>{
@@ -58,7 +58,7 @@ editNews(req,res){
     publishedOn: req.body.publishedOn,
     newsImpact: null
   };
-  News.findByIdAndUpdate(req.params.id).then(news =>{
+  News.findByIdAndUpdate(req.params.id,obj,{new:true}).then(news =>{
     res.json(news);
   })
   .catch(err =>{
