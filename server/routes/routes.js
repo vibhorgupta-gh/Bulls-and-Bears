@@ -1,4 +1,4 @@
-module.exports = function(app, passport){
+module.exports = function (app, passport) {
   const {
     getUsers,
     getCompanies,
@@ -14,20 +14,20 @@ module.exports = function(app, passport){
     repayloan
   } = require('../utils/customer.js');
 
-  const { isLoggedIn, isAdmin } = require('../utils/middleware')
+  const {isLoggedIn } = require('../utils/middleware');
   const user = require('../model/user');
   const company = require('../model/company');
 
-  app.get('/leaderboard', passport.authenticate(['facebook','google']), getUsers);
-  app.get('/company_list', passport.authenticate(['facebook','google']), getCompanies);
-  app.get('/customer_detail/:id', passport.authenticate(['facebook','google']), getCustomerDetail);
-  app.get('/company_detail/:id', passport.authenticate(['facebook','google']), getCompany);
-  app.get('/newsDetail/:id', passport.authenticate(['facebook','google']), getNewsDetail);
-  app.get('/news_list', passport.authenticate(['facebook','google']), getNews);
-  app.post('/buy/:id', passport.authenticate(['facebook','google']), buyShares);
-  app.post('/sell/:id', passport.authenticate(['facebook','google']), sellShares);
-  app.post('/short/:id', passport.authenticate(['facebook','google']), shortShares);
-  app.post('/cover/:id', passport.authenticate(['facebook','google']), coverShares);
-  app.post('/take_loan', passport.authenticate(['facebook','google']), takeloan);
-  app.post('/repay_loan', passport.authenticate(['facebook','google']), repayloan);
+  app.get('/leaderboard', isLoggedIn, getUsers);
+  app.get('/company_list', isLoggedIn, getCompanies);
+  app.get('/customer_detail/:id', isLoggedIn, getCustomerDetail);
+  app.get('/company_detail/:id', isLoggedIn, getCompany);
+  app.get('/newsDetail/:id', isLoggedIn, getNewsDetail);
+  app.get('/news_list', isLoggedIn, getNews);
+  app.post('/buy/:id', isLoggedIn, buyShares);
+  app.post('/sell/:id', isLoggedIn, sellShares);
+  app.post('/short/:id', isLoggedIn, shortShares);
+  app.post('/cover/:id', isLoggedIn, coverShares);
+  app.post('/take_loan', isLoggedIn, takeloan);
+  app.post('/repay_loan', isLoggedIn, repayloan);
 }
