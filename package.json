@@ -1,0 +1,37 @@
+{
+  "name": "Bulls-and-Bears",
+  "version": "1.0.0",
+  "description": "Virtual share market simulation",
+  "repository": "https://github.com/VibhorCodecianGupta/Bulls-and-Bears.git",
+  "author": "IEEE DTU",
+  "license": "MIT",
+  "main": "server.js",
+  "scripts": {
+    "test": "cd server/test && mocha --timeout 40000 --exit ",
+    "start": "cross-env BNB_ENV=localhost nodemon server.js",
+    "start:prod": "cross-env BNB_ENV=production node server.js"
+  },
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "fs": "^0.0.1-security",
+    "mongoose": "^5.2.2",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-facebook-token": "^3.3.0",
+    "passport-google-oauth": "^1.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "cross-env": "^5.2.0",
+    "expect": "^23.3.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.4",
+    "should": "^13.2.1"
+  }
+}

@@ -174,7 +174,7 @@ describe("Test for GET request for company", () => {
       .get("/company_list")
       .end((err, res) => {
         expect(res.statusCode).to.equal(200);
-        expect(res.body).to.be.a("Array");
+        expect(res.body).to.be.a("object");
         res.should.have.property("error", false);
         done();
       });
@@ -187,7 +187,7 @@ describe("Test for GET request for company", () => {
       .end((err, res) => {
         console.log(res.body);
         expect(res.statusCode).to.equal(200);
-        expect(res.body).to.be.an("Array");
+        expect(res.body).to.be.an("object");
         res.should.have.property("error", false);
         done();
       });
