@@ -11,12 +11,16 @@ const app = express();
 app.use(session({
   secret: 'bnbisgoodbnbisgood',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 60000000
+  }
 }));
 // session secret
 app.use(passport.initialize());
 app.use(passport.session());
 require('./auth/social')(app, passport);
+
 
 app.use(cookieParser());
 // persistent login sessions

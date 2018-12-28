@@ -12,9 +12,12 @@ const server = require("../server.js");
 chai.use(chaiHttp);
 process.env.NODE_ENV = "test";
 after(function (done) {
-  mongoose.connect(config.SECRETS.database.url, (err) => {
-    mongoose.connection.db.dropDatabase();
-    done();
+  mongoose.connect(config.SECRETS.database.url,{ useNewUrlParser: true }, (err) => {
+    mongoose.connection.collections['companies'].drop(function (err) {
+      mongoose.connection.collections['news'].drop(function (err) {
+        done();
+      });
+    });
   })
 });
 describe("Test for POST request for admin", () => {
@@ -173,6 +176,7 @@ describe("Test for GET request for company", () => {
       .request(server)
       .get("/company_list")
       .end((err, res) => {
+        console.log(res.body);
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.a("Array");
         res.should.have.property("error", false);
@@ -185,7 +189,6 @@ describe("Test for GET request for company", () => {
       .request(server)
       .get("/news_list")
       .end((err, res) => {
-        console.log(res.body);
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an("Array");
         res.should.have.property("error", false);
@@ -284,7 +287,7 @@ describe("Test for POST request for company", () => {
     });
 
     const buy = {
-      id: "5b7d863dc1a1b37b5c266f56",
+      id: "5c0c935d9b448a41a47b6c68",
       NoOfShares: 4
     };
 
@@ -314,7 +317,7 @@ describe("Test for POST request for company", () => {
     });
 
     var sell = {
-      id: "5b7d863dc1a1b37b5c266f56",
+      id: "5c0c935d9b448a41a47b6c68",
       NoOfShares: 4
     };
 
@@ -344,7 +347,7 @@ describe("Test for POST request for company", () => {
     });
 
     var short = {
-      id: "5b7d863dc1a1b37b5c266f56",
+      id: "5c0c935d9b448a41a47b6c68",
       NoOfShares: 4
     };
 
@@ -374,7 +377,7 @@ describe("Test for POST request for company", () => {
     });
 
     var cover = {
-      id: "5b7d863dc1a1b37b5c266f56",
+      id: "5c0c935d9b448a41a47b6c68",
       NoOfShares: 4
     };
 
@@ -394,7 +397,7 @@ describe("Test for POST request for company", () => {
 
   it("take_loan", done => {
     var Loan = {
-      id: "5b7d863dc1a1b37b5c266f56",
+      id: "5c0c935d9b448a41a47b6c68",
       loan: 1000
     };
 
@@ -412,8 +415,8 @@ describe("Test for POST request for company", () => {
 
   it("repay_loan", done => {
     var Loan = {
-      id: "5b7d863dc1a1b37b5c266f56",
-      Loan: 1000
+      id: "5c0c935d9b448a41a47b6c68",
+      loan: 1000
     };
 
     chai

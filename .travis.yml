@@ -9,6 +9,5 @@ install:
   - cd server
   - yarn install
 script:
-  - cd server
   - yarn test
 
