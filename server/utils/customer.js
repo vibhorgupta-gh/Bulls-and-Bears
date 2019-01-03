@@ -14,8 +14,19 @@ exports.getUsers = function (req, res) {
     })
 }
 
+exports.getCurrentUser = function (req, res) {
+  User.findById(req.user.id).then(customerDetails => {
+      res.json(customerDetails)
+    })
+    .catch(err => {
+      console.log(err)
+      res.send("unable to fetch User details")
+    })
+
+}
+
 exports.getCompanies = function (req, res) {
-  Company.find({}).then((companies,err) => {
+  Company.find({}).then((companies, err) => {
       res.json(companies)
     })
     .catch(err => {
@@ -294,15 +305,15 @@ exports.coverShares = function (req, res) {
 }
 
 exports.takeloan = function (req, res) {
-  User.findById(req.body.id).then(user => {
-      if (user.loan.amount + req.body.loan > parameter.maxLoan) {
+  User.findById(req.user.id).then(user => {
+      if (user.loan.amount + req.body.amount > parameter.maxLoan) {
         return res.json({
           msg: "aur nahi"
         });
       }
       user.loan.isPending = true;
-      user.loan.amount += req.body.loan;
-      user.accountBalance += req.body.loan;
+      user.loan.amount += req.body.amount;
+      user.accountBalance += req.body.amount;
       user.save();
       res.json({
         Customer: user
