@@ -48,7 +48,7 @@ require('./routes/admin')(app, passport)
 
 app.get('/', (req, res) => res.status(200).send('We are now live!'))
 
-app.get('*', (req, res) => res.status(404).send('Out of Bounds!'))
+//app.get('*', (req, res) => res.status(404).send('Out of Bounds!'))
 
 app.use((err, req, res, next) => res.status(500).send('Internal server error!'))
 
