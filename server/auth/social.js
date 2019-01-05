@@ -1,5 +1,5 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
-const GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
 // load up the user model
@@ -9,15 +9,15 @@ const User = require('../model/user');
 const config = require('../config');
 
 module.exports = function (app, passport) {
-// used to serialize the user for the session
+    // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        return done(null, user.id);
     });
 
-// used to deserialize the user
+    // used to deserialize the user
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
-            done(err, user);
+            return done(err, user);
         });
     });
     // =========================================================================
@@ -48,17 +48,17 @@ module.exports = function (app, passport) {
                     // if there is an error, stop everything and return that
                     // ie an error connecting to the database
                     if (err) {
-                        done(err);
+                        return done(err);
                     }
 
                     //this needs checking, please double check
                     if (!user) {
-                        done(null, false)
+                        return done(null, false)
                     }
 
                     // if the user is found, then log them in
                     if (user) {
-                        done(null, user); // user found, return that user
+                        return done(null, user); // user found, return that user
                     } else {
                         // if there is no user found with that facebook id, create them
                         let newUser = new User();
@@ -71,10 +71,10 @@ module.exports = function (app, passport) {
                         // save our user to the database
                         newUser.save(function (err) {
                             if (err) {
-                                done(err);
+                                return done(err);
                             }
                             // if successful, return the new user
-                            done(null, newUser);
+                            return done(null, newUser);
                         });
                     }
                 });
@@ -87,21 +87,23 @@ module.exports = function (app, passport) {
 
     passport.use(new GoogleStrategy({
 
-            clientID : config.SECRETS.google_auth.client_ID,
-            clientSecret : config.SECRETS.google_auth.client_secret,
-            callbackURL : config.SECRETS.google_auth.callbackURL,
-            passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+            clientID: config.SECRETS.google_auth.client_ID,
+            clientSecret: config.SECRETS.google_auth.client_secret,
+            callbackURL: config.SECRETS.google_auth.callbackURL,
+            passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
         },
-        function(req, token, refreshToken, profile, done) {
+        function (req, token, refreshToken, profile, done) {
 
             // asynchronous
-            process.nextTick(function() {
+            process.nextTick(function () {
 
                 // check if the user is already logged in
                 if (!req.user) {
 
-                    User.findOne({ 'google.id' : profile.id }, function(err, user) {
+                    User.findOne({
+                        'google.id': profile.id
+                    }, function (err, user) {
                         if (err)
                             return done(err);
 
@@ -114,7 +116,7 @@ module.exports = function (app, passport) {
                                 console.log(user.google.name);
                                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                                user.save(function(err) {
+                                user.save(function (err) {
                                     if (err)
                                         return done(err);
 
@@ -132,7 +134,7 @@ module.exports = function (app, passport) {
                             console.log(newUser.google.id);
                             newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                            newUser.save(function(err) {
+                            newUser.save(function (err) {
                                 if (err) return done(err);
 
                                 return done(null, newUser);
@@ -150,7 +152,7 @@ module.exports = function (app, passport) {
                     user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
 
-                    user.save(function(err) {
+                    user.save(function (err) {
                         if (err) return done(err);
 
                         return done(null, user);
@@ -168,11 +170,11 @@ module.exports = function (app, passport) {
     }));
 
     // handle the callback after facebook has authenticated the user
-    app.get('/auth/facebook/callback',passport.authenticate('facebook', {
-            successRedirect: '/dashboard',
-            failureRedirect: '/',
-            failureFlash:true
-        }));
+    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+        successRedirect: 'http://localhost:3000/dashboard',
+        failureRedirect: '/',
+        failureFlash: true
+    }));
 
     // route for logging out
     app.get('/logout', function (req, res) {
@@ -180,13 +182,15 @@ module.exports = function (app, passport) {
         res.redirect('/');
     });
     // send to google to do the authentication
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    app.get('/auth/google', passport.authenticate('google', {
+        scope: ['profile', 'email']
+    }));
 
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect : '/',
-            failureRedirect : '/'
+            successRedirect: 'http://localhost:3000/dashboard',
+            failureRedirect: '/'
         }));
     // route for logging out
     app.get('/logout', function (req, res) {

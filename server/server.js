@@ -7,6 +7,13 @@ const port = process.env.PORT || 8080;
 const passport = require('passport');
 const config = require('./config.js');
 const app = express();
+var cors = require('cors')
+
+app.use(cors({
+  methods: ['GET', 'POST'],
+  credentials: true,
+  origin: 'http://localhost:3000'
+}));
 
 app.use(session({
   secret: 'bnbisgoodbnbisgood',

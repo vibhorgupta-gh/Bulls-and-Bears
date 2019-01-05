@@ -11,7 +11,8 @@ module.exports = function (app, passport) {
     shortShares,
     coverShares,
     takeloan,
-    repayloan
+    repayloan,
+    getCurrentUser
   } = require('../utils/customer.js');
 
   const {isLoggedIn } = require('../utils/middleware');
@@ -19,6 +20,7 @@ module.exports = function (app, passport) {
   const company = require('../model/company');
 
   app.get('/leaderboard', isLoggedIn, getUsers);
+  app.get('/getcurrentuser',isLoggedIn,getCurrentUser);
   app.get('/company_list', isLoggedIn, getCompanies);
   app.get('/customer_detail/:id', isLoggedIn, getCustomerDetail);
   app.get('/company_detail/:id', isLoggedIn, getCompany);
