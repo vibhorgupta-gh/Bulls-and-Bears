@@ -305,7 +305,7 @@ exports.coverShares = function (req, res) {
 }
 
 exports.takeloan = function (req, res) {
-  User.findById(req.user.id).then(user => {
+  User.findById(req.body.id).then(user => {
       if (user.loan.amount + req.body.amount > parameter.maxLoan) {
         return res.json({
           msg: "aur nahi"
