@@ -1,15 +1,20 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { url } from "../config";
 
 class LeaderBoard extends Component {
-  constructor{
-    super();
+  constructor(props) {
+    super(props);
     this.state{
       list:[]
     };
   }
   componentDidMount() {
-    fetch('/leaderboard')
-      .then(response => response.json())
+    axios.get(url + '/leaderboard')
+      .then(response => {
+        response.json()
+        console.log(response);
+      })
       .then((list) => { this.setState({ list }); });
   }
   render() {
