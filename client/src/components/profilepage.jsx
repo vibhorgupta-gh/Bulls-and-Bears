@@ -14,12 +14,16 @@ class Profile extends Component {
 
   componentDidMount() {
     var self = this;
-    axios.get(url + "/getcurrentuser", { withCredentials: true }).then(data => {
-      console.log(data.data);
-      self.setState({
-        loan: data.data.loan.amount
+    axios
+      .get(url + "/getcurrentuser", {
+        withCredentials: true
+      })
+      .then(data => {
+        console.log(data.data);
+        self.setState({
+          loan: data.data.loan.amount
+        });
       });
-    });
   }
   takeLoan() {
     console.log(this.state.amount);
@@ -27,8 +31,12 @@ class Profile extends Component {
     axios
       .post(
         url + "/take_loan",
-        { amount: self.state.amount },
-        { withCredentials: true }
+        {
+          amount: self.state.amount
+        },
+        {
+          withCredentials: true
+        }
       )
       .then(data => {
         console.log(data.data);
@@ -46,14 +54,14 @@ class Profile extends Component {
   render() {
     return (
       <div>
-        <h1>Loan is {this.state.loan}</h1>
+        <h1> Loan is {this.state.loan} </h1>
         <input
           value={this.state.amount}
           type="number"
           step="100"
           onChange={this.handleChange}
         />
-        <button onClick={() => this.takeLoan()}>Take Loan</button>
+        <button onClick={() => this.takeLoan()}> Take Loan </button>{" "}
       </div>
     );
   }
