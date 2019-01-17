@@ -2444,7 +2444,7 @@ table.dataTable thead td {
 }
 
 .login-other a.fb-login {
-    background: #8655FC;
+    background: rgb(63, 70, 170);
     color: #fff;
 }
 

@@ -47,22 +47,17 @@ module.exports = function (app, passport) {
 
                     // if there is an error, stop everything and return that
                     // ie an error connecting to the database
+                   
                     if (err) {
                         return done(err);
                     }
-
-                    //this needs checking, please double check
-                    if (!user) {
-                        return done(null, false)
-                    }
-
                     // if the user is found, then log them in
                     if (user) {
                         return done(null, user); // user found, return that user
                     } else {
                         // if there is no user found with that facebook id, create them
                         let newUser = new User();
-
+                        
                         // set all of the facebook information in our user model
                         newUser.facebook.id = profile.id; // set the users facebook id
                         newUser.facebook.token = token; // we will save the token that facebook provides to the user
