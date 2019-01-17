@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
+import axios from "axios";
+import { url } from "../config";
 
 class News extends Component{
   constructor(props) {
     super(props);
-    this.state{
-      news_list:[]
-      news:{}
+    this.state={
+      news_list:[],
+      news:[]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   componentDidMount() {
-    axios.get(url + '/news_list', { withCredentials: true })
+    var s=[];
+    axios.get(url + '/news_list')
       .then(response => {
-        response.json()
-        console.log(response);
+        //console.log(typeof(response.data[0].newsText))
+        for(var i=0;i<response.data.length;i++){
+           s.push(response.data[i].newsText);
+         }
+        //console.log(response.data[0]);
+        this.setState({
+          news_list : s
+        });
+         //console.log(typeof(response.data[0].newsText))
+        //console.log(response);
+
       })
-      .then((news_list) => { this.setState({ news_list }); });
+
   }
   render() {
     return(
@@ -30,15 +43,23 @@ class News extends Component{
       </div>
     );
 
-  },
-  handleSubmit:function(){
+  }
+  handleSubmit=function(){
+    var s=[];
     console.log(this.refs.Item);
     axios.get(url + '/newsDetail/' + this.refs.Item.value, { withCredentials: true })
     .then(response => {
-      response.json()
+
+    //  console.log(typeof(response.data[0].newsText))
+      for(var i=0;i<response.data.length;i++){
+         s.push(response.data[i].newsText);
+       }
       console.log(response);
+      this.setState({
+        news : s
+      });
     })
-    .then((news) => { this.setState({ news }); });
+
   }
 }
 
