@@ -11,15 +11,7 @@ const server = require("../server.js");
 
 chai.use(chaiHttp);
 process.env.NODE_ENV = "test";
-after(function (done) {
-  mongoose.connect(config.SECRETS.database.url,{ useNewUrlParser: true }, (err) => {
-    mongoose.connection.collections['companies'].drop(function (err) {
-      mongoose.connection.collections['news'].drop(function (err) {
-        done();
-      });
-    });
-  })
-});
+
 describe("Test for POST request for admin", () => {
   it("adds company", done => {
     let Companytemp = {
