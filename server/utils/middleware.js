@@ -7,6 +7,7 @@ function isLoggedIn(req, res, next) {
   } else {
     console.log('no headers')
     res.redirect('/')
+    //return next()
   }
 }
 
