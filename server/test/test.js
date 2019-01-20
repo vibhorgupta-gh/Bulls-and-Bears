@@ -8,6 +8,9 @@ const chaiHttp = require("chai-http");
 const expect = require("chai").expect;
 const should = require("should");
 const server = require("../server.js");
+var http = require('http');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://DeViLINSIDE:bnb2k18@ds233061.mlab.com:33061/bnb-18";
 
 chai.use(chaiHttp);
 process.env.NODE_ENV = "test";
@@ -32,6 +35,16 @@ describe("Test for POST request for admin", () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an("object");
         res.should.have.property("error", false);
+
+        MongoClient.connect(url, function(err, db) {
+          if (err) throw err;
+          var myquery = { address: 'Ghaziabad' };
+          db.collection("companies").remove(Companytemp, function(err, obj) {
+          if (err) throw err;
+          console.log(obj.result.n + " record(s) deleted");
+          db.close();
+          });
+        });
         done();
       });
 
@@ -54,6 +67,15 @@ describe("Test for POST request for admin", () => {
         expect(res.body).to.be.an("object");
         res.should.have.property("error", false);
         done();
+        MongoClient.connect(url, function(err, db) {
+          if (err) throw err;
+          var myquery = { address: 'Ghaziabad' };
+          db.collection("news").remove(Newstemp, function(err, obj) {
+          if (err) throw err;
+          console.log(obj.result.n + " record(s) deleted");
+          db.close();
+          });
+        });
       });
   });
 });
@@ -88,6 +110,15 @@ describe("Test for PUT request for admin", () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an("object");
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("companies").remove(Companytemp, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -110,6 +141,15 @@ describe("Test for PUT request for admin", () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an("object");
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("news").remove(newstemp, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -136,6 +176,15 @@ describe("Test for DELETE request for admin", () => {
           expect(res.body).to.be.an("string");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("companies").remove(company, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -151,11 +200,20 @@ describe("Test for DELETE request for admin", () => {
     News.save((err, news) => {
       chai
         .request(server)
-        .delete("/admin/news/" + news.id)
+        .delete("/admin/news/" + news._id)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an("String");
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("news").remove(news, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -242,6 +300,15 @@ describe("Test for GET request for company", () => {
           expect(res.body).to.be.an("object");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+
+            db.collection("users").remove(user, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -261,6 +328,15 @@ describe("Test for GET request for company", () => {
           expect(res.body).to.be.an("object");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("news").remove(News, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -293,6 +369,15 @@ describe("Test for POST request for company", () => {
           expect(res.body).to.be.an("object");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("companies").remove(company, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -323,6 +408,15 @@ describe("Test for POST request for company", () => {
           expect(res.body).to.be.an("object");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("companies").remove(company, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -353,6 +447,15 @@ describe("Test for POST request for company", () => {
           expect(res.body).to.be.an("object");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("companies").remove(company, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
@@ -383,13 +486,22 @@ describe("Test for POST request for company", () => {
           expect(res.body).to.be.an("object");
           res.should.have.property("error", false);
           done();
+          MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var myquery = { address: 'Ghaziabad' };
+            db.collection("companies").remove(company, function(err, obj) {
+            if (err) throw err;
+            console.log(obj.result.n + " record(s) deleted");
+            db.close();
+            });
+          });
         });
     });
   });
 
   it("take_loan", done => {
     var Loan = {
-      id: "5c0c935d9b448a41a47b6c68",
+      id: "5c401e976aa0063240b86fe9",
       loan: 1000
     };
 

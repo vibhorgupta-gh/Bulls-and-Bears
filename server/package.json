@@ -20,6 +20,7 @@
     "express-session": "^1.15.6",
     "fs": "^0.0.1-security",
     "mongoose": "^5.2.2",
+    "mongodb": "^2.2.33",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-facebook-token": "^3.3.0",
