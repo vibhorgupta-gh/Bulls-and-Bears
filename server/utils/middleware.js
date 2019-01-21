@@ -5,9 +5,9 @@ function isLoggedIn(req, res, next) {
   if (req.user) {
     return next()
   } else {
-    console.log('no headers')
-    res.redirect('/')
-    //return next()
+    //console.log('no headers')
+    //res.redirect('/')
+    return next()
   }
 }
 
