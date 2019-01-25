@@ -92,6 +92,7 @@ module.exports = function (app, passport) {
 
             // asynchronous
             process.nextTick(function () {
+                console.log(profile);
 
                 // check if the user is already logged in
                 if (!req.user) {
