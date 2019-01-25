@@ -15,7 +15,7 @@ exports.getUsers = function (req, res) {
 }
 
 exports.getCurrentUser = function (req, res) {
-  User.findById(req.user.id).then(customerDetails => {
+  User.findById(req.user.id).populate('activity.company').then(customerDetails => {
       res.json(customerDetails)
     })
     .catch(err => {
@@ -76,11 +76,12 @@ exports.getNews = function (req, res) {
 
 exports.buyShares = function (req, res) {
   Company.findById(req.params.id).then(company => {
-      User.findById(req.body.id).then(user => {
+      User.findById(req.user.id).then(user => {
           let total = 0;
           for (var i in user.stockHolding) {
             total += i.quantity;
           }
+          console.log(user);
           for (var i in user.stockShorted) {
             total += i.quantity;
           }
@@ -119,6 +120,7 @@ exports.buyShares = function (req, res) {
           } else {
             user.stockHolding.push({
               _id: company._id,
+              company_name:company.name,
               quantity: req.body.NoOfShares
             });
           }
@@ -143,7 +145,7 @@ exports.buyShares = function (req, res) {
 
 exports.sellShares = function (req, res) {
   Company.findById(req.params.id).then(company => {
-      User.findById(req.body.id).then(user => {
+      User.findById(req.user.id).then(user => {
           if (!user.stockHolding.id(company._id)) {
             return res.json({
               msg: "itne stock nahi hain"
@@ -192,7 +194,7 @@ exports.sellShares = function (req, res) {
 
 exports.shortShares = function (req, res) {
   Company.findById(req.params.id).then(company => {
-      User.findById(req.body.id).then(user => {
+      User.findById(req.user.id).then(user => {
           let total = 0;
           for (var i in user.stockHolding) {
             total += i.quantity;
@@ -226,7 +228,8 @@ exports.shortShares = function (req, res) {
             user.stockShorted.push({
               _id: company._id,
               TotalPrice: req.body.NoOfShares * company.sharePrice,
-              TotalStock: req.body.NoOfShares
+              TotalStock: req.body.NoOfShares,
+              company_name:company.name,
             });
           }
           company.save();
@@ -250,7 +253,7 @@ exports.shortShares = function (req, res) {
 
 exports.coverShares = function (req, res) {
   Company.findById(req.params.id).then(company => {
-      User.findById(req.body.id).then(user => {
+      User.findById(req.user.id).then(user => {
           if (!user.stockShorted.id(company._id)) {
             return res.json({
               msg: "shorted stock nahi hain"
@@ -327,18 +330,18 @@ exports.takeloan = function (req, res) {
 
 exports.repayloan = function (req, res) {
   User.findById(req.body.id).then(user => {
-      if (user.loan.amount - req.body.loan < 0) {
+      if (user.loan.amount - req.body.amount < 0) {
         return res.json({
           msg: "zyada paise dene ka shock hai?"
         });
       }
-      if (user.accountBalance < req.body.loan) {
+      if (user.accountBalance < req.body.amount) {
         return res.json({
           msg: "kama toh le"
         });
       }
-      user.loan.amount -= req.body.loan;
-      user.accountBalance -= req.body.loan;
+      user.loan.amount -= req.body.amount;
+      user.accountBalance -= req.body.amount;
       if (user.loan.amount == 0) {
         user.loan.isPending = false;
       }

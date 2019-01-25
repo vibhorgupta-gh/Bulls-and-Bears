@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import axios from "axios";
+import { url } from "../config";
 
 class Company extends Component{
     render()
     {
-        return <h1>Company goes here!</h1>
+        return (
+          <div>Hey there , this is the compny page</div>
+           
+        );
     }
 }
 

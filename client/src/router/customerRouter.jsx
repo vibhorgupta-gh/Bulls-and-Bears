@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Leaderboard from "../components/leaderboard";
+ import Leaderboard from "../components/leaderboard";
 import CompanyList from "../components/companyList";
 import Company from "../components/company";
 import ProfilePage from "../components/profilepage";

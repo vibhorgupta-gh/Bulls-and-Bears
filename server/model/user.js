@@ -26,10 +26,12 @@ const UserSchema = mongoose.Schema({
     },
     stockShorted: [{
         TotalPrice: Number,
-        TotalStock: Number
+        TotalStock: Number,
+        company_name:String,
     }],
     stockHolding: [{
-        quantity: Number
+        quantity: Number,
+        company_name:String,
     }],
     activity: [{
         company: {
