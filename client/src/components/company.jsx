@@ -29,22 +29,45 @@ class Company extends Component{
     render()
     {
         return (
+
             <div>
                 <div className="page-container">
                     <div className="main-content">
 
                         <div className="page-title-area">
-                            <div className="row align-items-center">
-                                <div className="col-sm-6">
-                                    <div className="breadcrumbs-area clearfix">
-                                        <h4 className="page-title pull-left">Company and symbol</h4>
-                                        <ul className="breadcrumbs pull-left">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><span>Dashboard</span></li>
-                                        </ul>
+                            <div className="header-area header-bottom">
+                                <div className="container">
+                                    <div className="row align-items-center">
+                                        <div className="col-lg-9  d-none d-lg-block">
+                                            <div className="horizontal-menu">
+                                                <nav>
+                                                    <h4 className="page-title pull-left">Company</h4>
+                                                    <ul id="nav_menu">
+                                                        <li>
+                                                            <a href="javascript:void(0)">
+                                                                <i className="ti-dashboard"/>
+                                                                <span>Dashboard</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0)">
+                                                                <span>News</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0)">
+                                                                <span>Leaderboard</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                        <div className="col-12 d-block d-lg-none">
+                                            <div id="mobile_menu"/>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
