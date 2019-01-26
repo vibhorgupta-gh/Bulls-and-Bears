@@ -156,7 +156,7 @@ class Company extends Component{
                                     <div className="card h-full">
                                         <div className="card-body">
                                             <h4 className="header-title">History come here</h4>
-                                            {this.state.history}
+                                            <canvas id="seolinechart8" height="233"></canvas>
                                         </div>
                                     </div>
                                 </div>
