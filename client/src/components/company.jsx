@@ -3,12 +3,149 @@ import axios from "axios";
 import { url } from "../config";
 
 class Company extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            name: [],
+            symbol: [],
+            description: [],
+            availableQuantity: 0,
+            sharePrice: 0,
+            totalQuantity: 0,
+            marketCap: 0,
+            history: [{
+                timestamp: {
+                    type: Date,
+                    default: Date.now
+                },
+                sharePrice: 0,
+                availableQuantity: 0
+
+            }]
+        }
+    };
+
+
     render()
     {
         return (
-          <div>Hey there , this is the compny page</div>
-           
+            <div>
+                <div className="page-container">
+                    <div className="main-content">
+
+                        <div className="page-title-area">
+                            <div className="row align-items-center">
+                                <div className="col-sm-6">
+                                    <div className="breadcrumbs-area clearfix">
+                                        <h4 className="page-title pull-left">Company and symbol</h4>
+                                        <ul className="breadcrumbs pull-left">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><span>Dashboard</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="main-content-inner">
+                            <div className="row">
+                                <div className="col-lg-8">
+                                    <div className="row">
+                                        <div className="col-md-6 mt-5 mb-3">
+                                            <div className="card">
+                                                <div className="seo-fact sbg1">
+                                                    <div
+                                                        className="p-4 d-flex justify-content-between align-items-center">
+                                                        <div className="seofct-icon"> Stock price</div>
+                                                        <h2>2,315</h2>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6 mt-md-5 mb-3">
+                                            <div className="card">
+                                                <div className="seo-fact sbg2">
+                                                    <div
+                                                        className="p-4 d-flex justify-content-between align-items-center">
+                                                        <div className="seofct-icon"> Stock available</div>
+                                                        <h2>3,984</h2>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6 mb-3 mb-lg-0">
+                                            <div className="card">
+                                                <div className="seo-fact sbg3">
+                                                    <div
+                                                        className="p-4 d-flex justify-content-between align-items-center">
+                                                        <div className="seofct-icon">Market Cap</div>
+                                                        <h2>00</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="card">
+                                                <div className="seo-fact sbg4">
+                                                    <div
+                                                        className="p-4 d-flex justify-content-between align-items-center">
+                                                        <div className="seofct-icon">Total Shares</div>
+                                                        <h2>00</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 mt-5">
+                                    <div className="card">
+                                        <div className="card-body pb-0">
+                                            <h2 className="header-title">Company Name</h2>
+
+                                            <button type="button" className="btn btn-rounded btn-primary mb-3">Buy
+                                            </button>
+                                            <button type="button" className="btn btn-rounded btn-danger mb-3">Sell
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-8 mt-5">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <h4 className="header-title">Description come here</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-4 mt-5">
+                                    <div className="card h-full">
+                                        <div className="card-body">
+                                            <h4 className="header-title">Charts come here</h4>
+                                            <canvas id="seolinechart8" height="233"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <div className="footer-area">
+                            <p>© Copyright 2019. All right reserved. <a href="http://ieeedtu.com/">IEEE DTU</a>.</p>
+                        </div>
+                    </footer>
+
+                </div>
+            </div>
+
         );
+
     }
 }
 
