@@ -6,9 +6,9 @@ class Company extends Component{
     constructor(props){
         super(props);
         this.state = {
-            name: [],
-            symbol: [],
-            description: [],
+            name: ['company'],
+            symbol: ['$#'],
+            description: ['Description lorem gghbfjjgjhggbhgyjbg'],
             availableQuantity: 0,
             sharePrice: 0,
             totalQuantity: 0,
@@ -44,19 +44,24 @@ class Company extends Component{
                                                     <h4 className="page-title pull-left">Company</h4>
                                                     <ul id="nav_menu">
                                                         <li>
-                                                            <a href="javascript:void(0)">
+                                                            <a href="dashboard">
                                                                 <i className="ti-dashboard"/>
                                                                 <span>Dashboard</span>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0)">
+                                                            <a href="news">
                                                                 <span>News</span>
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a href="javascript:void(0)">
                                                                 <span>Leaderboard</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="market">
+                                                                <span>Market</span>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -73,6 +78,19 @@ class Company extends Component{
 
                         <div className="main-content-inner">
                             <div className="row">
+                                <div className="col-lg-4 mt-5">
+                                    <div className="card">
+                                        <div className="card-body pb-0">
+                                            <h2 className="header-title">{this.state.name}</h2>
+
+                                            <button type="button" className="btn btn-rounded btn-primary mb-3">Buy
+                                            </button>
+                                            <button type="button" className="btn btn-rounded btn-danger mb-3">Sell
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="col-lg-8">
                                     <div className="row">
                                         <div className="col-md-6 mt-5 mb-3">
@@ -81,7 +99,7 @@ class Company extends Component{
                                                     <div
                                                         className="p-4 d-flex justify-content-between align-items-center">
                                                         <div className="seofct-icon"> Stock price</div>
-                                                        <h2>2,315</h2>
+                                                        <h2>{this.state.sharePrice}</h2>
                                                     </div>
 
                                                 </div>
@@ -93,7 +111,7 @@ class Company extends Component{
                                                     <div
                                                         className="p-4 d-flex justify-content-between align-items-center">
                                                         <div className="seofct-icon"> Stock available</div>
-                                                        <h2>3,984</h2>
+                                                        <h2>{this.state.availableQuantity}</h2>
                                                     </div>
 
                                                 </div>
@@ -105,7 +123,7 @@ class Company extends Component{
                                                     <div
                                                         className="p-4 d-flex justify-content-between align-items-center">
                                                         <div className="seofct-icon">Market Cap</div>
-                                                        <h2>00</h2>
+                                                        <h2>{this.state.marketCap}</h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,31 +134,20 @@ class Company extends Component{
                                                     <div
                                                         className="p-4 d-flex justify-content-between align-items-center">
                                                         <div className="seofct-icon">Total Shares</div>
-                                                        <h2>00</h2>
+                                                        <h2>{this.state.totalQuantity}</h2>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-4 mt-5">
-                                    <div className="card">
-                                        <div className="card-body pb-0">
-                                            <h2 className="header-title">Company Name</h2>
 
-                                            <button type="button" className="btn btn-rounded btn-primary mb-3">Buy
-                                            </button>
-                                            <button type="button" className="btn btn-rounded btn-danger mb-3">Sell
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div className="col-lg-8 mt-5">
                                     <div className="card">
                                         <div className="card-body">
-                                            <h4 className="header-title">Description come here</h4>
+                                            <h4 className="header-title">Description</h4>
+                                            <p height="233">{this.state.description}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -148,8 +155,8 @@ class Company extends Component{
                                 <div className="col-lg-4 mt-5">
                                     <div className="card h-full">
                                         <div className="card-body">
-                                            <h4 className="header-title">Charts come here</h4>
-                                            <canvas id="seolinechart8" height="233"></canvas>
+                                            <h4 className="header-title">History come here</h4>
+                                            {this.state.history}
                                         </div>
                                     </div>
                                 </div>
