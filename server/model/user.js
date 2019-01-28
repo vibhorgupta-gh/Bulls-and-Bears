@@ -27,11 +27,17 @@ const UserSchema = mongoose.Schema({
     stockShorted: [{
         TotalPrice: Number,
         TotalStock: Number,
-        company_name:String,
+        company_name:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Company"
+        },
     }],
     stockHolding: [{
         quantity: Number,
-        company_name:String,
+        company_name:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Company"
+        },
     }],
     activity: [{
         company: {

@@ -15,7 +15,7 @@ exports.getUsers = function (req, res) {
 }
 
 exports.getCurrentUser = function (req, res) {
-  User.findById(req.user.id).populate('activity.company').then(customerDetails => {
+  User.findById(req.user.id).populate('activity.company').populate('stockShorted.company_name').populate('stockHolding.company_name').then(customerDetails => {
       res.json(customerDetails)
     })
     .catch(err => {
@@ -120,7 +120,7 @@ exports.buyShares = function (req, res) {
           } else {
             user.stockHolding.push({
               _id: company._id,
-              company_name:company.name,
+              company_name: company._id,
               quantity: req.body.NoOfShares
             });
           }
@@ -229,7 +229,7 @@ exports.shortShares = function (req, res) {
               _id: company._id,
               TotalPrice: req.body.NoOfShares * company.sharePrice,
               TotalStock: req.body.NoOfShares,
-              company_name:company.name,
+              company_name: company._id,
             });
           }
           company.save();
