@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { url } from "../config";
+import jquery from 'jquery';
+import ScriptTag from 'react-script-tag';
+import NavBar from "./navbar";
 
 class Profile extends Component {
   constructor(props) {
@@ -29,16 +32,29 @@ class Profile extends Component {
       })
       .then(data => {
         console.log(data.data);
-        self.setState({
-          loan: data.data.loan.amount,
-          image: data.data.facebook.id,
-          name: data.data.facebook.name || data.data.google.name,
-          balance: data.data.accountBalance,
-          activity: data.data.activity,
-          res: data.data.stockHolding.map(x =>
-            Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-          )
-        });
+        if (data.data.facebook == undefined) {
+          self.setState({
+            loan: data.data.loan.amount,
+            image: data.data.google.id,
+            name: data.data.google.name,
+            balance: data.data.accountBalance,
+            activity: data.data.activity,
+            res: data.data.stockHolding.map(x =>
+              Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
+            )
+          });
+        } else {
+          self.setState({
+            loan: data.data.loan.amount,
+            image: data.data.facebook.id,
+            name: data.data.facebook.name,
+            balance: data.data.accountBalance,
+            activity: data.data.activity,
+            res: data.data.stockHolding.map(x =>
+              Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
+            )
+          });
+        }
       });
   }
   takeLoan() {
@@ -101,111 +117,7 @@ class Profile extends Component {
     return (
       <div class="body-bg">
         <div class="horizontal-main-wrapper">
-          <div class="mainheader-area">
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col-md-3">
-                  <div class="logo">
-                    <a href="index.html">
-                      <img src="assets/images/icon/logo2.png" alt="logo" />
-                    </a>
-                  </div>
-                </div>
-                <div class="col-md-9 clearfix text-right">
-                  <div class="d-md-inline-block d-block mr-md-4">
-                    <ul class="notification-area">
-                      <li class="dropdown">
-                        <i
-                          class="ti-bell dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          <span>2</span>
-                        </i>
-                        <div class="dropdown-menu bell-notify-box notify-box">
-                          <span class="notify-title">
-                            You have 3 new notifications{" "}
-                            <a href="#">view all</a>
-                          </span>
-                          <div class="nofity-list">
-                            <a href="#" class="notify-item">
-                              <div class="notify-thumb">
-                                <i class="ti-key btn-danger" />
-                              </div>
-                              <div class="notify-text">
-                                <p>You have Changed Your Password</p>
-                                <span>Just Now</span>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="clearfix d-md-inline-block d-block">
-                    <div class="user-profile m-0">
-                      <img
-                        class="avatar user-thumb"
-                        src={`https://graph.facebook.com/${
-                          this.state.image
-                        }/picture`}
-                        alt="avatar"
-                      />
-                      <h4
-                        class="user-name dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        {this.state.name} <i class="fa fa-angle-down" />
-                      </h4>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">
-                          Message
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          Settings
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          Log Out
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="header-area header-bottom">
-              <div class="container">
-                <div class="row align-items-center">
-                  <div class="col-lg-9  d-none d-lg-block">
-                    <div class="horizontal-menu">
-                      <nav>
-                        <ul id="nav_menu">
-                          <li>
-                            <a href="javascript:void(0)">
-                              <i class="ti-dashboard" />
-                              <span>Dashboard</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="javascript:void(0)">
-                              <span>News</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="javascript:void(0)">
-                              <span>Leaderboard</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </nav>
-                    </div>
-                  </div>
-                  <div class="col-12 d-block d-lg-none">
-                    <div id="mobile_menu" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <NavBar></NavBar>
           <div className="main-content-inner">
             <div className="container">
               <div className="row">
@@ -328,7 +240,9 @@ class Profile extends Component {
                                 {this.state.res.map((value, index) => {
                                   return (
                                     <tr>
-                                      <th scope="row">{value.company_name.name}</th>
+                                      <th scope="row">
+                                        {value.company_name.name}
+                                      </th>
                                       <td>{value.TotalStock}</td>
                                       <td>{value.quantity}</td>
                                       <td>{value.company_name.sharePrice}</td>
@@ -353,7 +267,9 @@ class Profile extends Component {
                           <ul className="nav" role="tablist">
                             <li>
                               <a
-                                className={this.state.choice=="bought" ? "active" : ""}
+                                className={
+                                  this.state.choice == "bought" ? "active" : ""
+                                }
                                 style={{ cursor: "pointer" }}
                                 data-toggle="tab"
                                 role="tab"
@@ -367,7 +283,9 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                className={this.state.choice=="sold" ? "active" : ""}
+                                className={
+                                  this.state.choice == "sold" ? "active" : ""
+                                }
                                 style={{ cursor: "pointer" }}
                                 role="tab"
                                 onClick={() => {
@@ -380,7 +298,9 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                className={this.state.choice=="shorted" ? "active" : ""}
+                                className={
+                                  this.state.choice == "shorted" ? "active" : ""
+                                }
                                 style={{ cursor: "pointer" }}
                                 role="tab"
                                 onClick={() => {
@@ -393,7 +313,9 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                className={this.state.choice=="covered" ? "active" : ""}
+                                className={
+                                  this.state.choice == "covered" ? "active" : ""
+                                }
                                 style={{ cursor: "pointer" }}
                                 role="tab"
                                 onClick={() => {
