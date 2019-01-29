@@ -7,13 +7,15 @@ module.exports = function(app, passport){
 		deleteCompany,
 		addNews,
 		editNews,
-		deleteNews
+		deleteNews,
+		changeprice
 	} = require('../utils/admin.js')
 	const company = require('../model/company');
 
 	// ----- Company related routes handled by admin ------
 	app.route('/admin/company/:id')
 		 .put(editCompany)//1. put of /admin/company/id is working
+		 .post(changeprice)
 		 .delete(deleteCompany)//1. delete of /admin/company/id is working
 
 	app.post('/admin/company', addCompany)//1. post of /admin/company/id is working

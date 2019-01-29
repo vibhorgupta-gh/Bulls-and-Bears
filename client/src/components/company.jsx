@@ -1,183 +1,158 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import axios from "axios";
 import { url } from "../config";
+import Charts from "./chart";
+import NavBar from "./navbar";
 
-class Company extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            name: ['company'],
-            symbol: ['$#'],
-            description: ['Description lorem gghbfjjgjhggbhgyjbg'],
-            availableQuantity: 0,
-            sharePrice: 0,
-            totalQuantity: 0,
-            marketCap: 0,
-            history: [{
-                timestamp: {
-                    type: Date,
-                    default: Date.now
-                },
-                sharePrice: 0,
-                availableQuantity: 0
-
-            }]
+class Company extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: ["company"],
+      symbol: ["$#"],
+      description: ["Description lorem gghbfjjgjhggbhgyjbg"],
+      availableQuantity: 0,
+      sharePrice: 0,
+      totalQuantity: 0,
+      marketCap: 0,
+      history: [
+        {
+          timestamp: {
+            type: Date,
+            default: Date.now
+          },
+          sharePrice: 0,
+          availableQuantity: 0
         }
+      ]
     };
+  }
 
-
-    render()
-    {
-        return (
-
-            <div>
-                <div className="page-container">
-                    <div className="main-content">
-
-                        <div className="page-title-area">
-                            <div className="header-area header-bottom">
-                                <div className="container">
-                                    <div className="row align-items-center">
-                                        <div className="col-lg-9  d-none d-lg-block">
-                                            <div className="horizontal-menu">
-                                                <nav>
-                                                    <h4 className="page-title pull-left">Company</h4>
-                                                    <ul id="nav_menu">
-                                                        <li>
-                                                            <a href="dashboard">
-                                                                <i className="ti-dashboard"/>
-                                                                <span>Dashboard</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="news">
-                                                                <span>News</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:void(0)">
-                                                                <span>Leaderboard</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="market">
-                                                                <span>Market</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 d-block d-lg-none">
-                                            <div id="mobile_menu"/>
-                                        </div>
-                                    </div>
-                                </div>
+  render() {
+    return (
+      <div class="body-bg">
+        <div class="horizontal-main-wrapper">
+          <NavBar />
+          <div className="main-content-inner">
+            <div className="container">
+              <div className="row">
+                <div class="col-xl-8 col-lg-12 mt-6">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-9 mt-4">
+                      <div class="card">
+                        <div class="seo-fact sbg1">
+                          <div class="p-4 d-flex justify-content-between align-items-center">
+                            <div class="seofct-icon">
+                              <i class="fa fa-money" /> Stock price
                             </div>
+                            <h2>{this.state.sharePrice}</h2>
+                          </div>
                         </div>
-
-                        <div className="main-content-inner">
-                            <div className="row">
-                                <div className="col-lg-4 mt-5">
-                                    <div className="card">
-                                        <div className="card-body pb-0">
-                                            <h2 className="header-title">{this.state.name}</h2>
-
-                                            <button type="button" className="btn btn-rounded btn-primary mb-3">Buy
-                                            </button>
-                                            <button type="button" className="btn btn-rounded btn-danger mb-3">Sell
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-8">
-                                    <div className="row">
-                                        <div className="col-md-6 mt-5 mb-3">
-                                            <div className="card">
-                                                <div className="seo-fact sbg1">
-                                                    <div
-                                                        className="p-4 d-flex justify-content-between align-items-center">
-                                                        <div className="seofct-icon"> Stock price</div>
-                                                        <h2>{this.state.sharePrice}</h2>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 mt-md-5 mb-3">
-                                            <div className="card">
-                                                <div className="seo-fact sbg2">
-                                                    <div
-                                                        className="p-4 d-flex justify-content-between align-items-center">
-                                                        <div className="seofct-icon"> Stock available</div>
-                                                        <h2>{this.state.availableQuantity}</h2>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 mb-3 mb-lg-0">
-                                            <div className="card">
-                                                <div className="seo-fact sbg3">
-                                                    <div
-                                                        className="p-4 d-flex justify-content-between align-items-center">
-                                                        <div className="seofct-icon">Market Cap</div>
-                                                        <h2>{this.state.marketCap}</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="card">
-                                                <div className="seo-fact sbg4">
-                                                    <div
-                                                        className="p-4 d-flex justify-content-between align-items-center">
-                                                        <div className="seofct-icon">Total Shares</div>
-                                                        <h2>{this.state.totalQuantity}</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div className="col-lg-8 mt-5">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <h4 className="header-title">Description</h4>
-                                            <p height="233">{this.state.description}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-4 mt-5">
-                                    <div className="card h-full">
-                                        <div className="card-body">
-                                            <h4 className="header-title">History come here</h4>
-                                            <canvas id="seolinechart8" height="233"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                      </div>
                     </div>
-
-                    <footer>
-                        <div className="footer-area">
-                            <p>© Copyright 2019. All right reserved. <a href="http://ieeedtu.com/">IEEE DTU</a>.</p>
+                    <div class="col-xl-6 col-lg-9 mt-4">
+                      <div class="card">
+                        <div class="seo-fact sbg2">
+                          <div class="p-4 d-flex justify-content-between align-items-center">
+                            <div class="seofct-icon">
+                              <i class="fa fa-rupee" />
+                              Stock available
+                            </div>
+                            <h2>{this.state.availableQuantity}</h2>
+                          </div>
                         </div>
-                    </footer>
-
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-9 mt-4">
+                      <div class="card">
+                        <div class="seo-fact sbg3">
+                          <div class="p-4 d-flex justify-content-between align-items-center">
+                            <div class="seofct-icon">
+                              <i class="fa fa-bank" /> Symbol
+                            </div>
+                            <h2>{this.state.symbol}</h2>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-9 mt-4">
+                      <div class="card">
+                        <div class="seo-fact sbg4">
+                          <div class="p-4 d-flex justify-content-between align-items-center">
+                            <div class="seofct-icon">
+                              <i class="fa fa-users" /> Total Share
+                            </div>
+                            <h2>{this.state.availableQuantity}</h2>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <div class="col-xl-4 col-lg-6 mt-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="header-title">trade System</h4>
+                      <form action="#">
+                        <div class="input-form">
+                          <input />
+                          <span style={{ cursor: "pointer" }}>Buy</span>
+                        </div>
+                        <br></br>
+                        <div class="input-form">
+                          <input />
+                          <span style={{ cursor: "pointer" }}>Cover</span>
+                        </div>
+                        <br></br>
+
+                        <div class="input-form">
+                          <input />
+                          <span style={{ cursor: "pointer" }}>short</span>
+                        </div>
+                        <br></br>
+
+                        <div class="input-form">
+                          <input />
+                          <span style={{ cursor: "pointer" }}>sell</span>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row mt-5 mb-5">
+                <div className="col-lg-6 mt-sm-22 mt-xs-22">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="d-sm-flex justify-content-between align-items-center">
+                        <h4 className="header-title mb-0">History</h4>
+                      </div>
+                      <Charts />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div className="col-lg-6 mt-sm-22 mt-xs-22">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="d-sm-flex justify-content-between align-items-center">
+                        <h4 className="header-title">Description</h4>
+                      </div>
+                      <div className="trad-history mt-4">
+                        {this.state.description}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-        );
-
-    }
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-
 
 export default Company;
