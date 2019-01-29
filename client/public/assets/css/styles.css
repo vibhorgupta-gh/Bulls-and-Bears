@@ -2830,4 +2830,14 @@ table.dataTable thead td {
     color: #555;
 }
 
+.spa {
+    padding : 0 100px ;
+}
+
+@media (max-width : 500px){
+    .spa {
+        padding : 0 0;
+    }
+}
+
 /*-------------------- END Offset Sidebar ------------------- */
