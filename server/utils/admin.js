@@ -23,6 +23,20 @@ editCompany(req, res) {
     res.json(err);
   })
 },
+changeprice(req,res){
+  Company.findById(req.params.id,(err,company)=>{
+    company.sharePrice = req.body.price;
+    company.history.push({
+      timestamp : Date.now(),
+      sharePrice : company.sharePrice,
+      availableQuantity : company.availableQuantity,
+    })
+    company.save().then(()=>{
+      res.json({"status" : "sucess"});
+    });
+  });
+
+},
 
 deleteCompany(req, res) {
   Company.findByIdAndRemove(req.params.id).then(() =>{
