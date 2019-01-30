@@ -101,17 +101,17 @@ exports.buyShares = function (req, res) {
               msg: "itne stock nahi hain"
             });
           }
-          var historytemp = {
-            sharePrice: company.sharePrice,
-            availableQuantity: company.availableQuantity - req.body.NoOfShares
-          };
+          // var historytemp = {
+          //   sharePrice: company.sharePrice,
+          //   availableQuantity: company.availableQuantity - req.body.NoOfShares
+          // };
           var activitytemp = {
             company: company._id,
             action: "bought",
             quantity: req.body.NoOfShares,
             price: company.sharePrice
           };
-          company.history.push(historytemp);
+          //company.history.push(historytemp);
           user.accountBalance -= company.sharePrice * req.body.NoOfShares;
           company.availableQuantity -= req.body.NoOfShares;
           user.activity.push(activitytemp);
@@ -156,17 +156,17 @@ exports.sellShares = function (req, res) {
               msg: "itne stock nahi hain"
             });
           }
-          var historytemp = {
-            sharePrice: company.sharePrice,
-            availableQuantity: company.availableQuantity + req.body.NoOfShares
-          };
+          // var historytemp = {
+          //   sharePrice: company.sharePrice,
+          //   availableQuantity: company.availableQuantity + req.body.NoOfShares
+          // };
           var activitytemp = {
             company: company._id,
             action: "sold",
             quantity: req.body.NoOfShares,
             price: company.sharePrice
           };
-          company.history.push(historytemp);
+          //company.history.push(historytemp);
           user.accountBalance += company.sharePrice * req.body.NoOfShares;
           company.availableQuantity = (+company.availableQuantity) + (+req.body.NoOfShares);
           user.activity.push(activitytemp);
@@ -207,17 +207,17 @@ exports.shortShares = function (req, res) {
               msg: "kitne khareedega?"
             });
           }
-          var historytemp = {
-            sharePrice: company.sharePrice,
-            availableQuantity: (+company.availableQuantity) + (+req.body.NoOfShares)
-          };
+          // var historytemp = {
+          //   sharePrice: company.sharePrice,
+          //   availableQuantity: (+company.availableQuantity) + (+req.body.NoOfShares)
+          // };
           var activitytemp = {
             company: company._id,
             action: "shorted",
             quantity: req.body.NoOfShares,
             price: company.sharePrice
           };
-          company.history.push(historytemp);
+          //company.history.push(historytemp);
           company.availableQuantity = (+company.availableQuantity) + (+req.body.NoOfShares);
           user.activity.push(activitytemp);
           if (user.stockShorted.id(company._id)) {
@@ -264,17 +264,17 @@ exports.coverShares = function (req, res) {
               msg: "itne shorted stock nahi hain"
             });
           }
-          var historytemp = {
-            sharePrice: company.sharePrice,
-            availableQuantity: company.availableQuantity - req.body.NoOfShares
-          };
+          // var historytemp = {
+          //   sharePrice: company.sharePrice,
+          //   availableQuantity: company.availableQuantity - req.body.NoOfShares
+          // };
           var activitytemp = {
             company: company._id,
             action: "covered",
             quantity: req.body.NoOfShares,
             price: company.sharePrice
           };
-          company.history.push(historytemp);
+          //company.history.push(historytemp);
           let temp = user.stockShorted.id(company._id);
           user.accountBalance += Math.round(
             (temp.TotalPrice * req.body.NoOfShares) / temp.TotalStock -
@@ -308,7 +308,7 @@ exports.coverShares = function (req, res) {
 }
 
 exports.takeloan = function (req, res) {
-  User.findById(req.body.id).then(user => {
+  User.findById(req.user.id).then(user => {
       if (user.loan.amount + req.body.amount > parameter.maxLoan) {
         return res.json({
           msg: "aur nahi"
@@ -329,7 +329,7 @@ exports.takeloan = function (req, res) {
 }
 
 exports.repayloan = function (req, res) {
-  User.findById(req.body.id).then(user => {
+  User.findById(req.user.id).then(user => {
       if (user.loan.amount - req.body.amount < 0) {
         return res.json({
           msg: "zyada paise dene ka shock hai?"
