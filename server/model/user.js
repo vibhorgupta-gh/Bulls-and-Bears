@@ -12,6 +12,7 @@ const UserSchema = mongoose.Schema({
     },
     google: {
         id: String,
+        ph: String,
         token: String,
         email: String,
         name: String
