@@ -57,7 +57,7 @@ class NavBar extends Component {
                     </div>
                     <div className="col-md-7 clearfix text-right">
                         <div className="clearfix d-md-inline-block d-block">
-                            <div className="user-profile m-0">
+                            <div className="user-profile ">
                                 <img
                                     className="avatar user-thumb"
                                     src={`https://graph.facebook.com/${
@@ -66,12 +66,12 @@ class NavBar extends Component {
                                     alt="avatar"
                                 />
                                 <h4 className="user-name dropdown-toggle" data-toggle="dropdown">
-                                    {this.state.name} <i className="fa fa-angle-down"> </i>
+                                    {this.state.name} <i className="fa fa-angle-down"></i>
                                 </h4>
 
-                                <div className="dropdown-menu">
+                                <div className="dropdown">
                                     <a className="dropdown-item" href="#">Message</a>
-                                    <a className="dropdown-item" href="/logout">Log Out</a>
+                                    <a className="dropdown-item" href="http://localhost:8080/logout">Log Out</a>
                                 </div>
 
 
