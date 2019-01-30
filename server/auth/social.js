@@ -175,7 +175,7 @@ module.exports = function (app, passport) {
     // route for logging out
     app.get('/logout', function (req, res) {
         req.logout();
-        res.redirect('/');
+        res.redirect('http://localhost:3000/');
     });
     // send to google to do the authentication
     app.get('/auth/google', passport.authenticate('google', {
@@ -191,7 +191,7 @@ module.exports = function (app, passport) {
     // route for logging out
     app.get('/logout', function (req, res) {
         req.logout();
-        res.redirect('/');
+        res.redirect('http://localhost:3000/');
     });
 
     return passport;
