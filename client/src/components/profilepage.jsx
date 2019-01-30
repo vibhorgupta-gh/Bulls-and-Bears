@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { url } from "../config";
-import jquery from 'jquery';
-import ScriptTag from 'react-script-tag';
+import jquery from "jquery";
+import ScriptTag from "react-script-tag";
 import NavBar from "./navbar";
 
 class Profile extends Component {
@@ -15,10 +15,12 @@ class Profile extends Component {
       name: "",
       balance: 0,
       worth: 0,
+      rank : 1,
       repay: 0,
       activity: [],
       choice: "bought",
-      res: []
+      res: [],
+      netWorth: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChange2 = this.handleChange2.bind(this);
@@ -32,6 +34,15 @@ class Profile extends Component {
       })
       .then(data => {
         console.log(data.data);
+        var arr = data.data.stockHolding.map(x =>
+          Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
+        );
+        var networth = 0;
+        console.log("arr",arr);
+        for (var i in arr) {
+          networth += (i.quantity + i.TotalStock) * i.sharePrice;
+        }
+        console.log("networth",networth);
         if (data.data.facebook == undefined) {
           self.setState({
             loan: data.data.loan.amount,
@@ -39,9 +50,8 @@ class Profile extends Component {
             name: data.data.google.name,
             balance: data.data.accountBalance,
             activity: data.data.activity,
-            res: data.data.stockHolding.map(x =>
-              Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-            )
+            res: arr,
+            netWorth: networth + data.data.accountBalance
           });
         } else {
           self.setState({
@@ -50,12 +60,32 @@ class Profile extends Component {
             name: data.data.facebook.name,
             balance: data.data.accountBalance,
             activity: data.data.activity,
-            res: data.data.stockHolding.map(x =>
-              Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-            )
+            res: arr,
+            netWorth: networth + data.data.loan.amount
           });
         }
+        axios
+      .get(url + "/leaderboard", {
+        withCredentials: true
+      })
+      .then(data => {
+        const arr = [...data.data];
+
+        // console.log('This is the new array --> ' + Object.keys(arr[0]));
+        arr.sort(function(a, b) {
+          return b.accountBalance - a.accountBalance;
+        });
+        var index = arr.map(function(e) { return e.facebook!=undefined ? e.facebook.id : e.google.id; }).indexOf(this.state.image);
+        console.log("rank",index);
+        self.setState({
+          rank: index
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
+      });
+    
   }
   takeLoan() {
     console.log(this.state.amount);
@@ -117,7 +147,7 @@ class Profile extends Component {
     return (
       <div class="body-bg">
         <div class="horizontal-main-wrapper">
-          <NavBar></NavBar>
+          <NavBar />
           <div className="main-content-inner">
             <div className="container">
               <div className="row">
@@ -169,7 +199,7 @@ class Profile extends Component {
                             <div class="seofct-icon">
                               <i class="fa fa-users" /> Rank
                             </div>
-                            <h2>1</h2>
+                            <h2>{this.state.rank+1}</h2>
                           </div>
                         </div>
                       </div>
