@@ -28,10 +28,29 @@ class Company extends Component {
     };
   }
 
-  componentDidMount()
-  {
+    componentDidMount() {
+        var self = this;
+        axios
+            .get(url + "/company/id:", {
+                withCredentials: true
+            })
+            .then(data => {
+                console.log(data.data);
+                self.setState({
+                    name: data.data.name,
+                    symbol: data.data,
+                    description: ["Description lorem gghbfjjgjhggbhgyjbg"],
+                    availableQuantity: 0,
+                    sharePrice: 0,
+                    totalQuantity: 0,
+                    marketCap: 0,
+                });
 
-  }
+            });
+            .catch(err => {
+                  console.log(err);
+            })
+    }
   render() {
     return (
       <div class="body-bg">
