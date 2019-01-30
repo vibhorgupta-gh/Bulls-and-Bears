@@ -28,6 +28,10 @@ class Company extends Component {
     };
   }
 
+  componentDidMount()
+  {
+
+  }
   render() {
     return (
       <div class="body-bg">
