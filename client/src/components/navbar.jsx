@@ -51,7 +51,7 @@ class NavBar extends Component {
               {/* <p>Bulls And Bears</p> */}
             </div>
             <div class="col-md-4">
-              <a href="/d" style={{align:"left"}}>
+              <a href="/dashboard" style={{align:"left"}}>
                 <img src="assets/images/icon/Bulls N Bears.png" alt="logo" />
 
               </a>
