@@ -26,78 +26,70 @@ class Profile extends Component {
     this.handleChange2 = this.handleChange2.bind(this);
   }
 
-  componentDidMount() {
-    var self = this;
-    axios
-      .get(url + "/getcurrentuser", {
-        withCredentials: true
-      })
-      .then(data => {
-        console.log(data.data);
-<<<<<<< HEAD
-        self.setState({
-          loan: data.data.loan.amount,
-          image: data.data.google.id,
-          name: data.data.google.name,
-          balance: data.data.accountBalance,
-          activity: data.data.activity
-        });
-=======
-        var arr = data.data.stockHolding.map(x =>
-          Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-        );
-        var networth = 0;
-        console.log("arr",arr);
-        for (var i in arr) {
-          networth += (i.quantity + i.TotalStock) * i.sharePrice;
-        }
-        console.log("networth",networth);
-        if (data.data.facebook == undefined) {
-          self.setState({
-            loan: data.data.loan.amount,
-            image: data.data.google.id,
-            name: data.data.google.name,
-            balance: data.data.accountBalance,
-            activity: data.data.activity,
-            res: arr,
-            netWorth: networth + data.data.accountBalance
-          });
-        } else {
-          self.setState({
-            loan: data.data.loan.amount,
-            image: data.data.facebook.id,
-            name: data.data.facebook.name,
-            balance: data.data.accountBalance,
-            activity: data.data.activity,
-            res: arr,
-            netWorth: networth + data.data.loan.amount
-          });
-        }
-        axios
-      .get(url + "/leaderboard", {
-        withCredentials: true
-      })
-      .then(data => {
-        const arr = [...data.data];
 
-        // console.log('This is the new array --> ' + Object.keys(arr[0]));
-        arr.sort(function(a, b) {
-          return b.accountBalance - a.accountBalance;
-        });
-        var index = arr.map(function(e) { return e.facebook!=undefined ? e.facebook.id : e.google.id; }).indexOf(this.state.image);
-        console.log("rank",index);
-        self.setState({
-          rank: index
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
->>>>>>> 791ddc5d8551f6eae7367571822d856f70549804
-      });
-    
-  }
-  takeLoan() {
+    componentDidMount() {
+        var self = this;
+        axios
+            .get(url + "/getcurrentuser", {
+                withCredentials: true
+            })
+            .then(data => {
+                console.log(data.data);
+                var arr = data.data.stockHolding.map(x =>
+                    Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
+                );
+                var networth = 0;
+                console.log("arr",arr);
+                for (var i in arr) {
+                    networth += (i.quantity + i.TotalStock) * i.sharePrice;
+                }
+                console.log("networth",networth);
+                if (data.data.facebook == undefined) {
+                    self.setState({
+                        loan: data.data.loan.amount,
+                        image: data.data.google.id,
+                        name: data.data.google.name,
+                        balance: data.data.accountBalance,
+                        activity: data.data.activity,
+                        res: arr,
+                        netWorth: networth + data.data.accountBalance
+                    });
+                } else {
+                    self.setState({
+                        loan: data.data.loan.amount,
+                        image: data.data.facebook.id,
+                        name: data.data.facebook.name,
+                        balance: data.data.accountBalance,
+                        activity: data.data.activity,
+                        res: arr,
+                        netWorth: networth + data.data.loan.amount
+                    });
+                }
+                axios
+                    .get(url + "/leaderboard", {
+                        withCredentials: true
+                    })
+                    .then(data => {
+                        const arr = [...data.data];
+
+                        // console.log('This is the new array --> ' + Object.keys(arr[0]));
+                        arr.sort(function(a, b) {
+                            return b.accountBalance - a.accountBalance;
+                        });
+                        var index = arr.map(function(e) { return e.facebook!=undefined ? e.facebook.id : e.google.id; }).indexOf(this.state.image);
+                        console.log("rank",index);
+                        self.setState({
+                            rank: index
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+
+            });
+
+    }
+    takeLoan() {
     console.log(this.state.amount);
     var self = this;
     axios
@@ -157,115 +149,7 @@ class Profile extends Component {
     return (
       <div class="body-bg">
         <div class="horizontal-main-wrapper">
-<<<<<<< HEAD
-          <div class="mainheader-area">
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col-md-3">
-                  <div class="logo">
-                    <a href="index.html">
-                      <img src="assets/images/icon/logo2.png" alt="logo" />
-                    </a>
-                  </div>
-                </div>
-                <div class="col-md-9 clearfix text-right">
-                  <div class="d-md-inline-block d-block mr-md-4">
-                    <ul class="notification-area">
-                      <li class="dropdown">
-                        <i
-                          class="ti-bell dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          <span>2</span>
-                        </i>
-                        <div class="dropdown-menu bell-notify-box notify-box">
-                          <span class="notify-title">
-                            You have 3 new notifications{" "}
-                            <a href="#">view all</a>
-                          </span>
-                          <div class="nofity-list">
-                            <a href="#" class="notify-item">
-                              <div class="notify-thumb">
-                                <i class="ti-key btn-danger" />
-                              </div>
-                              <div class="notify-text">
-                                <p>You have Changed Your Password</p>
-                                <span>Just Now</span>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="clearfix d-md-inline-block d-block">
-                    <div class="user-profile m-0">
-                      <img
-                        class="avatar user-thumb"
-                        src={`https://graph.google.com/${
-                          this.state.image
-                        }/picture`}
-                        alt="avatar"
-                      />
-                      <h4
-                        class="user-name dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        {this.state.name} <i class="fa fa-angle-down" />
-                      </h4>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">
-                          Message
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          Settings
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          Log Out
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="header-area header-bottom">
-              <div class="container">
-                <div class="row align-items-center">
-                  <div class="col-lg-9  d-none d-lg-block">
-                    <div class="horizontal-menu">
-                      <nav>
-                        <ul id="nav_menu">
-                          <li>
-                            <a href="javascript:void(0)">
-                              <i class="ti-dashboard" />
-                              <span>Dashboard</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="javascript:void(0)">
-                              <span>News</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="javascript:void(0)">
-                              <span>Leaderboard</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </nav>
-                    </div>
-                  </div>
-                  <div class="col-12 d-block d-lg-none">
-                    <div id="mobile_menu" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-=======
           <NavBar />
->>>>>>> 791ddc5d8551f6eae7367571822d856f70549804
           <div className="main-content-inner">
             <div className="container">
               <div className="row">
