@@ -39,37 +39,37 @@ class NavBar extends Component {
       <div class="mainheader-area">
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-md-3">
+            <div class="col-md-1">
               <div class="logo">
-                <a href="index.html">
-                  <img src="assets/images/icon/logo2.png" alt="logo" />
+                <a href="/d">
+                  <img src="assets/images/icon/bnb.png" alt="logo" />
+
                 </a>
+
+                
               </div>
+              {/* <p>Bulls And Bears</p> */}
             </div>
-            <div class="col-md-9 clearfix text-right">
+            <div class="col-md-4">
+              <a href="/d" style={{align:"left"}}>
+                <img src="assets/images/icon/Bulls N Bears.png" alt="logo" />
+
+              </a>
+            </div>
+            <div class="col-md-7 clearfix text-right">
               <div class="clearfix d-md-inline-block d-block">
                 <div class="user-profile m-0">
                   <img
                     class="avatar user-thumb"
                     src={`https://graph.facebook.com/${
                       this.state.image
-                    }/picture`}
+                      }/picture`}
                     alt="avatar"
                   />
                   <h4 class="user-name dropdown-toggle" data-toggle="dropdown">
                     {this.state.name} <i class="fa fa-angle-down" />
                   </h4>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
-                      Message
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      Settings
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      Log Out
-                    </a>
-                  </div>
+
                 </div>
               </div>
             </div>
@@ -112,33 +112,33 @@ class NavBar extends Component {
               </div>
               <div class="col-12 d-block d-lg-none">
                 <div id="mobile_menu" >
-                <ul id="nav_menu">
-                      <li>
-                        <Link to={"/dashboard"}>
-                          <i class="ti-dashboard" />
-                          <span>Dashboard</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={"/market"}>
-                          <i class="ti-dashboard" />
-                          <span>market</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={"/leaderboard"}>
-                          <i class="ti-dashboard" />
-                          <span>leaderboard</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={"/news"}>
-                          <i class="ti-dashboard" />
-                          <span>News</span>
-                        </Link>
-                      </li>
-                    </ul>
-                    </div>
+                  <ul id="nav_menu">
+                    <li>
+                      <Link to={"/dashboard"}>
+                        <i class="ti-dashboard" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/market"}>
+                        <i class="ti-dashboard" />
+                        <span>market</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/leaderboard"}>
+                        <i class="ti-dashboard" />
+                        <span>leaderboard</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/news"}>
+                        <i class="ti-dashboard" />
+                        <span>News</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
