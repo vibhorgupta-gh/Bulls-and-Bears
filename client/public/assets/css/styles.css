@@ -150,8 +150,9 @@
     text-align: center;
 }
 .logo a {
-    display: inline-block;
-    max-width: 120px;
+    
+    max-width: 220px;
+    max-height : 300px;
 }
 
 .metismenu >li >a {
