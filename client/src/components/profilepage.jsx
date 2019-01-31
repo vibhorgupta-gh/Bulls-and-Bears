@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { url } from "../config";
-import jquery from "jquery";
-import ScriptTag from "react-script-tag";
 import NavBar from "./navbar";
 
 class Profile extends Component {
@@ -15,7 +13,7 @@ class Profile extends Component {
       name: "",
       balance: 0,
       worth: 0,
-      rank : 1,
+      rank: 1,
       repay: 0,
       activity: [],
       choice: "bought",
@@ -26,70 +24,71 @@ class Profile extends Component {
     this.handleChange2 = this.handleChange2.bind(this);
   }
 
-
-    componentDidMount() {
-        var self = this;
+  componentDidMount() {
+    var self = this;
+    axios
+      .get(url + "/getcurrentuser", {
+        withCredentials: true
+      })
+      .then(data => {
+        console.log(data.data);
+        var arr = data.data.stockHolding.map(x =>
+          Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
+        );
+        var networth = 0;
+        console.log("arr", arr);
+        for (var i in arr) {
+          networth += (arr[i].quantity + arr[i].TotalStock) * arr[i].company_name.sharePrice;
+        }
+        console.log("networth", networth);
+        if (data.data.facebook == undefined) {
+          self.setState({
+            loan: data.data.loan.amount,
+            image: data.data.google.id,
+            name: data.data.google.name,
+            balance: data.data.accountBalance,
+            activity: data.data.activity,
+            res: arr,
+            netWorth: networth + data.data.accountBalance
+          });
+        } else {
+          self.setState({
+            loan: data.data.loan.amount,
+            image: data.data.facebook.id,
+            name: data.data.facebook.name,
+            balance: data.data.accountBalance,
+            activity: data.data.activity,
+            res: arr,
+            netWorth: networth + data.data.accountBalance
+          });
+        }
         axios
-            .get(url + "/getcurrentuser", {
-                withCredentials: true
-            })
-            .then(data => {
-                console.log(data.data);
-                var arr = data.data.stockHolding.map(x =>
-                    Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-                );
-                var networth = 0;
-                console.log("arr",arr);
-                for (var i in arr) {
-                    networth += (i.quantity + i.TotalStock) * i.sharePrice;
-                }
-                console.log("networth",networth);
-                if (data.data.facebook == undefined) {
-                    self.setState({
-                        loan: data.data.loan.amount,
-                        image: data.data.google.id,
-                        name: data.data.google.name,
-                        balance: data.data.accountBalance,
-                        activity: data.data.activity,
-                        res: arr,
-                        netWorth: networth + data.data.accountBalance
-                    });
-                } else {
-                    self.setState({
-                        loan: data.data.loan.amount,
-                        image: data.data.facebook.id,
-                        name: data.data.facebook.name,
-                        balance: data.data.accountBalance,
-                        activity: data.data.activity,
-                        res: arr,
-                        netWorth: networth + data.data.loan.amount
-                    });
-                }
-                axios
-                    .get(url + "/leaderboard", {
-                        withCredentials: true
-                    })
-                    .then(data => {
-                        const arr = [...data.data];
+          .get(url + "/leaderboard", {
+            withCredentials: true
+          })
+          .then(data => {
+            const arr = [...data.data];
 
-                        // console.log('This is the new array --> ' + Object.keys(arr[0]));
-                        arr.sort(function(a, b) {
-                            return b.accountBalance - a.accountBalance;
-                        });
-                        var index = arr.map(function(e) { return e.facebook!=undefined ? e.facebook.id : e.google.id; }).indexOf(this.state.image);
-                        console.log("rank",index);
-                        self.setState({
-                            rank: index
-                        });
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-
+            // console.log('This is the new array --> ' + Object.keys(arr[0]));
+            arr.sort(function(a, b) {
+              return b.accountBalance - a.accountBalance;
             });
-
-    }
-    takeLoan() {
+            var index = arr
+              .map(function(e) {
+                return e.facebook != undefined ? e.facebook.id : e.google.id;
+              })
+              .indexOf(this.state.image);
+            console.log("rank", index);
+            self.setState({
+              rank: index
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+  }
+  takeLoan() {
     console.log(this.state.amount);
     var self = this;
     axios
@@ -106,8 +105,8 @@ class Profile extends Component {
         console.log(data.data);
         this.setState({
           loan: data.data.Customer.loan.amount,
-          balance:data.data.Customer.accountBalance,
-          amount:0,
+          balance: data.data.Customer.accountBalance,
+          amount: 0
         });
       });
   }
@@ -128,8 +127,8 @@ class Profile extends Component {
         console.log(data.data);
         this.setState({
           loan: data.data.Customer.loan.amount,
-          balance:data.data.Customer.accountBalance,
-          repay:0,
+          balance: data.data.Customer.accountBalance,
+          repay: 0
         });
       });
   }
@@ -175,7 +174,7 @@ class Profile extends Component {
                               <i class="fa fa-rupee" />
                               Net Worth
                             </div>
-                            <h2>0</h2>
+                            <h2>{this.state.netWorth}</h2>
                           </div>
                         </div>
                       </div>
@@ -201,7 +200,7 @@ class Profile extends Component {
                             <div class="seofct-icon">
                               <i class="fa fa-users" /> Rank
                             </div>
-                            <h2>{this.state.rank+1}</h2>
+                            <h2>{this.state.rank + 1}</h2>
                           </div>
                         </div>
                       </div>
@@ -219,14 +218,26 @@ class Profile extends Component {
                             type="number"
                             onChange={this.handleChange}
                           />
-                          <span style={{cursor:"pointer"}} onClick={() => this.takeLoan()}>Take Loan</span>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => this.takeLoan()}
+                          >
+                            Take Loan
+                          </span>
                         </div>
                         <br />
                         <div class="input-form">
-                          <input value={this.state.repay}
+                          <input
+                            value={this.state.repay}
                             type="number"
-                            onChange={this.handleChange2} />
-                          <span style={{cursor:"pointer"}} onClick={() => this.repayLoan()}>Repay Loan</span>
+                            onChange={this.handleChange2}
+                          />
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => this.repayLoan()}
+                          >
+                            Repay Loan
+                          </span>
                         </div>
                       </form>
                     </div>
@@ -235,7 +246,7 @@ class Profile extends Component {
               </div>
               <div className="row mt-5 mb-5">
                 <div className="col-lg-6 mt-sm-22 mt-xs-22">
-                  <div className="card">
+                  <div className="card" style={{marginBottom:"20px"}}>
                     <div className="card-body">
                       <div className="d-sm-flex justify-content-between align-items-center">
                         <h4 className="header-title mb-0">Portfolio</h4>
@@ -246,7 +257,7 @@ class Profile extends Component {
                       </div>
                       <div className="market-status-table mt-4">
                         <div class="single-table">
-                          <div class="table-responsive">
+                          <div class="table-responsive" style={{maxHeight:"350px"}}>
                             <table class="table table-hover text-center">
                               <thead class="text-uppercase">
                                 <tr>
@@ -257,30 +268,18 @@ class Profile extends Component {
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <th scope="row">1</th>
-                                  <td>Mark</td>
-                                  <td>09 / 07 / 2018</td>
-                                  <td>$120</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">1</th>
-                                  <td>jone</td>
-                                  <td>09 / 07 / 2018</td>
-                                  <td>$150</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">1</th>
-                                  <td>Mark</td>
-                                  <td>09 / 07 / 2018</td>
-                                  <td>$120</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">1</th>
-                                  <td>jone</td>
-                                  <td>09 / 07 / 2018</td>
-                                  <td>$150</td>
-                                </tr>
+                                {this.state.res.map((value, index) => {
+                                  return (
+                                    <tr>
+                                      <th scope="row">
+                                        {value.company_name.name}
+                                      </th>
+                                      <td>{value.TotalStock}</td>
+                                      <td>{value.quantity}</td>
+                                      <td>{value.company_name.sharePrice}</td>
+                                    </tr>
+                                  );
+                                })}
                               </tbody>
                             </table>
                           </div>
@@ -299,9 +298,11 @@ class Profile extends Component {
                           <ul className="nav" role="tablist">
                             <li>
                               <a
-                                className="active"
+                                className={
+                                  this.state.choice == "bought" ? "active" : ""
+                                }
+                                style={{ cursor: "pointer" }}
                                 data-toggle="tab"
-                                href="#buy_order"
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "bought" });
@@ -313,7 +314,10 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                href="#sell_order"
+                                className={
+                                  this.state.choice == "sold" ? "active" : ""
+                                }
+                                style={{ cursor: "pointer" }}
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "sold" });
@@ -325,7 +329,10 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                href="#sell_order"
+                                className={
+                                  this.state.choice == "shorted" ? "active" : ""
+                                }
+                                style={{ cursor: "pointer" }}
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "shorted" });
@@ -337,7 +344,10 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                href="#sell_order"
+                                className={
+                                  this.state.choice == "covered" ? "active" : ""
+                                }
+                                style={{ cursor: "pointer" }}
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "covered" });
@@ -357,8 +367,8 @@ class Profile extends Component {
                             role="tabpanel"
                           >
                             <div class="single-table">
-                              <div class="table-responsive">
-                                <table class="table table-hover text-center">
+                              <div class="table-responsive" style={{maxHeight:"350px"}}>
+                                <table class="table table-hover text-center" >
                                   <thead class="text-uppercase">
                                     <tr>
                                       <th scope="col">Company</th>
@@ -376,7 +386,9 @@ class Profile extends Component {
                                       .map((value, index) => {
                                         return (
                                           <tr>
-                                            <th scope="row">{value.company.name}</th>
+                                            <th scope="row">
+                                              {value.company.name}
+                                            </th>
                                             <td>{value.price}</td>
                                             <td>{value.quantity}</td>
                                           </tr>

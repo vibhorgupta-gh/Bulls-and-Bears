@@ -31,7 +31,7 @@ class Company extends Component {
         }
       ],
       chartData: {
-        labels: [],
+        labels: [1,2,3],
         datasets: [
           {
             label: "My Second dataset",
@@ -41,43 +41,29 @@ class Company extends Component {
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
-            data: []
+            data: [1,2,3]
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-				title: {
-					display: true,
-					text: 'Chart.js Line Chart'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Month'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Value'
-						}
-					}]
-				}
-			}
-		};
+        title: {
+          display: true,
+          text: "Chart.js Line Chart"
+        },
+        tooltips: {
+          mode: "label"
+        },
+        hover: {
+          mode: "dataset"
+        },
+
+        scaleShowLabels: true,
+        scaleLabel: "<%=value%>",
+        scaleFontColor: "#666",
+      }
+    };
   }
   buystock() {
     console.log(`${url}/buy/${this.state.id}`);
@@ -157,9 +143,10 @@ class Company extends Component {
   }
 
   componentDidMount() {
+    console.log("props",this.props);
     let self = this;
     axios
-      .get(url + "/company_detail/5c501fbb90ffc3115b2d0107", {
+      .get(url + "/company_detail/"+this.props.match.params.id, {
         withCredentials: true
       })
       .then(data => {
@@ -174,7 +161,7 @@ class Company extends Component {
           history: data.data.history,
           id: data.data._id,
           chartData: {
-            labels: data.data.history.map(a => a.timestamp),
+            labels: data.data.history.length!=0 ? data.data.history.map(a => a.timestamp) :  [1,2,3],
             datasets: [
               {
                 label: "My Second dataset",
@@ -184,44 +171,15 @@ class Company extends Component {
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(151,187,205,1)",
-                data: data.data.history.map(a => a.sharePrice)
+                data: data.data.history.length!=0 ? data.data.history.map(a => a.sharePrice) :  [1,2,3]
               }
             ]
           },
           options: {
             responsive: true,
-            title: {
-              display: true,
-              text: "Chart.js Line Chart"
-            },
-            tooltips: {
-              mode: "index",
-              intersect: false
-            },
-            hover: {
-              mode: "nearest",
-              intersect: true
-            },
-            scales: {
-              xAxes: [
-                {
-                  display: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Month"
-                  }
-                }
-              ],
-              yAxes: [
-                {
-                  display: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Value"
-                  }
-                }
-              ]
-            }
+            maintainAspectRatio: false,
+            scaleShowLabels: true,
+            scaleLabel: "<%=value%>"
           }
         });
       });
