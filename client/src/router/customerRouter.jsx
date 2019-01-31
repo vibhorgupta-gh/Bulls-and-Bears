@@ -16,7 +16,7 @@ class CustomerRoutes extends Component {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/leaderboard" component={Leaderboard} />
           <Route exact path="/market" component={CompanyList} />
-          <Route exact path="/company" component={Company} />
+          <Route  path="/company/:id" component={Company} />
           <Route exact path="/dashboard" component={ProfilePage} />
           <Route exact path="/news" component={News} />
         </Switch>

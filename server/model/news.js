@@ -13,7 +13,8 @@ const newsSchema = mongoose.Schema({
 	newsImpact: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Company"
-	}]
+	}],
+	description : String,
 
 });
 

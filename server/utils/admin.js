@@ -70,7 +70,8 @@ editNews(req,res){
   const obj = {
     newsText: req.body.newsText,
     publishedOn: req.body.publishedOn,
-    newsImpact: null
+    newsImpact: null,
+    description : req.body.description
   };
   News.findByIdAndUpdate(req.params.id,obj,{new:true}).then(news =>{
     res.json(news);
@@ -93,7 +94,9 @@ addNews(req, res) {
   const obj = {
     newsText: req.body.newsText,
     publishedOn: req.body.publishedOn,
-    newsImpact: Company
+    newsImpact: Company,
+    description : req.body.description
+
   };
   News.create(obj).then(news =>{
     news.save();
