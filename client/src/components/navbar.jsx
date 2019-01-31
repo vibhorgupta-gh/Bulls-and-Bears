@@ -69,7 +69,7 @@ class NavBar extends Component {
                                     {this.state.name} <i className="fa fa-angle-down"></i>
                                 </h4>
 
-                                <div className="dropdown">
+                                <div className="dropdown-menu">
                                     <a className="dropdown-item" href="#">Message</a>
                                     <a className="dropdown-item" href="http://localhost:8080/logout">Log Out</a>
                                 </div>
