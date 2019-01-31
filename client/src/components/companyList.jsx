@@ -8,10 +8,10 @@ class CompanyList extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          list : [] ,
-          image: null 
+            list : [] ,
+            image: null
         };
-      }
+    }
 
 
     componentDidMount() {
@@ -22,28 +22,28 @@ class CompanyList extends Component{
             console.log(data.data);
             self.setState({
                 list : data.data
-            })         
-        })       
+            })
+        })
     }
 
     render() {
         return (
-          <div class="body-bg">
-            <div class="horizontal-main-wrapper">
-                <NavBar></NavBar>
-                <div class="main-content-inner">        
-                    <div class="sales-report-area mt-5 mb-5">
-                            
+            <div class="body-bg">
+                <div class="horizontal-main-wrapper">
+                    <NavBar></NavBar>
+                    <div class="main-content-inner">
+                        <div class="sales-report-area mt-5 mb-5">
+
                             <div class="row mt-5 mb-5">
                                 <div class="col-lg-12 spa">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-sm-flex justify-content-between align-items-center">
                                                 <h4 class="header-title mb-0">Company List</h4>
-                                                    <select class="custome-select border-0 pr-3">
-                                                        <option selected>Last 24 Hours</option>
-                                                        <option value="0">10 February 2019</option>
-                                                    </select>
+                                                <select class="custome-select border-0 pr-3">
+                                                    <option selected>Last 24 Hours</option>
+                                                    <option value="0">10 February 2019</option>
+                                                </select>
                                             </div>
                                             <div class="market-status-table mt-4">
                                                 <div class="table-responsive">
@@ -57,7 +57,7 @@ class CompanyList extends Component{
                                                             <td class="attachments">Shares Available</td>
                                                             <td class="stats-chart">Share Price</td>
                                                         </tr>
-                                                    
+
                                                         {this.state.list
                                                             .map((el,index) => {
                                                                 return (
@@ -72,7 +72,7 @@ class CompanyList extends Component{
                                                                         <td class="stats-chart">{el.sharePrice}</td>
                                                                     </tr>
                                                                 )
-                                                            })      
+                                                            })
                                                         }
                                                     </table>
                                                 </div>
@@ -80,15 +80,15 @@ class CompanyList extends Component{
                                         </div>
                                     </div>
                                 </div>
-                            </div>                
-                        
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
         );
-      }
     }
-    
+}
+
 
 export default CompanyList;

@@ -26,68 +26,70 @@ class Profile extends Component {
     this.handleChange2 = this.handleChange2.bind(this);
   }
 
-  componentDidMount() {
-    var self = this;
-    axios
-      .get(url + "/getcurrentuser", {
-        withCredentials: true
-      })
-      .then(data => {
-        console.log(data.data);
-        var arr = data.data.stockHolding.map(x =>
-          Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-        );
-        var networth = 0;
-        console.log("arr",arr);
-        for (var i in arr) {
-          networth += (i.quantity + i.TotalStock) * i.sharePrice;
-        }
-        console.log("networth",networth);
-        if (data.data.facebook == undefined) {
-          self.setState({
-            loan: data.data.loan.amount,
-            image: data.data.google.id,
-            name: data.data.google.name,
-            balance: data.data.accountBalance,
-            activity: data.data.activity,
-            res: arr,
-            netWorth: networth + data.data.accountBalance
-          });
-        } else {
-          self.setState({
-            loan: data.data.loan.amount,
-            image: data.data.facebook.id,
-            name: data.data.facebook.name,
-            balance: data.data.accountBalance,
-            activity: data.data.activity,
-            res: arr,
-            netWorth: networth + data.data.loan.amount
-          });
-        }
-        axios
-      .get(url + "/leaderboard", {
-        withCredentials: true
-      })
-      .then(data => {
-        const arr = [...data.data];
 
-        // console.log('This is the new array --> ' + Object.keys(arr[0]));
-        arr.sort(function(a, b) {
-          return b.accountBalance - a.accountBalance;
-        });
-        var index = arr.map(function(e) { return e.facebook!=undefined ? e.facebook.id : e.google.id; }).indexOf(this.state.image);
-        console.log("rank",index);
-        self.setState({
-          rank: index
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-      });
-    
-  }
-  takeLoan() {
+    componentDidMount() {
+        var self = this;
+        axios
+            .get(url + "/getcurrentuser", {
+                withCredentials: true
+            })
+            .then(data => {
+                console.log(data.data);
+                var arr = data.data.stockHolding.map(x =>
+                    Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
+                );
+                var networth = 0;
+                console.log("arr",arr);
+                for (var i in arr) {
+                    networth += (i.quantity + i.TotalStock) * i.sharePrice;
+                }
+                console.log("networth",networth);
+                if (data.data.facebook == undefined) {
+                    self.setState({
+                        loan: data.data.loan.amount,
+                        image: data.data.google.id,
+                        name: data.data.google.name,
+                        balance: data.data.accountBalance,
+                        activity: data.data.activity,
+                        res: arr,
+                        netWorth: networth + data.data.accountBalance
+                    });
+                } else {
+                    self.setState({
+                        loan: data.data.loan.amount,
+                        image: data.data.facebook.id,
+                        name: data.data.facebook.name,
+                        balance: data.data.accountBalance,
+                        activity: data.data.activity,
+                        res: arr,
+                        netWorth: networth + data.data.loan.amount
+                    });
+                }
+                axios
+                    .get(url + "/leaderboard", {
+                        withCredentials: true
+                    })
+                    .then(data => {
+                        const arr = [...data.data];
+
+                        // console.log('This is the new array --> ' + Object.keys(arr[0]));
+                        arr.sort(function(a, b) {
+                            return b.accountBalance - a.accountBalance;
+                        });
+                        var index = arr.map(function(e) { return e.facebook!=undefined ? e.facebook.id : e.google.id; }).indexOf(this.state.image);
+                        console.log("rank",index);
+                        self.setState({
+                            rank: index
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+
+            });
+
+    }
+    takeLoan() {
     console.log(this.state.amount);
     var self = this;
     axios
@@ -104,8 +106,8 @@ class Profile extends Component {
         console.log(data.data);
         this.setState({
           loan: data.data.Customer.loan.amount,
-          balance: data.data.Customer.accountBalance,
-          amount: 0
+          balance:data.data.Customer.accountBalance,
+          amount:0,
         });
       });
   }
@@ -126,8 +128,8 @@ class Profile extends Component {
         console.log(data.data);
         this.setState({
           loan: data.data.Customer.loan.amount,
-          balance: data.data.Customer.accountBalance,
-          repay: 0
+          balance:data.data.Customer.accountBalance,
+          repay:0,
         });
       });
   }
@@ -217,26 +219,14 @@ class Profile extends Component {
                             type="number"
                             onChange={this.handleChange}
                           />
-                          <span
-                            style={{ cursor: "pointer" }}
-                            onClick={() => this.takeLoan()}
-                          >
-                            Take Loan
-                          </span>
+                          <span style={{cursor:"pointer"}} onClick={() => this.takeLoan()}>Take Loan</span>
                         </div>
                         <br />
                         <div class="input-form">
-                          <input
-                            value={this.state.repay}
+                          <input value={this.state.repay}
                             type="number"
-                            onChange={this.handleChange2}
-                          />
-                          <span
-                            style={{ cursor: "pointer" }}
-                            onClick={() => this.repayLoan()}
-                          >
-                            Repay Loan
-                          </span>
+                            onChange={this.handleChange2} />
+                          <span style={{cursor:"pointer"}} onClick={() => this.repayLoan()}>Repay Loan</span>
                         </div>
                       </form>
                     </div>
@@ -267,18 +257,30 @@ class Profile extends Component {
                                 </tr>
                               </thead>
                               <tbody>
-                                {this.state.res.map((value, index) => {
-                                  return (
-                                    <tr>
-                                      <th scope="row">
-                                        {value.company_name.name}
-                                      </th>
-                                      <td>{value.TotalStock}</td>
-                                      <td>{value.quantity}</td>
-                                      <td>{value.company_name.sharePrice}</td>
-                                    </tr>
-                                  );
-                                })}
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>Mark</td>
+                                  <td>09 / 07 / 2018</td>
+                                  <td>$120</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>jone</td>
+                                  <td>09 / 07 / 2018</td>
+                                  <td>$150</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>Mark</td>
+                                  <td>09 / 07 / 2018</td>
+                                  <td>$120</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>jone</td>
+                                  <td>09 / 07 / 2018</td>
+                                  <td>$150</td>
+                                </tr>
                               </tbody>
                             </table>
                           </div>
@@ -297,11 +299,9 @@ class Profile extends Component {
                           <ul className="nav" role="tablist">
                             <li>
                               <a
-                                className={
-                                  this.state.choice == "bought" ? "active" : ""
-                                }
-                                style={{ cursor: "pointer" }}
+                                className="active"
                                 data-toggle="tab"
+                                href="#buy_order"
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "bought" });
@@ -313,10 +313,7 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                className={
-                                  this.state.choice == "sold" ? "active" : ""
-                                }
-                                style={{ cursor: "pointer" }}
+                                href="#sell_order"
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "sold" });
@@ -328,10 +325,7 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                className={
-                                  this.state.choice == "shorted" ? "active" : ""
-                                }
-                                style={{ cursor: "pointer" }}
+                                href="#sell_order"
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "shorted" });
@@ -343,10 +337,7 @@ class Profile extends Component {
                             <li>
                               <a
                                 data-toggle="tab"
-                                className={
-                                  this.state.choice == "covered" ? "active" : ""
-                                }
-                                style={{ cursor: "pointer" }}
+                                href="#sell_order"
                                 role="tab"
                                 onClick={() => {
                                   this.setState({ choice: "covered" });
@@ -385,9 +376,7 @@ class Profile extends Component {
                                       .map((value, index) => {
                                         return (
                                           <tr>
-                                            <th scope="row">
-                                              {value.company.name}
-                                            </th>
+                                            <th scope="row">{value.company.name}</th>
                                             <td>{value.price}</td>
                                             <td>{value.quantity}</td>
                                           </tr>

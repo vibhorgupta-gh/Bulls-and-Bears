@@ -158,7 +158,6 @@ class Company extends Component {
 
   componentDidMount() {
     let self = this;
-
     axios
       .get(url + "/company_detail/5c501fbb90ffc3115b2d0107", {
         withCredentials: true
@@ -233,6 +232,7 @@ class Company extends Component {
     });
     console.log(e.target.value);
   }
+
   render() {
     return (
       <div class="body-bg">

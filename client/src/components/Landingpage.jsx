@@ -13,9 +13,9 @@ class LandingPage extends Component {
                   <p>
                     Hello there, Sign in and start managing your Admin Template
                   </p>
-                
+
                   <div class="submit-btn-area">
-                  
+
                     <div class="login-other row mt-4">
                       <div class="col-6">
                         <a class="fb-login" href={url + "/auth/facebook"}>
