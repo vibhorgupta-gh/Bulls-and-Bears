@@ -71,7 +71,7 @@ class LeaderBoard extends Component {
                                     <td class="mv-icon">{index + 1}</td>
                                     <img
                                       class="avatar user-thumb"
-                                      src={`/assets/np.jpg`}
+                                      src={el.google.ph}
                                       alt="avatar"
                                     />
                                  

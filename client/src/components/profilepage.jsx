@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { url } from "../config";
 import NavBar from "./navbar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class Profile extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class Profile extends Component {
       name: "",
       balance: 0,
       worth: 0,
-      rank: 1,
+      rank: 0,
       repay: 0,
       activity: [],
       choice: "bought",
@@ -38,7 +41,9 @@ class Profile extends Component {
         var networth = 0;
         console.log("arr", arr);
         for (var i in arr) {
-          networth += (arr[i].quantity + arr[i].TotalStock) * arr[i].company_name.sharePrice;
+          networth +=
+            ((arr[i].quantity || 0) + (arr[i].TotalStock || 0)) *
+            arr[i].company_name.sharePrice;
         }
         console.log("networth", networth);
         if (data.data.facebook == undefined) {
@@ -49,7 +54,7 @@ class Profile extends Component {
             balance: data.data.accountBalance,
             activity: data.data.activity,
             res: arr,
-            netWorth: networth + data.data.accountBalance
+            netWorth: networth + data.data.accountBalance - data.data.loan.amount,
           });
         } else {
           self.setState({
@@ -103,11 +108,19 @@ class Profile extends Component {
       )
       .then(data => {
         console.log(data.data);
-        this.setState({
-          loan: data.data.Customer.loan.amount,
-          balance: data.data.Customer.accountBalance,
-          amount: 0
-        });
+        if (data.data.msg != undefined) {
+          toast.error("Loan limit exceeded");
+          this.setState({
+            amount: 0
+          });
+        } else {
+          this.setState({
+            loan: data.data.Customer.loan.amount,
+            balance: data.data.Customer.accountBalance,
+            amount: 0
+          });
+          toast.success("loan granted successfully");
+        }
       });
   }
   repayLoan() {
@@ -125,11 +138,19 @@ class Profile extends Component {
       )
       .then(data => {
         console.log(data.data);
-        this.setState({
-          loan: data.data.Customer.loan.amount,
-          balance: data.data.Customer.accountBalance,
-          repay: 0
-        });
+        if (data.data.msg != undefined) {
+          toast.error("Unable to repay loan");
+          this.setState({
+            repay: 0
+          });
+        } else {
+          this.setState({
+            loan: data.data.Customer.loan.amount,
+            balance: data.data.Customer.accountBalance,
+            repay: 0
+          });
+          toast.success("Loan repaid successfully");
+        }
       });
   }
   handleChange(e) {
@@ -246,7 +267,7 @@ class Profile extends Component {
               </div>
               <div className="row mt-5 mb-5">
                 <div className="col-lg-6 mt-sm-22 mt-xs-22">
-                  <div className="card" style={{marginBottom:"20px"}}>
+                  <div className="card" style={{ marginBottom: "20px" }}>
                     <div className="card-body">
                       <div className="d-sm-flex justify-content-between align-items-center">
                         <h4 className="header-title mb-0">Portfolio</h4>
@@ -257,25 +278,28 @@ class Profile extends Component {
                       </div>
                       <div className="market-status-table mt-4">
                         <div class="single-table">
-                          <div class="table-responsive" style={{maxHeight:"350px"}}>
+                          <div
+                            class="table-responsive"
+                            style={{ maxHeight: "350px" }}
+                          >
                             <table class="table table-hover text-center">
                               <thead class="text-uppercase">
                                 <tr>
                                   <th scope="col">Company</th>
-                                  <th scope="col">Holding</th>
                                   <th scope="col">Shorted</th>
+                                  <th scope="col">Holdings</th>
                                   <th scope="col">Price</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {this.state.res.map((value, index) => {
                                   return (
-                                    <tr>
+                                    <tr style={{ cursor: "pointer" }} onClick={()=>{this.props.history.push("/company/" + value._id)}}>
                                       <th scope="row">
                                         {value.company_name.name}
                                       </th>
-                                      <td>{value.TotalStock}</td>
-                                      <td>{value.quantity}</td>
+                                      <td>{value.TotalStock || 0}</td>
+                                      <td>{value.quantity || 0}</td>
                                       <td>{value.company_name.sharePrice}</td>
                                     </tr>
                                   );
@@ -367,8 +391,11 @@ class Profile extends Component {
                             role="tabpanel"
                           >
                             <div class="single-table">
-                              <div class="table-responsive" style={{maxHeight:"350px"}}>
-                                <table class="table table-hover text-center" >
+                              <div
+                                class="table-responsive"
+                                style={{ maxHeight: "350px" }}
+                              >
+                                <table class="table table-hover text-center">
                                   <thead class="text-uppercase">
                                     <tr>
                                       <th scope="col">Company</th>
@@ -408,6 +435,7 @@ class Profile extends Component {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     );
   }

@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import { url } from "../config";
 import NavBar from "./navbar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 var LineChart = require("react-chartjs");
 
 class Company extends Component {
@@ -31,7 +34,7 @@ class Company extends Component {
         }
       ],
       chartData: {
-        labels: [1,2,3],
+        labels: [1, 2, 3],
         datasets: [
           {
             label: "My Second dataset",
@@ -41,27 +44,15 @@ class Company extends Component {
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [1,2,3]
+            data: [1, 2, 3]
           }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: "Chart.js Line Chart"
-        },
-        tooltips: {
-          mode: "label"
-        },
-        hover: {
-          mode: "dataset"
-        },
-
         scaleShowLabels: true,
-        scaleLabel: "<%=value%>",
-        scaleFontColor: "#666",
+        scaleLabel: "<%=value%> $",
+        scaleFontColor: "#666"
       }
     };
   }
@@ -79,6 +70,14 @@ class Company extends Component {
       )
       .then(data => {
         console.log(data);
+        if(data.data.msg!=undefined)
+        {
+          toast.error("Can't buy stock due to some reason");
+        }
+        else
+        {
+          toast.success("successfully bought the stocks!")
+        }
         this.setState({
           buy: 0
         });
@@ -97,7 +96,16 @@ class Company extends Component {
         }
       )
       .then(data => {
+
         console.log(data);
+        if(data.data.msg!=undefined)
+        {
+          toast.error("Can't sell stock due to some reason");
+        }
+        else
+        {
+          toast.success("successfully sold the stocks!")
+        }
         this.setState({
           sell: 0
         });
@@ -117,6 +125,14 @@ class Company extends Component {
       )
       .then(data => {
         console.log(data);
+        if(data.data.msg!=undefined)
+        {
+          toast.error("Can't buy short due to some reason");
+        }
+        else
+        {
+          toast.success("successfully shorted the stocks!")
+        }
         this.setState({
           short: 0
         });
@@ -136,6 +152,14 @@ class Company extends Component {
       )
       .then(data => {
         console.log(data);
+        if(data.data.msg!=undefined)
+        {
+          toast.error("Can't cover stock due to some reason");
+        }
+        else
+        {
+          toast.success("successfully covered the stocks!")
+        }
         this.setState({
           cover: 0
         });
@@ -143,10 +167,10 @@ class Company extends Component {
   }
 
   componentDidMount() {
-    console.log("props",this.props);
+    console.log("props", this.props);
     let self = this;
     axios
-      .get(url + "/company_detail/"+this.props.match.params.id, {
+      .get(url + "/company_detail/" + this.props.match.params.id, {
         withCredentials: true
       })
       .then(data => {
@@ -161,7 +185,13 @@ class Company extends Component {
           history: data.data.history,
           id: data.data._id,
           chartData: {
-            labels: data.data.history.length!=0 ? data.data.history.map(a => a.timestamp) :  [1,2,3],
+            labels:
+              data.data.history.length != 0
+                ? Array.from(
+                    new Array(data.data.history.length),
+                    (val, index) => index
+                  )
+                : [1, 2, 3],
             datasets: [
               {
                 label: "My Second dataset",
@@ -171,16 +201,13 @@ class Company extends Component {
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(151,187,205,1)",
-                data: data.data.history.length!=0 ? data.data.history.map(a => a.sharePrice) :  [1,2,3]
+                data:
+                  data.data.history.length != 0
+                    ? data.data.history.map(a => a.sharePrice)
+                    : [1, 2, 3]
               }
             ]
           },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scaleShowLabels: true,
-            scaleLabel: "<%=value%>"
-          }
         });
       });
   }
@@ -201,12 +228,16 @@ class Company extends Component {
               <br />
               <div className="row">
                 <div class="col-xl-8 col-lg-12 mt-6">
-                  <div className="card" style={{ height: "350px" }}>
+                  <div className="card">
                     <div className="card-body">
+                      <div className="d-sm-flex justify-content-between align-items-center">
+                        <h4 className="header-title">Stock Statistics</h4>
+                        <h4 className="header-title">{this.state.name}</h4>
+                      </div>
                       <LineChart.Line
                         data={this.state.chartData}
                         options={this.state.options}
-                      />
+                      />                      
                     </div>
                   </div>
                 </div>
@@ -334,6 +365,7 @@ class Company extends Component {
             </div>
           </div>
         </div>
+        <ToastContainer></ToastContainer>
       </div>
     );
   }

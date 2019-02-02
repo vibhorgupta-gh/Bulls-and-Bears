@@ -62,7 +62,7 @@ class CompanyList extends Component {
                               if (el.history.length > 1) {
                                 trends =
                                   el.history[el.history.length - 1].sharePrice >
-                                  el.history[el.history.length - 1].sharePrice;
+                                  el.history[el.history.length - 2].sharePrice;
                               }
                               return (
                                 <Link to={"/company/" + el._id}>

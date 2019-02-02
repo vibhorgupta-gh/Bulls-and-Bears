@@ -47,7 +47,7 @@ module.exports = function (app, passport) {
 
                     // if there is an error, stop everything and return that
                     // ie an error connecting to the database
-                   
+
                     if (err) {
                         return done(err);
                     }
@@ -57,7 +57,7 @@ module.exports = function (app, passport) {
                     } else {
                         // if there is no user found with that facebook id, create them
                         let newUser = new User();
-                        
+
                         // set all of the facebook information in our user model
                         newUser.facebook.id = profile.id; // set the users facebook id
                         newUser.facebook.token = token; // we will save the token that facebook provides to the user
@@ -109,6 +109,7 @@ module.exports = function (app, passport) {
                             if (!user.google.token) {
                                 user.google.token = token;
                                 user.google.name = profile.displayName;
+                                user.google.ph = profile.photos[0].value;
                                 console.log(user.google.name);
                                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
@@ -127,6 +128,7 @@ module.exports = function (app, passport) {
                             newUser.google.id = profile.id;
                             newUser.google.token = token;
                             newUser.google.name = profile.displayName;
+                            newUser.google.ph = profile.photos[0].value;
                             console.log(newUser.google.id);
                             newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
@@ -144,6 +146,8 @@ module.exports = function (app, passport) {
                     user.google.id = profile.id;
                     user.google.token = token;
                     user.google.name = profile.displayName;
+                    user.google.ph = profile.photos[0].value;
+
                     console.log(user.google.name);
                     user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
