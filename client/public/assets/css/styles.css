@@ -155,6 +155,136 @@
     max-height : 300px;
 }
 
+body {
+    background-color : black ;
+}
+
+#imgB {
+    position : relative ;
+    width : 45% ;
+    margin : 30px 80px ;
+    right : -20em ;
+    animation : fadeIn 5s linear ;
+}
+
+#myProgress {
+    width: 40%;
+    background-color: grey;
+    margin : 20px auto ;
+  }
+  
+#myBar {
+    width: 0%;
+    height: 20px;
+    background-color: white;
+    animation : fillBar 8s linear ;
+}
+
+#myBar a {
+    color : black ;
+    opacity : 0;
+    font-family: "Arial" , sans-serif;
+    font-size : 20px;
+    position: relative;
+    width: 1000px;
+    right: -12em;
+    top: -5px;
+    padding-top: 10px;
+    /* animation-name: clickLink; */
+    animation: clickLink 10s 8s ease-out; 
+    
+    /* animation-timing-function: ease-out; 
+    animation-fill-mode: forwards; 
+    animation-delay: 8s; */
+}
+
+@keyframes fadeIn { 
+    0% {
+        opacity : 0 ;
+    }
+    100% {
+        opacity : 1 ;
+    }
+}
+
+
+@keyframes fillBar { 
+    0% {
+        width : 0%;
+    }
+    100% {
+        width : 100%;
+    }
+}
+
+#myBar {
+    width: 100%;   
+}
+
+@keyframes clickLink { 
+    0% {
+        opacity : 0 ;
+    }
+    100% {
+        opacity : 1 ;
+    }
+}
+
+/* #myBar a {
+    opacity : 1 ;
+} */
+
+/* #leftImg {
+    position : relative ;
+    width : 10.2% ;
+    height : 10% ;
+    animation : slideRight 3s linear ;
+    right : 30em ;
+}
+
+#rightImg {
+    position : relative ;
+    width : 10% ;
+    height : 10% ;
+    opacity : 1 ;
+    animation : slideLeft 5s linear ;
+    right: -100em;
+}
+@keyframes slideLeft {
+    
+    50% {
+        transform : translate(-70em);
+    }
+
+    75%{
+        transform: translate(-69em,0);
+    }
+
+    100% {
+        transform : translate(-70em);
+        opacity : 1;
+        right : 10px ;
+    }
+}
+
+@keyframes slideRight {
+    50% {
+        transform : translate(50em);
+    }
+
+    75%{
+        transform: translate(49em,0);
+    }
+
+    100% {
+        transform : translate(50em);
+        opacity : 1;
+        right : 10px ;
+    }
+} */
+
+
+
 .metismenu >li >a {
     padding-left: 32px!important;
 }
