@@ -8,6 +8,7 @@ const passport = require('passport');
 const config = require('./config.js');
 const app = express();
 var cors = require('cors')
+var cron = require('cron');
 
 app.use(cors({
   methods: ['GET', 'POST'],
@@ -49,6 +50,11 @@ mongoose.connection.on('error', (err) => {
     console.log('error is ' + err + config.SECRETS.database.url);
   }
 });
+// let job = require('./utils/random_effect')(cron);
+// let job4 = require('./utils/newsPublish')(cron);
+// let job3 = require('./utils/neweffect')(cron);
+// let job1 = require('./utils/highnew_impact')(cron);
+// let job2 = require('./utils/newdepublisher')(cron);
 
 require('./routes/routes')(app, passport)
 require('./routes/admin')(app, passport)
