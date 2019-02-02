@@ -6,13 +6,14 @@ import Company from "../components/company";
 import ProfilePage from "../components/profilepage";
 import News from "../components/news";
 import LandingPage from "../components/Landingpage";
-
+import LandingLoader from '../components/landingLoader';
 
 class CustomerRoutes extends Component {
   render() {
     return (
       <Router>
         <Switch>
+          <Route exact path="/landing" component={LandingLoader} />
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/leaderboard" component={Leaderboard} />
           <Route exact path="/market" component={CompanyList} />
