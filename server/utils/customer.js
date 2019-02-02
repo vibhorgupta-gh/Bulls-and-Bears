@@ -65,7 +65,11 @@ exports.getNewsDetail = function (req, res) { //yet to be tested
 }
 
 exports.getNews = function (req, res) {
-  News.find({}).then(newslist => {
+  News.find({
+      flag: {
+        $ne: "0"
+      }
+    }).then(newslist => {
       res.json(newslist)
     })
     .catch(err => {
