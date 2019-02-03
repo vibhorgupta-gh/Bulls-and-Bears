@@ -31,6 +31,7 @@ module.exports = function (cron) {
                                 availableQuantity: Company.availableQuantity
                             });
                             Company.save();
+                            console.log("high effects",Company.name);
                         }).catch(err => {
                             console.log(err)
                         })

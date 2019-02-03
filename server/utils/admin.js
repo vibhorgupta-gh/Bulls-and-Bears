@@ -101,17 +101,7 @@ module.exports = {
   },
 
   addNews(req, res) {
-    const obj = {
-      newsText: req.body.newsText,
-      publishedOn: Date.now(),
-      flag: req.body.flag,
-      newsImpact: {
-        company: req.body.newsImpact.company,
-        impact: req.body.newsImpact.impact,
-      },
-      description: req.body.description
-    };
-    News.create(obj).then(news => {
+    News.create(req.body).then(news => {
         news.save();
         res.json(news);
       })
