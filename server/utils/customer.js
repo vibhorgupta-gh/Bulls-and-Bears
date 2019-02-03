@@ -10,7 +10,7 @@ exports.getUsers = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch Users list")
+      res.send({msg:"unable to fetch User list"});
     })
 }
 
@@ -20,7 +20,7 @@ exports.getCurrentUser = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch User details")
+      res.send({msg:"unable to fetch User details"});
     })
 
 }
@@ -31,7 +31,7 @@ exports.getCompanies = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch company list")
+      res.send({msg:"unable to fetch company details"});
     })
 }
 
@@ -41,7 +41,7 @@ exports.getCustomerDetail = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch User details")
+      res.send({msg:"unable to fetch User details"});
     })
 }
 
@@ -51,7 +51,7 @@ exports.getCompany = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch Company details")
+      res.send({msg:"unable to fetch company details"});
     })
 }
 exports.getNewsDetail = function (req, res) { //yet to be tested
@@ -60,7 +60,7 @@ exports.getNewsDetail = function (req, res) { //yet to be tested
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch News details")
+      res.send({msg:"unable to fetch News details"})
     })
 }
 
@@ -74,7 +74,7 @@ exports.getNews = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch news list")
+      res.send({msg:"unable to fetch news list"})
     })
 }
 
@@ -138,12 +138,12 @@ exports.buyShares = function (req, res) {
         })
         .catch(err => {
           console.log(err)
-          res.send("unable to fetch user details")
+          res.send({msg:"unable to fetch User details"});
         })
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch Company details")
+      res.send({msg:"unable to fetch company details"});
     })
 }
 
@@ -187,12 +187,12 @@ exports.sellShares = function (req, res) {
         })
         .catch(err => {
           console.log(err)
-          res.send("unable to fetch user details")
+          res.send({msg:"unable to fetch User details"});
         })
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch Company details")
+      res.send({msg:"unable to fetch company details"});
     })
 }
 
@@ -246,12 +246,12 @@ exports.shortShares = function (req, res) {
         })
         .catch(err => {
           console.log(err)
-          res.send("unable to fetch user details")
+          res.send({msg:"unable to fetch User details"});
         })
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch Company details")
+      res.send({msg:"unable to fetch Company details"});
     })
 }
 
@@ -302,12 +302,12 @@ exports.coverShares = function (req, res) {
         })
         .catch(err => {
           console.log(err)
-          res.send("unable to fetch user details")
+          res.send({msg:"unable to fetch User details"});
         })
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch Company details")
+      res.send({msg:"unable to fetch company details"});
     })
 }
 
@@ -328,7 +328,7 @@ exports.takeloan = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch User details")
+      res.send({msg:"unable to fetch User details"});
     })
 }
 
@@ -356,6 +356,6 @@ exports.repayloan = function (req, res) {
     })
     .catch(err => {
       console.log(err)
-      res.send("unable to fetch User details")
+      res.send({msg:"unable to fetch User details"});
     })
 }

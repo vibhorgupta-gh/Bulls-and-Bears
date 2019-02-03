@@ -103,7 +103,7 @@ module.exports = {
   addNews(req, res) {
     const obj = {
       newsText: req.body.newsText,
-      publishedOn: req.body.publishedOn,
+      publishedOn: Date.now(),
       flag: req.body.flag,
       newsImpact: {
         company: req.body.newsImpact.company,

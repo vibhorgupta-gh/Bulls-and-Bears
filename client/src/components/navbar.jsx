@@ -23,7 +23,7 @@ class NavBar extends Component {
         console.log(data.data);
         if (data.data.facebook == undefined) {
           self.setState({
-            image: data.data.google.id,
+            image: data.data.google.ph,
             name: data.data.google.name
           });
         } else {
@@ -63,7 +63,7 @@ class NavBar extends Component {
                     }/picture`}
                     onError={e => {
                       e.target.onerror = null;
-                      e.target.src = "/assets/np.jpg";
+                      e.target.src = this.state.image;
                     }}
                   />
 

@@ -2971,4 +2971,10 @@ table.dataTable thead td {
     }
 }
 
+.verticaltext_content {
+    position: relative;
+    transform: rotate(-90deg);
+    right:15%;   
+    width:200px;
+  }
 /*-------------------- END Offset Sidebar ------------------- */
