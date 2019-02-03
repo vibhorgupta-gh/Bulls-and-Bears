@@ -94,7 +94,12 @@ exports.buyShares = function (req, res) {
               msg: "kitne khareedega?"
             });
           }
-
+          if(req.body.NoOfShares<0)
+          {
+            return res.json({
+              msg: "negative shares not allowed"
+            });
+          }
           if (user.accountBalance < company.sharePrice * req.body.NoOfShares) {
             return res.json({
               msg: "itne paise nahi hain"
@@ -160,6 +165,12 @@ exports.sellShares = function (req, res) {
               msg: "itne stock nahi hain"
             });
           }
+          if(req.body.NoOfShares<0)
+          {
+            return res.json({
+              msg: "negative shares not allowed"
+            });
+          }
           // var historytemp = {
           //   sharePrice: company.sharePrice,
           //   availableQuantity: company.availableQuantity + req.body.NoOfShares
@@ -209,6 +220,12 @@ exports.shortShares = function (req, res) {
           if (total + req.body.NoOfShares > parameter.maxShares) {
             return res.json({
               msg: "kitne khareedega?"
+            });
+          }
+          if(req.body.NoOfShares<0)
+          {
+            return res.json({
+              msg: "negative shares not allowed"
             });
           }
           // var historytemp = {
@@ -266,6 +283,12 @@ exports.coverShares = function (req, res) {
           if (user.stockShorted.id(company._id).TotalStock < req.body.NoOfShares) {
             return res.json({
               msg: "itne shorted stock nahi hain"
+            });
+          }
+          if(req.body.NoOfShares<0)
+          {
+            return res.json({
+              msg: "negative shares not allowed"
             });
           }
           // var historytemp = {
