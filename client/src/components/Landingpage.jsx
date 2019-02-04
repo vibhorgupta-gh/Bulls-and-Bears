@@ -8,13 +8,10 @@ class LandingPage extends Component {
           <div class="container">
             <div class="login-box ptb--100">
               <form>
+                
                 <div class="login-form-head">
                   <h4>BULLS AND BEARS</h4>
-                  <p>
-                    Hello there, Sign in and start managing your Admin Template
-                  </p>
-
-                  <div class="submit-btn-area">
+                 <div class="submit-btn-area">
 
                     <div class="login-other row mt-4">
                       <div class="col-6">

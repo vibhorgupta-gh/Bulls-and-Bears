@@ -21,16 +21,21 @@ class NavBar extends Component {
       })
       .then(data => {
         console.log(data.data);
-        if (data.data.facebook == undefined) {
-          self.setState({
-            image: data.data.google.ph,
-            name: data.data.google.name
-          });
-        } else {
+        if (data.data.facebook != undefined) {
           self.setState({
             image: data.data.facebook.id,
             name: data.data.facebook.name
           });
+        } else {
+          if (data.data.google != undefined) {
+            self.setState({
+              image: data.data.google.ph,
+              name: data.data.google.name
+            });
+          } else {
+            console.log("hello");
+            window.location.href='http://localhost:3000'
+          }
         }
       });
   }
@@ -74,6 +79,7 @@ class NavBar extends Component {
                     {this.state.name}
                   </h4>
                 </div>
+               
               </div>
             </div>
             <div className="col-12 d-block d-lg-none">

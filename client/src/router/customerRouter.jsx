@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
+import { BrowserRouter , Route,Switch } from "react-router-dom";
  import Leaderboard from "../components/leaderboard";
 import CompanyList from "../components/companyList";
 import Company from "../components/company";
@@ -11,7 +11,7 @@ import LandingLoader from '../components/landingLoader';
 class CustomerRoutes extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Switch>
           <Route exact path="/landing" component={LandingLoader} />
           <Route exact path="/" component={LandingPage} />
@@ -21,7 +21,7 @@ class CustomerRoutes extends Component {
           <Route exact path="/dashboard" component={ProfilePage} />
           <Route exact path="/news" component={News} />
         </Switch>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
