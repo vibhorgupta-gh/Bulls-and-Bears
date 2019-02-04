@@ -2635,7 +2635,7 @@ table.dataTable thead td {
 /* login-s3 */
 
 .login-bg {
-    background: url(../images/bg/singin-bg.jpg) center/cover no-repeat;
+    background: url(../images/bg/singin-bg.gif) center/cover no-repeat;
     position: relative;
     z-index: 1;
 }
