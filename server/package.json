@@ -9,7 +9,7 @@
   "scripts": {
     "test": "cd test && mocha --timeout 40000 --exit ",
     "start": "cross-env BNB_ENV=localhost nodemon server.js",
-    "start:prod": "cross-env BNB_ENV=production node server.js"
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "private": false,
   "dependencies": {
