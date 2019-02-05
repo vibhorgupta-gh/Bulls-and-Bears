@@ -19,7 +19,7 @@ module.exports = function (app, passport) {
   const user = require('../model/user');
   const company = require('../model/company');
 
-  app.get('/leaderboard', isLoggedIn, getUsers);
+  app.get('/leaderboards', isLoggedIn, getUsers);
   app.get('/getcurrentuser',isLoggedIn,getCurrentUser);
   app.get('/company_list', isLoggedIn, getCompanies);
   app.get('/customer_detail/:id', isLoggedIn, getCustomerDetail);

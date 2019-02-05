@@ -171,7 +171,7 @@ module.exports = function (app, passport) {
 
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: 'http://localhost:3000/landing',
+        successRedirect: '/dashboard',
         failureRedirect: '/',
         failureFlash: true
     }));
@@ -179,7 +179,7 @@ module.exports = function (app, passport) {
     // route for logging out
     app.get('/logout', function (req, res) {
         req.logout();
-        res.redirect('http://localhost:3000/');
+        res.redirect('/');
     });
     // send to google to do the authentication
     app.get('/auth/google', passport.authenticate('google', {
@@ -189,13 +189,13 @@ module.exports = function (app, passport) {
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: 'http://localhost:3000/landing',
+            successRedirect: '/dashboard',
             failureRedirect: '/'
         }));
     // route for logging out
     app.get('/logout', function (req, res) {
         req.logout();
-        res.redirect('http://localhost:3000/');
+        res.redirect('/');
     });
 
     return passport;

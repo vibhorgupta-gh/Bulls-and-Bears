@@ -9,6 +9,8 @@ const config = require('./config.js');
 const app = express();
 var cors = require('cors')
 var cron = require('cron');
+const path = require("path")
+
 
 app.use(cors({
   methods: ['GET', 'POST'],
@@ -58,13 +60,14 @@ mongoose.connection.on('error', (err) => {
 
 require('./routes/routes')(app, passport)
 require('./routes/admin')(app, passport)
-
-app.get('/', (req, res) => res.status(200).send('We are now live!'))
+app.use(express.static(path.join(__dirname, "../client", "build")))
 
 //app.get('*', (req, res) => res.status(404).send('Out of Bounds!'))
 
 app.use((err, req, res, next) => res.status(500).send('Internal server error!'))
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+});
 app.listen(port, () => console.log('Magic happens at port ' + port + '!'))
 
 module.exports = app;
