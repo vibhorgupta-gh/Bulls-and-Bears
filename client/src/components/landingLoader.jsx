@@ -14,7 +14,7 @@ class LandingPage extends Component {
 
                 <div id="myProgress">
                     <div id="myBar">
-                        <a href='http://localhost:3000/dashboard'>Click Here</a>
+                        <a href='/dashboard'>Click Here</a>
                     </div>
                 </div>
             </body>
