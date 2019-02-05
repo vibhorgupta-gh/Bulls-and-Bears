@@ -14,7 +14,7 @@ class LeaderBoard extends Component {
   componentDidMount() {
     const self = this;
     axios
-      .get(url + "/leaderboard", {
+      .get(url + "/leaderboards", {
         withCredentials: true
       })
       .then(data => {

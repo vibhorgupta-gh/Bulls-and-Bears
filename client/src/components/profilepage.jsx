@@ -68,7 +68,7 @@ class Profile extends Component {
           });
         }
         axios
-          .get(url + "/leaderboard", {
+          .get(url + "/leaderboards", {
             withCredentials: true
           })
           .then(data => {
