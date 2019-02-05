@@ -27,7 +27,14 @@
     "passport-facebook": "^2.1.1",
     "passport-facebook-token": "^3.3.0",
     "passport-google-oauth": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "cross-env": "^5.2.0",
+    "expect": "^23.3.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.4",
+    "should": "^13.2.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -37,5 +44,8 @@
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "should": "^13.2.1"
+  },
+  "engines": {
+    "node": "11.5.0"
   }
 }
