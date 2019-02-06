@@ -125,7 +125,7 @@ class LeaderBoard extends Component {
                                       {el.facebook.name}
                                     </td>
 
-                                    <td class="buy">{el.accountBalance}</td>
+                                    <td class="buy">{networth-el.loan.amount}</td>
                                   </tr>
                                 );
                               }
