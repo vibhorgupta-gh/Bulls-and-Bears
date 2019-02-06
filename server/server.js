@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const passport = require('passport');
 const config = require('./config.js');
 const app = express();
 var cors = require('cors')
 var cron = require('cron');
-const path = require("path")
+const path = require('path')
 
 
 app.use(cors({
   methods: ['GET', 'POST'],
   credentials: true,
-  origin: 'http://167.99.96.200/'
+  origin: 'http://localhost:8080'
 }));
 
 app.use(session({
@@ -68,6 +68,6 @@ app.use((err, req, res, next) => res.status(500).send('Internal server error!'))
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
 });
-app.listen(port,"167.99.96.200",() => console.log('Magic happens at port ' + port + '!'))
+app.listen(port,() => console.log('Magic happens at port ' + port + '!'))
 
 module.exports = app;
