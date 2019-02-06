@@ -190,7 +190,7 @@ class Company extends Component {
                 ? Array.from(
                     new Array(data.data.history.length),
                     (val, index) => index
-                  )
+                  ).filter((_,i) => i % 5 == 0)
                 : [1, 2, 3],
             datasets: [
               {
@@ -203,7 +203,7 @@ class Company extends Component {
                 pointHighlightStroke: "rgba(151,187,205,1)",
                 data:
                   data.data.history.length != 0
-                    ? data.data.history.map(a => a.sharePrice)
+                    ? data.data.history.map(a => a.sharePrice).filter((_,i) => i % 5 == 0)
                     : [1, 2, 3]
               }
             ]
