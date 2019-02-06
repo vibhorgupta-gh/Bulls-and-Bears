@@ -5,7 +5,7 @@ const parameter = require("../utils/parameters");
 
 
 exports.getUsers = function (req, res) {
-  User.find({}).then(users => {
+  User.find({}).populate('activity.company').populate('stockShorted.company_name').populate('stockHolding.company_name').then(users => {
       res.json(users)
     })
     .catch(err => {
