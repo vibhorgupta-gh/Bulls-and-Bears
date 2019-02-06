@@ -5,7 +5,7 @@ const parameter = require("../utils/parameters");
 
 
 exports.getUsers = function (req, res) {
-  User.find({}).then(users => {
+  User.find({}).populate('activity.company').populate('stockShorted.company_name').populate('stockHolding.company_name').then(users => {
       res.json(users)
     })
     .catch(err => {
@@ -85,11 +85,7 @@ exports.buyShares = function (req, res) {
           for (var i in user.stockHolding) {
             total += i.quantity;
           }
-          console.log(user);
-          for (var i in user.stockShorted) {
-            total += i.quantity;
-          }
-          if (total + req.body.NoOfShares > parameter.maxShares) {
+          if (total + req.body.NoOfShares > 100) {
             return res.json({
               msg: "kitne khareedega?"
             });
@@ -211,13 +207,10 @@ exports.shortShares = function (req, res) {
   Company.findById(req.params.id).then(company => {
       User.findById(req.user.id).then(user => {
           let total = 0;
-          for (var i in user.stockHolding) {
-            total += i.quantity;
-          }
           for (var i in user.stockShorted) {
             total += i.quantity;
           }
-          if (total + req.body.NoOfShares > parameter.maxShares) {
+          if (total + req.body.NoOfShares > 100) {
             return res.json({
               msg: "kitne khareedega?"
             });

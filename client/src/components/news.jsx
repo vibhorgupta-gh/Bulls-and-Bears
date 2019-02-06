@@ -84,8 +84,7 @@ class News extends Component {
                                 </span>
                               </div>
                               <p>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Esse distinctio itaque at.
+                               {el.description || ""}
                               </p>
                             </div>
                           );
