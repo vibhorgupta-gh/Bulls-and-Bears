@@ -28,7 +28,7 @@ class LeaderBoard extends Component {
           );
           var networth1 = 0;
           //console.log("arr", arr);
-          for (var i in arr) {
+          for (var i in arr1) {
             networth1 +=
               ((arr1[i].quantity || 0) + (arr1[i].TotalStock || 0)) *
               arr1[i].company_name.sharePrice - (arr1[i].TotalPrice || 0);
@@ -38,7 +38,7 @@ class LeaderBoard extends Component {
           );
           var networth2 = 0;
           //console.log("arr", arr);
-          for (var i in arr) {
+          for (var i in arr2) {
             networth2 +=
               ((arr2[i].quantity || 0) + (arr2[i].TotalStock || 0)) *
               arr2[i].company_name.sharePrice - (arr2[i].TotalPrice || 0);
