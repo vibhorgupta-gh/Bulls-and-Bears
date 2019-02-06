@@ -42,9 +42,8 @@ class Profile extends Component {
         console.log("arr", arr);
         for (var i in arr) {
           networth +=
-            (arr[i].quantity || 0) * arr[i].company_name.sharePrice +
-            (arr[i].TotalPrice || 0) -
-            (arr[i].TotalStock || 0) * arr[i].company_name.sharePrice;
+            ((arr[i].quantity || 0) + (arr[i].TotalStock || 0)) *
+            arr[i].company_name.sharePrice - (arr[i].TotalPrice || 0);
         }
         console.log("networth", networth);
         if (data.data.facebook == undefined) {
@@ -55,8 +54,7 @@ class Profile extends Component {
             balance: data.data.accountBalance,
             activity: data.data.activity,
             res: arr,
-            netWorth:
-              networth + data.data.accountBalance - data.data.loan.amount
+            netWorth: networth + data.data.accountBalance - data.data.loan.amount,
           });
         } else {
           self.setState({
@@ -66,8 +64,7 @@ class Profile extends Component {
             balance: data.data.accountBalance,
             activity: data.data.activity,
             res: arr,
-            netWorth:
-              networth + data.data.accountBalance - data.data.loan.amount
+            netWorth: networth + data.data.accountBalance - data.data.loan.amount
           });
         }
         axios
@@ -297,14 +294,7 @@ class Profile extends Component {
                               <tbody>
                                 {this.state.res.map((value, index) => {
                                   return (
-                                    <tr
-                                      style={{ cursor: "pointer" }}
-                                      onClick={() => {
-                                        this.props.history.push(
-                                          "/company/" + value._id
-                                        );
-                                      }}
-                                    >
+                                    <tr style={{ cursor: "pointer" }} onClick={()=>{this.props.history.push("/company/" + value._id)}}>
                                       <th scope="row">
                                         {value.company_name.name}
                                       </th>
