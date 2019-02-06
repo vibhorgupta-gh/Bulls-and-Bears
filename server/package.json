@@ -8,8 +8,8 @@
   "main": "server.js",
   "scripts": {
     "test": "cd test && mocha --timeout 40000 --exit ",
-    "start": "cross-env BNB_ENV=localhost nodemon server.js",
-    "heroku-postbuild": "cd client && yarn install && yarn run build"
+    "build": "cd client && yarn install && yarn run build",
+    "start": "yarn run build cross-env BNB_ENV=localhost nodemon server.js"
   },
   "private": false,
   "dependencies": {
@@ -46,6 +46,6 @@
     "should": "^13.2.1"
   },
   "engines": {
-    "node": "11.5.0"
+    "node": "*"
   }
 }
