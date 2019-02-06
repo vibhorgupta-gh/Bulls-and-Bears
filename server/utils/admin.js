@@ -55,7 +55,7 @@ module.exports = {
     const obj = {
       name: req.body.name,
       symbol: req.body.symbol,
-      description: req.body.description,
+      description: "",
       availableQuantity: req.body.availableQuantity,
       sharePrice: req.body.sharePrice,
       totalQuantity: req.body.totalQuantity,

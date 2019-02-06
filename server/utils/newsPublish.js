@@ -9,7 +9,7 @@ module.exports = function (cron) {
 
 
     let companyPriceOnTime = new cron.CronJob({
-        cronTime: '*/15 * * * *', // The time pattern when you want the job to start running every 15 minutes
+        cronTime: '*/5 * * * *', // The time pattern when you want the job to start running every 15 minutes
         onTick: changePrice, // Task to run
         onComplete: reset, // When job is completed and It stops.
         start: true, // immediately starts the job.
