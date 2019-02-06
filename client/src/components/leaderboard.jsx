@@ -20,24 +20,26 @@ class LeaderBoard extends Component {
       .then(data => {
         const arr = [...data.data];
 
-        // console.log('This is the new array --> ' + Object.keys(arr[0]));
+         //console.log('This is the new array --> ' ,arr);
         
         arr.sort(function(a, b) {
           var arr1 = a.stockHolding.map(x =>
             Object.assign(x, a.stockShorted.find(y => y._id == x._id))
           );
-          var networth1 = 0;
-          //console.log("arr", arr);
+          var networth1 = a.accountBalance;
+          //console.log("arr1", arr1);
           for (var i in arr1) {
             networth1 +=
               ((arr1[i].quantity || 0) + (arr1[i].TotalStock || 0)) *
               arr1[i].company_name.sharePrice - (arr1[i].TotalPrice || 0);
+              //console.log((arr1[i].quantity||0),arr1[i].company_name.sharePrice,arr1[i].TotalStock,arr1[i].TotalPrices);
+
           }
           var arr2 = b.stockHolding.map(x =>
             Object.assign(x, b.stockShorted.find(y => y._id == x._id))
           );
-          var networth2 = 0;
-          //console.log("arr", arr);
+          var networth2 = b.accountBalance;
+         // console.log("arr2", arr2);
           for (var i in arr2) {
             networth2 +=
               ((arr2[i].quantity || 0) + (arr2[i].TotalStock || 0)) *
@@ -84,12 +86,12 @@ class LeaderBoard extends Component {
                             </tr>
 
                             {this.state.list.map((el, index) => {
-                              console.log("This is the el --> ", el);
+                              //console.log("This is the el --> ", el);
                               var arr = el.stockHolding.map(x =>
                                 Object.assign(x, el.stockShorted.find(y => y._id == x._id))
                               );
-                              var networth = 0;
-                              console.log("arr", arr);
+                              var networth = el.accountBalance;
+                              //console.log("arr", arr);
                               for (var i in arr) {
                                 networth +=
                                   ((arr[i].quantity || 0) + (arr[i].TotalStock || 0)) *
