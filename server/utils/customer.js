@@ -215,6 +215,11 @@ exports.shortShares = function (req, res) {
               msg: "kitne khareedega?"
             });
           }
+          if (company.availableQuantity < req.body.NoOfShares) {
+            return res.json({
+              msg: "itne stock nahi hain"
+            });
+          }
           if(req.body.NoOfShares<0)
           {
             return res.json({
