@@ -67,7 +67,7 @@ class News extends Component {
                           const a = JSON.stringify(t);
                           console.log(a);
                           const time = a.slice(16, 20);
-                          console.log(el);
+                          //console.log(el);
                           // const haha = a.slice(1 ,10);
                           // const total = time + ' ' +haha ;
                           // console.log(total);

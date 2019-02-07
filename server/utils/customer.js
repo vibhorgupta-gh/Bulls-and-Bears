@@ -50,7 +50,7 @@ exports.getCompanies = function (req, res) {
 }
 
 exports.getCustomerDetail = function (req, res) {
-  User.findById(req.params.id).then(customerDetails => {
+  User.findById(req.params.id).populate('activity.company').populate('portfolio.company_name').then(customerDetails => {
       res.json(customerDetails)
     })
     .catch(err => {
