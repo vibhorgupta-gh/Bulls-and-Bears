@@ -34,7 +34,7 @@ module.exports = function (cron) {
                         console.log("published",i);
                         count++;
                     }
-                    if(count>=3)
+                    if(count>=1)
                     {
                         break;
                     }
