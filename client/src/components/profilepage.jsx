@@ -10,21 +10,20 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 0,
+      amount: 5000,
       loan: 0,
       image: null,
-      name: "",
-      balance: 0,
-      worth: 0,
-      rank: 0,
-      repay: 0,
+      balance: "NA",
+      worth:"NA",
+      rank: "NA",
+      repay: 5600,
       activity: [],
       choice: "bought",
       res: [],
       netWorth: 0
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChange2 = this.handleChange2.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleChange2 = this.handleChange2.bind(this);
   }
 
   componentDidMount() {
@@ -35,36 +34,23 @@ class Profile extends Component {
       })
       .then(data => {
         console.log(data.data);
-        var arr = data.data.stockHolding.map(x =>
-          Object.assign(x, data.data.stockShorted.find(y => y._id == x._id))
-        );
-        var networth = 0;
-        console.log("arr", arr);
-        for (var i in arr) {
-          networth +=
-            ((arr[i].quantity || 0) + (arr[i].TotalStock || 0)) *
-            arr[i].company_name.sharePrice - (arr[i].TotalPrice || 0);
-        }
-        console.log("networth", networth);
         if (data.data.facebook == undefined) {
           self.setState({
             loan: data.data.loan.amount,
             image: data.data.google.id,
-            name: data.data.google.name,
             balance: data.data.accountBalance,
             activity: data.data.activity,
-            res: arr,
-            netWorth: networth + data.data.accountBalance - data.data.loan.amount,
+            res: data.data.portfolio,
+            netWorth: data.data.networth,
           });
         } else {
           self.setState({
             loan: data.data.loan.amount,
             image: data.data.facebook.id,
-            name: data.data.facebook.name,
             balance: data.data.accountBalance,
             activity: data.data.activity,
-            res: arr,
-            netWorth: networth + data.data.accountBalance - data.data.loan.amount
+            res: data.data.portfolio,
+            netWorth: data.data.networth
           });
         }
         axios
@@ -76,29 +62,7 @@ class Profile extends Component {
 
             // console.log('This is the new array --> ' + Object.keys(arr[0]));
             arr.sort(function(a, b) {
-              var arr1 = a.stockHolding.map(x =>
-                Object.assign(x, a.stockShorted.find(y => y._id == x._id))
-              );
-              var networth1 = a.accountBalance;
-              //console.log("arr1", arr1);
-              for (var i in arr1) {
-                networth1 +=
-                  ((arr1[i].quantity || 0) + (arr1[i].TotalStock || 0)) *
-                  arr1[i].company_name.sharePrice - (arr1[i].TotalPrice || 0);
-                  //console.log((arr1[i].quantity||0),arr1[i].company_name.sharePrice,arr1[i].TotalStock,arr1[i].TotalPrices);
-    
-              }
-              var arr2 = b.stockHolding.map(x =>
-                Object.assign(x, b.stockShorted.find(y => y._id == x._id))
-              );
-              var networth2 = b.accountBalance;
-             // console.log("arr2", arr2);
-              for (var i in arr2) {
-                networth2 +=
-                  ((arr2[i].quantity || 0) + (arr2[i].TotalStock || 0)) *
-                  arr2[i].company_name.sharePrice - (arr2[i].TotalPrice || 0);
-              }
-              return (networth2-b.loan.amount) -(networth1-a.loan.amount);
+              return b.networth -a.networth;
             });
             var index = arr
               .map(function(e) {
@@ -107,7 +71,7 @@ class Profile extends Component {
               .indexOf(this.state.image);
             console.log("rank", index);
             self.setState({
-              rank: index
+              rank: index+1
             });
           })
           .catch(err => {
@@ -116,13 +80,14 @@ class Profile extends Component {
       });
   }
   takeLoan() {
-    console.log(this.state.amount);
+    toast.info("your request is being processed!");
+    //console.log(this.state.amount);
     var self = this;
     axios
       .post(
         url + "/take_loan",
         {
-          amount: self.state.amount
+          amount: 5000
         },
         {
           withCredentials: true
@@ -133,26 +98,27 @@ class Profile extends Component {
         if (data.data.msg != undefined) {
           toast.error("Loan limit exceeded");
           this.setState({
-            amount: 0
+            amount: 5000
           });
         } else {
           this.setState({
             loan: data.data.Customer.loan.amount,
             balance: data.data.Customer.accountBalance,
-            amount: 0
+            amount: 5000
           });
           toast.success("loan granted successfully");
         }
       });
   }
   repayLoan() {
-    console.log(this.state.repay);
+    toast.info("your request is being processed!");
+    //console.log(this.state.repay);
     var self = this;
     axios
       .post(
         url + "/repay_loan",
         {
-          amount: self.state.repay
+          amount: this.state.amount
         },
         {
           withCredentials: true
@@ -163,30 +129,30 @@ class Profile extends Component {
         if (data.data.msg != undefined) {
           toast.error("Unable to repay loan");
           this.setState({
-            repay: 0
+            repay: 5600
           });
         } else {
           this.setState({
             loan: data.data.Customer.loan.amount,
             balance: data.data.Customer.accountBalance,
-            repay: 0
+            repay: 5600
           });
           toast.success("Loan repaid successfully");
         }
       });
   }
-  handleChange(e) {
-    console.log("k", parseInt(e.target.value));
-    this.setState({
-      amount: parseInt(e.target.value)
-    });
-  }
-  handleChange2(e) {
-    console.log("k", parseInt(e.target.value));
-    this.setState({
-      repay: parseInt(e.target.value)
-    });
-  }
+  // handleChange(e) {
+  //   console.log("k", parseInt(e.target.value));
+  //   this.setState({
+  //     amount: parseInt(e.target.value)
+  //   });
+  // }
+  // handleChange2(e) {
+  //   console.log("k", parseInt(e.target.value));
+  //   this.setState({
+  //     repay: parseInt(e.target.value)
+  //   });
+  // }
   render() {
     return (
       <div class="body-bg">
@@ -243,7 +209,7 @@ class Profile extends Component {
                             <div class="seofct-icon">
                               <i class="fa fa-users" /> Rank
                             </div>
-                            <h2>{this.state.rank + 1}</h2>
+                            <h2>{this.state.rank}</h2>
                           </div>
                         </div>
                       </div>
@@ -259,7 +225,7 @@ class Profile extends Component {
                           <input
                             value={this.state.amount}
                             type="number"
-                            onChange={this.handleChange}
+                            disabled
                           />
                           <span
                             style={{ cursor: "pointer" }}
@@ -273,7 +239,7 @@ class Profile extends Component {
                           <input
                             value={this.state.repay}
                             type="number"
-                            onChange={this.handleChange2}
+                            disabled
                           />
                           <span
                             style={{ cursor: "pointer" }}
@@ -315,13 +281,14 @@ class Profile extends Component {
                               </thead>
                               <tbody>
                                 {this.state.res.map((value, index) => {
+                                  //console.log(value);
                                   return (
-                                    <tr style={{ cursor: "pointer" }} onClick={()=>{this.props.history.push("/company/" + value._id)}}>
+                                    <tr key={index} style={{ cursor: "pointer" }} onClick={()=>{this.props.history.push("/company/" + value._id)}}>
                                       <th scope="row">
                                         {value.company_name.name}
                                       </th>
-                                      <td>{value.TotalStock || 0}</td>
-                                      <td>{value.quantity || 0}</td>
+                                      <td>{value.stockShorted.TotalStock || 0}</td>
+                                      <td>{value.stockHolding.quantity || 0}</td>
                                       <td>{value.company_name.sharePrice}</td>
                                     </tr>
                                   );

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 module.exports = {
 	maxShares: 10000, //subject to change
-	maxLoan: 5000, //subject to change
+	maxLoan: 5600, //subject to change
 	defaultbal: 100000,
 	shortMax: 100,
 	stock: 10,

@@ -25,19 +25,30 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: parameters.defaultbal
     },
-    stockShorted: [{
-        TotalPrice: Number,
-        TotalStock: Number,
-        company_name:{
+    networth: {
+        type: Number,
+        default: parameters.defaultbal
+    },
+    portfolio: [{
+        company_name: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Company"
         },
-    }],
-    stockHolding: [{
-        quantity: Number,
-        company_name:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Company"
+        stockShorted: {
+            TotalPrice: {
+                type: Number,
+                default: 0
+            },
+            TotalStock: {
+                type: Number,
+                default: 0
+            },
+        },
+        stockHolding: {
+            quantity: {
+                type: Number,
+                default: 0
+            },
         },
     }],
     activity: [{

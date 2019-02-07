@@ -25,6 +25,8 @@ class CompanyList extends Component {
         self.setState({
           list: data.data
         });
+      }).catch((err)=>{
+        console.log(err);
       });
   }
 
@@ -56,7 +58,7 @@ class CompanyList extends Component {
                               <td class="attachments">Shares Available</td>
                               <td class="stats-chart">Share Price</td>
                             </tr>
-
+                            {this.state.list.length==0 ? "Loading .." : ""}
                             {this.state.list.map((el, index) => {
                               var trends = true;
                               if (el.history.length > 1) {
@@ -65,9 +67,8 @@ class CompanyList extends Component {
                                   el.history[el.history.length - 2].sharePrice;
                               }
                               return (
-                                <Link to={"/company/" + el._id}>
+                                <Link key={index} to={"/company/" + el._id}>
                                   <tr>
-                                    {console.log(el)}
                                     <td class="mv-icon">{el.symbol}</td>
                                     <td class="coin-name">{el.name}</td>
                                     <td class="trends">

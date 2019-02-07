@@ -57,6 +57,7 @@ mongoose.connection.on('error', (err) => {
  let job3 = require('./utils/neweffect')(cron);
  let job1 = require('./utils/highnew_impact')(cron);
  let job2 = require('./utils/newdepublisher')(cron);
+ let job5 = require('./utils/worth_calculator')(cron);
 
 require('./routes/routes')(app, passport)
 require('./routes/admin')(app, passport)
