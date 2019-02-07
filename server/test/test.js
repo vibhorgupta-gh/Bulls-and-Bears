@@ -10,7 +10,7 @@ const should = require("should");
 const server = require("../server.js");
 var http = require('http');
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://DeViLINSIDE:bnb2k18@ds233061.mlab.com:33061/bnb-18";
+var url = "mongodb://enactus:enactus18@ds237669.mlab.com:37669/unnati";
 
 chai.use(chaiHttp);
 process.env.NODE_ENV = "test";
