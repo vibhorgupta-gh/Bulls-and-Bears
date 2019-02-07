@@ -9,7 +9,7 @@ module.exports = function (cron) {
 
 
     let companyPriceOnTime = new cron.CronJob({
-        cronTime: '*/5 * * * *', // The time pattern when you want the job to start running every 15 minutes
+        cronTime: '*/15 * * * *', // The time pattern when you want the job to start running every 15 minutes
         onTick: changePrice, // Task to run
         onComplete: reset, // When job is completed and It stops.
         start: true, // immediately starts the job.
@@ -24,22 +24,20 @@ module.exports = function (cron) {
                 console.log(err);
                 // res.send("unable to load news");
             } else {
-                var l = 0;
-                while(News[l].flag!="0" && l<News.length)
+                var count = 0;
+                for(var i=0;i<News.length;i++)
                 {
-                    l++;
-                }
-                if ((l < News.length)) {
-                    News[l].flag = "1";
-                    News[l].publishedOn = Date.now();
-                    console.log(News.publishedOn);
-                    // console.log("change in",k)
-                    console.log("news available is", l);
-                    News[l].save();
-                }
-                else
-                {
-                    console.log("no news is available");
+                    if(News[i].flag=="0")
+                    {
+                        News[i].flag="1";
+                        News[i].save();
+                        console.log("published",i);
+                        count++;
+                    }
+                    if(count>=3)
+                    {
+                        break;
+                    }
                 }
 
             }

@@ -8,7 +8,7 @@ module.exports = function (cron) {
 
 
     let companyPriceOnTime = new cron.CronJob({
-        cronTime: '*/5 * * * *', // The time pattern when you want the job to start
+        cronTime: '*/15 * * * *', // The time pattern when you want the job to start
         onTick: changePrice, // Task to run
         onComplete: reset, // When job is completed and It stops.
         start: true, // immediately starts the job.
@@ -24,21 +24,20 @@ module.exports = function (cron) {
                 console.log(err);
                 // res.send("unable to load news");
             } else {
-                var k = 0;
-                var l;
-                while (k <= News.length - 1 && News[k].flag != "2") {
-                    k++;
-                }
-                if ((k < News.length) && (News[k].flag == "2")) {
-                    News[k].flag = "3";
-                    // console.log("change in",k)
-                    console.log("news not available is", k);
-                    News[k].save();
-                    if (k < News.length - 1) {
-                        k++
-                    };
-                } else {
-                    console.log("nothing to depublish");
+                var count = 0;
+                for(var i=0;i<News.length;i++)
+                {
+                    if(News[i].flag=="2")
+                    {
+                        News[i].flag="3";
+                        News[i].save();
+                        console.log("depublished",i);
+                        count++;
+                    }
+                    if(count>=3)
+                    {
+                        break;
+                    }
                 }
 
             }

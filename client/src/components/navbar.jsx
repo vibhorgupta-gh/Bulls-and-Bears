@@ -34,7 +34,7 @@ class NavBar extends Component {
             });
           } else {
             console.log("hello");
-            window.location.href='http://localhost:3000'
+            window.location.href='http://bnb.ieeedtu.com'
           }
         }
       });

@@ -51,13 +51,14 @@ class Company extends Component {
       options: {
         responsive: true,
         scaleShowLabels: true,
-        scaleLabel: "<%=value%> $",
+        scaleLabel: "Rs. <%=value%>",
         scaleFontColor: "#666"
       }
     };
   }
   buystock() {
-    console.log(`${url}/buy/${this.state.id}`);
+    toast.info("your request is being processed!");
+    //console.log(`${url}/buy/${this.state.id}`);
     axios
       .post(
         `${url}/buy/${this.state.id}`,
@@ -84,7 +85,8 @@ class Company extends Component {
       });
   }
   sellstock() {
-    console.log(`${url}/sell/${this.state.id}`);
+    toast.info("your request is being processed!");
+    //console.log(`${url}/sell/${this.state.id}`);
     axios
       .post(
         `${url}/sell/${this.state.id}`,
@@ -112,7 +114,8 @@ class Company extends Component {
       });
   }
   shortstock() {
-    console.log(`${url}/short/${this.state.id}`);
+    toast.info("your request is being processed!");
+    //console.log(`${url}/short/${this.state.id}`);
     axios
       .post(
         `${url}/short/${this.state.id}`,
@@ -139,7 +142,8 @@ class Company extends Component {
       });
   }
   coverstock() {
-    console.log(`${url}/cover/${this.state.id}`);
+    toast.info("your request is being processed!");
+   // console.log(`${url}/cover/${this.state.id}`);
     axios
       .post(
         `${url}/cover/${this.state.id}`,

@@ -18,38 +18,15 @@ class LeaderBoard extends Component {
         withCredentials: true
       })
       .then(data => {
-        const arr = [...data.data];
 
-         //console.log('This is the new array --> ' ,arr);
-        
-        arr.sort(function(a, b) {
-          var arr1 = a.stockHolding.map(x =>
-            Object.assign(x, a.stockShorted.find(y => y._id == x._id))
-          );
-          var networth1 = a.accountBalance;
-          //console.log("arr1", arr1);
-          for (var i in arr1) {
-            networth1 +=
-              ((arr1[i].quantity || 0) + (arr1[i].TotalStock || 0)) *
-              arr1[i].company_name.sharePrice - (arr1[i].TotalPrice || 0);
-              //console.log((arr1[i].quantity||0),arr1[i].company_name.sharePrice,arr1[i].TotalStock,arr1[i].TotalPrices);
+       // console.log("This is the new array --> ", arr);
 
-          }
-          var arr2 = b.stockHolding.map(x =>
-            Object.assign(x, b.stockShorted.find(y => y._id == x._id))
-          );
-          var networth2 = b.accountBalance;
-         // console.log("arr2", arr2);
-          for (var i in arr2) {
-            networth2 +=
-              ((arr2[i].quantity || 0) + (arr2[i].TotalStock || 0)) *
-              arr2[i].company_name.sharePrice - (arr2[i].TotalPrice || 0);
-          }
-          return (networth2-b.loan.amount) -(networth1-a.loan.amount);
+        data.data.sort(function(a, b) {
+          return b.networth - a.networth;
         });
 
         self.setState({
-          list: arr
+          list: data.data
         });
       })
       .catch(err => {
@@ -84,37 +61,30 @@ class LeaderBoard extends Component {
                               <td class="coin-name">Name</td>
                               <td class="buy">Worth</td>
                             </tr>
-
+                            {
+                              this.state.list.length==0 ? "Loading ..." : ""
+                            }                           
                             {this.state.list.map((el, index) => {
                               //console.log("This is the el --> ", el);
-                              var arr = el.stockHolding.map(x =>
-                                Object.assign(x, el.stockShorted.find(y => y._id == x._id))
-                              );
-                              var networth = el.accountBalance;
-                              //console.log("arr", arr);
-                              for (var i in arr) {
-                                networth +=
-                                  ((arr[i].quantity || 0) + (arr[i].TotalStock || 0)) *
-                                  arr[i].company_name.sharePrice - (arr[i].TotalPrice || 0);
-                              }
+
                               if (el.facebook === undefined) {
                                 return (
-                                  <tr>
+                                  <tr key={index}>
                                     <td class="mv-icon">{index + 1}</td>
                                     <img
                                       class="avatar user-thumb"
                                       src={el.google.ph}
                                       alt="avatar"
                                     />
-                                 
+
                                     <td class="coin-name">{el.google.name}</td>
 
-                                    <td class="buy">{networth-el.loan.amount}</td>
+                                    <td class="buy">{el.networth}</td>
                                   </tr>
                                 );
                               } else {
                                 return (
-                                  <tr>
+                                  <tr key={index}>
                                     <td class="mv-icon">{index + 1}</td>
                                     <img
                                       class="avatar user-thumb"
@@ -127,7 +97,7 @@ class LeaderBoard extends Component {
                                       {el.facebook.name}
                                     </td>
 
-                                    <td class="buy">{networth-el.loan.amount}</td>
+                                    <td class="buy">{el.networth}</td>
                                   </tr>
                                 );
                               }
