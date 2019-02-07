@@ -272,7 +272,7 @@ exports.shortShares = function (req, res) {
             price: company.sharePrice
           };
           //company.history.push(historytemp);
-          company.availableQuantity = company.availableQuantity + (req.body.NoOfShares);
+          company.availableQuantity = company.availableQuantity - (req.body.NoOfShares);
           user.activity.push(activitytemp);
           if (user.portfolio.id(company._id)) {
             user.portfolio.id(company._id).stockShorted.TotalPrice += req.body.NoOfShares * company.sharePrice;
@@ -347,7 +347,7 @@ exports.coverShares = function (req, res) {
             (temp.TotalPrice * req.body.NoOfShares) / temp.TotalStock -
             company.sharePrice * req.body.NoOfShares
           );
-          company.availableQuantity -= req.body.NoOfShares;
+          company.availableQuantity += req.body.NoOfShares;
           user.activity.push(activitytemp);
           if (user.portfolio.id(company._id)) {
             user.portfolio.id(company._id).stockShorted.TotalPrice = Math.round(
